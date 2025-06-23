@@ -1,0 +1,27 @@
+<!-- This is the base page that all templates will inherit from -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}My Flask App{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <header>
+        <h1>UCNJ Flask Demo</h1>
+    </header>
+
+    <main>
+        {% block content %}
+        <!-- The content for other pages will go here -->
+        {% endblock %}
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Union College - Emilio Vasquez</p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <!-- This line above simply connects our javascript file: 'script.js' to our front-end and since it's in the base.html it'll be used throughout the whole application-->
+</body>
+</html>
