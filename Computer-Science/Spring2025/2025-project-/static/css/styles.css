@@ -1,0 +1,98 @@
+body{
+  background-image: url("../images/logo\ web\ project\ \ \(Website\).jpg");
+  bottom: 10px;
+  background-size: 900px;
+  margin: 20;
+  font-size: medium;
+  font-family: Georgia, 'Times New Roman', Times, serif
+  }
+
+h1{
+  color: rgb(221, 216, 216);
+  font-style: oblique;
+  font-size: 50px;
+  outline-color: #681cec;
+
+}
+
+h2{
+  font-family: Haettenschweiler, 'Times New Roman', sans-serif;
+  text-align: center;
+  font-style: bold;
+  color:rgb(62, 104, 255);
+}
+  
+p{
+  color: rgb(255, 255, 255);
+  font-family: Haettenschweiler, 'Times New Roman', sans-serif;
+  text-align: center;
+  font-size: large;
+}
+
+
+img {
+  margin: auto;
+  border: 50px solid #ee2e2e00;
+  height: 100px;
+  width: 380px;
+  opacity: 20;
+ 
+}
+.topnav {
+  background-color: #007BFF;
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
+  text-align: center;
+ list-style: none;
+}
+
+.topnav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center; /* center nav items */
+  gap: 20px; /* space between links */
+}
+
+.topnav li {
+  display: inline;
+}
+
+.topnav a {
+  display: inline-block;
+  color: white;
+  text-align: center;
+  padding: 14px 20px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #007BFF;
+}
+
+li {
+  float: left;
+  word-spacing: 100px;
+}
+
+li a {
+  display: block;
+  color: rgb(0, 0, 0);
+  text-align: center;
+  padding: 2px 8px;
+  text-decoration: none;
+}
+
+li a:hover {
+  background-color: #0f7aec;
+  
+}
+
+

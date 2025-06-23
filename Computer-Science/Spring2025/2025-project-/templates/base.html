@@ -1,0 +1,59 @@
+<!-- templates/base.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}EcuaDominicanFoodRecipe.com{% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+    
+</head>
+
+<body>
+    
+    <style>
+        header{
+            text-align: center;
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            font-size: 20px;
+            
+        }
+        h1{
+            font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            text-align: center;
+            font-size: 20px;
+        }
+        p{
+            font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            background-color: orange;
+            color: white;
+            font-size: 20px;
+        }
+    </style>
+    <header>Welcome To Ecua Dominican Food Recipe</header>
+
+    <p>User will need to SUBSCRIBE and create a login account</p>
+
+    <nav class="topnav">
+        <ul>
+            <li><a class="active" href="{{ url_for('index') }}">Home</a></li>
+            <li><a href="{{ url_for('ecuadorian_recipe') }}">EcuadorianRecipe</a>
+            <li><a href="{{ url_for('dominican_recipe') }}">DominicanRecipe</a>
+            <li><a href="{{ url_for('contact') }}">Contact</a></li>
+            <li><a href="{{ url_for('about') }}">About</a></li>
+            <a href="{{ url_for('Login') }}">Sign Up</a>
+            <a href="{{ url_for('shop') }}">Rewards</a>
+
+            
+           
+        </ul>
+    </nav>
+
+
+    <!-- This is where every page will insert its unique content -->
+    <main>
+        {% block content %}
+
+        {% endblock %}
+    </main>
+</body>
+</html>

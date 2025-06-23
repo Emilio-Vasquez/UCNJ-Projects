@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration</title>
+
+    <style>
+        header{
+            text-align: center;
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            font-size: 20px;
+            
+        }
+        h1{
+            font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            text-align: center;
+            font-size: 20px;
+        }
+        p{
+            font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            background-color: orange;
+            color: white;
+            font-size: 20px;
+            text-align: center;
+        }
+    </style>
+    <header>Welcome To Ecua Dominican Food Recipe</header>
+
+    <p>User will need to SUBSCRIBE and create a login account</p>
+
+    <script>
+        function validateForm() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const email = document.getElementById('email').value;
+
+            // Username validation (5+ characters)
+            if (username.length < 5) {
+                alert("Username must be at least 5 characters long.");
+                return false;
+            }
+
+            // Password validation (8+ chars, 1 uppercase, 1 lowercase, 1 symbol)
+            const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}$/;
+            if (!passwordPattern.test(password)) {
+                alert("Password must be at least 8 characters long, include 1 uppercase letter, 1 lowercase letter, and 1 symbol.");
+                return false;
+            }
+
+            // Email validation (simple)
+            const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+            if (!emailPattern.test(email)) {
+                alert("Please enter a valid email address.");
+                return false;
+            }
+
+            return true;
+        }
+    </script>
+
+
+<!-- This is where the navigation tab styling starts -->
+<style>
+    .topnav {
+  background-color: #007BFF;
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
+  text-align: center;
+ list-style: none;
+}
+
+.topnav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center; /* center nav items */
+  gap: 20px; /* space between links */
+}
+
+.topnav li {
+  display: inline;
+}
+
+.topnav a {
+  display: inline-block;
+  color: white;
+  text-align: center;
+  padding: 14px 20px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #007BFF;
+}
+
+li {
+  float: left;
+  word-spacing: 100px;
+}
+
+li a {
+  display: block;
+  color: rgb(0, 0, 0);
+  text-align: center;
+  padding: 2px 8px;
+  text-decoration: none;
+}
+
+li a:hover {
+  background-color: #0f7aec;
+  
+}
+</style>
+    <nav class="topnav">
+        <ul>
+          <li><a class="active" href="{{ url_for('index') }}">Home</a></li>
+          <li><a href="{{ url_for('ecuadorian_recipe') }}">EcuadorianRecipe</a>
+          <li><a href="{{ url_for('dominican_recipe') }}">DominicanRecipe</a>
+          <li><a href="{{ url_for('contact') }}">Contact</a></li>
+          <li><a href="{{ url_for('about') }}">About</a></li>
+          <a href="{{ url_for('Login') }}">Sign Up</a>
+          <a href="{{ url_for('shop') }}">Rewards</a>
+
+            
+           
+        </ul>
+    </nav>
+
+<!-- This is where the navigation tab styling ENDS -->
+
+<!--This is the styling for the background -->
+<body style="background-image: url('static/images/logo web project  (Website).jpg');
+             background-size: cover;
+             background-repeat: repeat;
+             background-position: center-down;">
+</body>
+
+<!--THE REGISTRATION BOX -->
+        <h1><center>Registration</center></h1>
+        <form onsubmit="return validateForm()" action="/register" method="POST">
+            <label for="username">Username:</label><br>
+            <input type="text" id="username" name="username" required><br><br>
+    
+            <label for="password">Password:</label><br>
+            <input type="password" id="password" name="password" required><br><br>
+    
+            <label for="email">Email:</label><br>
+            <input type="email" id="email" name="email" required><br><br>
+    
+            <input type="submit" value="Register">
+
+  
+</body>
+</html>
+
+
+

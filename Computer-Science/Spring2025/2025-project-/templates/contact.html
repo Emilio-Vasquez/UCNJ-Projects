@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact Us</title>
+  
+<!--THIS IS THE HEADER WITH WEB NAME-->
+  <style>
+    header{
+        text-align: center;
+        font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+        font-size: 20px;
+        
+    }
+    h1{
+        font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        text-align: center;
+        font-size: 20px;
+    }
+    p{
+        font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        background-color: orange;
+        color: white;
+        font-size: 20px;
+        text-align: center;
+    }
+</style>
+<header>Welcome To Ecua Dominican Food Recipe</header>
+
+<p>User will need to SUBSCRIBE and create a login account</p>
+
+<!--THIS IS THE NAVIGATION BAR-->
+<style>
+  .topnav {
+background-color: #007BFF;
+overflow: hidden;
+padding: 0;
+margin: 0;
+text-align: center;
+list-style: none;
+}
+
+.topnav ul {
+list-style-type: none;
+margin: 0;
+padding: 0;
+display: flex;
+justify-content: center; /* center nav items */
+gap: 20px; /* space between links */
+}
+
+.topnav li {
+display: inline;
+}
+
+.topnav a {
+display: inline-block;
+color: white;
+text-align: center;
+padding: 14px 20px;
+text-decoration: none;
+font-weight: bold;
+}
+
+ul {
+list-style-type: none;
+margin: 0;
+padding: 0;
+overflow: hidden;
+background-color: #007BFF;
+}
+
+li {
+float: left;
+word-spacing: 100px;
+}
+
+li a {
+display: block;
+color: rgb(0, 0, 0);
+text-align: center;
+padding: 2px 8px;
+text-decoration: none;
+}
+
+li a:hover {
+background-color: #0f7aec;
+
+}
+</style>
+  <nav class="topnav">
+      <ul>
+        <li><a class="active" href="{{ url_for('index') }}">Home</a></li>
+        <li><a href="{{ url_for('ecuadorian_recipe') }}">EcuadorianRecipe</a>
+        <li><a href="{{ url_for('dominican_recipe') }}">DominicanRecipe</a>
+        <li><a href="{{ url_for('contact') }}">Contact</a></li>
+        <li><a href="{{ url_for('about') }}">About</a></li>
+        <a href="{{ url_for('Login') }}">Sign Up</a>
+        <a href="{{ url_for('shop') }}">Rewards</a>
+          
+         
+      </ul>
+  </nav>
+<!--END OF NAVIGATION BAR-->
+
+
+  <!-- Font Awesome for social media icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+
+
+  <style>
+    /* Basic Body Styling */
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, rgba(255, 204, 0, 0.8), rgba(255, 87, 34, 0.8)); /* Yellow to orange gradient */
+      background-size: cover;
+      margin: 0;
+      padding: 20px;
+      position: relative;
+    }
+
+    /* Main Wrapper for Layout */
+    .main-wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* Left Section: Country Images and Info */
+    .image-section {
+      flex: 1;
+      min-width: 300px;
+      border-left: 10px solid #333;
+      padding-left: 20px;
+    }
+
+    /* Title for Image Section */
+    .image-section h3 {
+      text-align: center;
+      color: #333;
+      font-size: 40px;
+      font-weight: bold;
+    }
+
+    /* Image Styling */
+    .country-images {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .country-images img {
+      width: 100%;
+      max-width: 215px;
+      height: auto;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      transform: rotate(-10deg);
+    }
+
+    /* Image Hover Effect */
+    .country-images img:hover {
+      transform: rotate(10deg);
+    }
+
+    /* Form Box Styling */
+    .form-box {
+      width: 280px; /* Smaller form box */
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      border-right: 10px solid #333; /* Right border */
+    }
+
+    /* Form Title */
+    h2 {
+      text-align: center;
+      color: #333;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    /* Form Inputs, Textareas, and Button Styling */
+    input, textarea, button {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+
+    /* Submit Button Styling */
+    button {
+      background-color: #28a745;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    /* Button Hover Effect */
+    button:hover {
+      background-color: #218838;
+    }
+
+    /* Success Message */
+    .success-message {
+      display: none;
+      padding: 10px;
+      margin-top: 10px;
+      color: #155724;
+      background-color: #d4edda;
+      border: 1px solid #c3e6cb;
+      border-radius: 5px;
+    }
+
+    /* Error Message */
+    .error-message {
+      color: red;
+      font-size: 14px;
+    }
+
+    /* Contact Information Section */
+    .details-section {
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    .details-section p {
+      margin: 10px 0;
+      line-height: 1.6;
+    }
+
+    /* Social Media Icons Section */
+    .social-icons {
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    .social-icons a {
+      margin: 0 10px;
+      font-size: 32px;
+      transition: transform 0.3s ease;
+    }
+
+    /* Social Icons Hover Effect */
+    .social-icons a:hover {
+      transform: scale(1.2);
+    }
+
+    /* Platform-specific Icon Colors */
+    .social-icons a.facebook   { color: #3b5998; }
+    .social-icons a.instagram { color: #e1306c; }
+    .social-icons a.youtube   { color: #ff0000; }
+    .social-icons a.tiktok    { color: #000000; }
+    .social-icons a.snapchat  { color: #fffc00; }
+
+    /* Image at Bottom Left */
+    .bottom-left-image {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      max-width: 200px;
+      border-radius: 15px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      transform: rotate(-10deg);
+    }
+
+    /* Feedback Box Styling */
+    .feedback-box {
+      width: 280px;
+      background: #f8f9fa;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      margin-top: 30px;
+      border-right: 10px solid #333;
+    }
+
+    /* Responsive Design for Mobile */
+    @media (max-width: 768px) {
+      .main-wrapper {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .country-images img {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+
+  <!-- Main Content Wrapper -->
+  <div class="main-wrapper">
+    
+    <!-- Left Section: Country Info and Images -->
+    <div class="image-section">
+      <!-- Title for Image Section -->
+      <h3>Ecua Dominican Food Lovers</h3>
+
+      <!-- Country Images -->
+      <div class="country-images">
+        <img src="static/images/ecuador.jpg" alt="Ecuador" />
+        <img src="static/images/dominican_republic.webp" alt="Dominican Republic"/> 
+      </div>
+
+      <!-- Contact Details -->
+      <div class="details-section">
+        <p><strong>📞 Phone:</strong> 908-222-7777</p>
+        <p><strong>📧 Email:</strong> <a href="mailto:ecuadominican@gmail.com">ecuadominican@gmail.com</a></p>
+        <p><strong>📍 Address:</strong><br>344 Westwood Avenue,<br>Essex, New Jersey 07003</p>
+        <p><strong>Owners:</strong><br>Cesarina, Michelle, Bryan</p>
+      </div>
+    </div>
+
+    <!-- Right Section: Contact Form -->
+    <div class="form-box">
+      <h2>Contact Us</h2>
+
+      <!-- Contact Form -->
+      <form id="contactForm">
+        <input type="text" id="name" placeholder="Your Name" required />
+        <input type="email" id="email" placeholder="Your Email" required />
+        <input type="text" id="phone" placeholder="Your Phone Number" required />
+        <textarea id="message" rows="5" placeholder="Your Message" required></textarea>
+        <button type="submit">Send Message</button>
+
+        <!-- Success and Error Messages -->
+        <div class="success-message" id="successMsg">✅ Your message has been sent!</div>
+        <div class="error-message" id="errorMsg"></div>
+      </form>
+    </div>
+
+    <!-- Feedback Form -->
+    <div class="feedback-box">
+      <h2>We value your feedback!</h2>
+      <form id="feedbackForm">
+        <textarea id="feedback" rows="5" placeholder="Please provide your feedback here..." required></textarea>
+        <button type="submit">Submit Feedback</button>
+
+        <!-- Feedback Success and Error Messages -->
+        <div class="success-message" id="feedbackSuccessMsg">✅ Feedback received! Thank you for sharing.</div>
+        <div class="error-message" id="feedbackErrorMsg"></div>
+      </form>
+    </div>
+
+    <!-- Social Media Icons Section -->
+    <div class="social-icons">
+      <a href="https://www.facebook.com" target="_blank" class="facebook"><i class="fab fa-facebook-square"></i></a>
+      <a href="https://www.instagram.com" target="_blank" class="instagram"><i class="fab fa-instagram"></i></a>
+      <a href="https://www.youtube.com/" target="_blank" class="youtube"><i class="fab fa-youtube"></i></a>
+      <a href="https://www.tiktok.com/" target="_blank" class="tiktok"><i class="fab fa-tiktok"></i></a>
+      <a href="https://www.snapchat.com/" target="_blank" class="snapchat"><i class="fab fa-snapchat"></i></a>
+    </div>
+  </div>
+
+  <!-- Bottom Left Image -->
+  <img src="static/images/foodlovers.jpg" alt="Food Lovers" class="bottom-left-image">
+
+  <!-- JavaScript for Form and Feedback Functionality -->
+  <script>
+    // Contact Form Submission Handling
+    document.getElementById("contactForm").addEventListener("submit", function (e) {
+      e.preventDefault(); // Prevent form from refreshing the page
+
+      // Grab form values
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const phone = document.getElementById("phone").value.trim();
+      const message = document.getElementById("message").value.trim();
+      const errorMsg = document.getElementById("errorMsg");
+      const successMsg = document.getElementById("successMsg");
+
+      // Clear previous messages
+      errorMsg.textContent = "";
+      successMsg.style.display = "none";
+
+      // Simple validation
+      if (!name || !email || !phone || !message) {
+        errorMsg.textContent = "⚠️ Please fill in all fields.";
+        return;
+      }
+
+      // Email validation regex
+      const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,}$/i;
+      if (!email.match(emailPattern)) {
+        errorMsg.textContent = "⚠️ Please enter a valid email address.";
+        return;
+      }
+
+      // Show success message
+      successMsg.style.display = "block";
+      errorMsg.textContent = "";
+
+      // Reset form
+      document.getElementById("contactForm").reset();
+    });
+
+    // Feedback Form Submission Handling
+    document.getElementById("feedbackForm").addEventListener("submit", function (e) {
+      e.preventDefault(); // Prevent form from refreshing the page
+
+      const feedback = document.getElementById("feedback").value.trim();
+      const feedbackErrorMsg = document.getElementById("feedbackErrorMsg");
+      const feedbackSuccessMsg = document.getElementById("feedbackSuccessMsg");
+
+      // Clear previous messages
+      feedbackErrorMsg.textContent = "";
+      feedbackSuccessMsg.style.display = "none";
+
+      // Simple feedback validation
+      if (!feedback) {
+        feedbackErrorMsg.textContent = "⚠️ Please provide your feedback.";
+        return;
+      }
+
+      // Show feedback success message
+      feedbackSuccessMsg.style.display = "block";
+      feedbackErrorMsg.textContent = "";
+
+      // Reset feedback form
+      document.getElementById("feedbackForm").reset();
+    });
+  </script>
+</body>
+</html>

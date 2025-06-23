@@ -1,0 +1,120 @@
+{% extends "base.html" %}
+
+{% block title %}Home - EcuaDominicanFoodRecipe.com{% endblock %}
+
+{% block content %}
+ 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>About - My Recipe Website</title>
+    <style>
+        h1{
+            color: rgb(15, 88, 223);
+            font-size: 50px;
+            font-family: 'Times New Roman', Times, serif
+           
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fffcfc;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            background-image: url('static/images/page-header.webp');
+            background-color: #4dafff;
+            color: rgb(249, 248, 248);
+            padding: 20px;
+            text-align: center;
+            
+        }
+
+        .content {
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            border-radius: 10px;
+        }
+
+        .content img {
+            width: 300px;
+            height: 200px;
+            
+            border-radius: 50px;
+        }
+
+        .content h2 {
+            color: #333;
+            line-height: 0;
+        }
+
+        .content p {
+            line-height: 1.6;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>About Our Recipes</h1>
+        <p>Discover the passion behind every dish!</p>
+    </div>
+
+
+    <div class="content">
+        
+        <img src="static/images/shrimp-ceviche-ecuadorian-style.webp" alt="Delicious food"><img src="static/images/page-header.webp" alt="FOODS">
+        <h2>Our Story</h2>
+        <p>We believe the best way to make everyone happy, is to serve them some delicious food. We have known each other here for a long time, and it is God's blessing that we get to band together to share our special foods. 
+            The best way to make food is with our hearts. Every dish that we serve is made with love and kindness, we want to share our love for food with the world. 
+            Please, help us build a bigger family by letting everyone you know of us.
+            Nuestra comida te hará sentir como si nunca hubieras salido de tu país de origen.</p>
+
+        <h2>Why Choose Us?</h2>
+
+        <style>
+            .list {
+                padding: 20px;       /* space inside the box */
+                margin: 30px;        /* space outside the box */
+                background-color: #f8f8f8;  /* optional: background color */
+                border-radius: 10px; /* optional: rounded corners */
+            }
+        
+            .list ul {
+                list-style-type: disc;  /* keeps bullet points */
+                padding-left: 20px;     /* indent bullets */
+            }
+        
+            .list li {
+                margin-bottom: 10px;    /* space between list items */
+                line-height: 1.6;       /* extra space between lines (if text wraps) */
+            }
+        </style>
+        
+        <div class="list">
+            <ul>
+                <p>Authentic, tested recipes</p>
+                <p>Easy-to-follow instructions</p>
+                <p>Nutrition tips and ingredient substitutions</p>
+                <p>Global cuisine inspiration</p>
+            </ul>
+        </div>
+        
+
+        <p>Join us on this culinary journey and bring joy to your table!</p>
+    </div>
+
+</body>
+</html>
+
+
+
+
+    
+{% endblock %}

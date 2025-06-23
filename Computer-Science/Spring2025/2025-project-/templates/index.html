@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block title %}Home - EcuaDominicanFoodRecipe.com{% endblock %}
+
+{% block content %}
+<style>
+    h1{
+        text-align: center;
+        font-size: 25px;
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        color: rgb(70, 8, 255);
+        
+    }
+    h2{
+        font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+        font-size: 30px;
+        font-style: Bold;
+        color:(rgb(255, 255, 255));
+        text-align: center;
+    }
+    h3{
+        text-align: center;
+        font-size: 15px;
+        color: rgb(0, 0, 0);
+    }
+</style>
+
+    <h1>Welcome to the Home Page!</h1>
+
+    <h2>Learn how to make traditional Ecuadorian and Dominican Recipes Subscripe and find all your favirote dishes!</h2>
+
+    <h3>Creators Cesarina,Michelle and Bryan</h3>
+
+    
+
+<body>
+    
+</body>
+<style>
+    img{
+        border-radius: 50%;
+        height: 20%;
+        align-items: center;
+    }
+</style>
+    <img src="{{ url_for('static', filename='images/logo web project  (Website).jpg') }}" alt="Logo" class="below-image">
+
+    <img src="static/images/sancocho_dominican.jpg" alt="sancocho" class="center-right-image" style="width: 600px;height: 400px;"></img>
+
+    <h1>Come join our recipe journey. Discovering all the Ecuadorian and Dominican traditional foods. These recipes area ready to follow with just a click! </h1>
+    <p> Learn how to make the delicous Dominican sancocho</p>
+<style>
+    img{
+        display: block;
+        margin: auto;
+        width: 400px;
+        height: 200px;
+
+    }
+  
+</style>
+    <img src="static/images/fb86662148be855d931b37d6c1e5fcbe.jpeg" alt="foodplate" class="center-left-image" style="width: 600px;height: 400px;">
+    
+    <p>Explore authentic Ecuadorian and Dominican recipes.</p>
+{% endblock %}

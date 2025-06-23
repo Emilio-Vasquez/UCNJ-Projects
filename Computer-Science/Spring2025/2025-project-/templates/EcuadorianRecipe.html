@@ -1,0 +1,262 @@
+{% extends "base.html" %}
+
+{% block title %}Home - EcuaDominicanFoodRecipe.com{% endblock %}
+
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EcuaDominicanFoodRecipe.com</title>
+  <style>
+    /* Basic Page Styling */
+    /* This style block defines the basic look and feel of the page */
+  
+    /* Styling for the body of the page */
+    body {
+      font-family: Arial, sans-serif; /* Sets the font page to Arial */
+      background: linear-gradient(135deg, #ffcc00cc, #ff5722cc); /* Background gradient from yellow to orange */
+      margin: 0; /* Removes default margin from the page */
+      padding: 20px; /* Adds padding around the page */
+    }
+  
+    /* Container in which holds all content, making it centered and responsive */
+    .container {
+      max-width: 1000px; /* Limits the container width to 1000px */
+      margin: auto; /* Centers the container horizontally */
+      background: #fff; /* Sets the background color to white */
+      padding: 20px; /* Adds padding inside the container */
+      border-radius: 10px; /* Rounds the corners of the container */
+    }
+  
+    /* Styling for main headings (h1 and h2) */
+    h1, h2 {
+      text-align: center; /* Centers the text */
+      color: #333; /* Sets the text color to dark grey */
+    }
+  
+    /* Styling for paragraphs (p) */
+    p {
+      font-size: 16px; /* Sets the font size of paragraphs */
+    }
+  
+    /* Styling for buttons */
+    button {
+      background-color: #ff5722; /* Sets the button background to orange */
+      color: white; /* Sets the text color to white */
+      border: none; /* Removes the border around the button */
+      padding: 8px 15px; /* Adds padding inside the button (vertical, horizontal) */
+      cursor: pointer; /* Changes the cursor to a pointer when hovering over the button */
+      border-radius: 5px; /* Rounds the corners of the button */
+    }
+  
+    /* Styling for when the user hovers over the button */
+    button:hover {
+      background-color: #e64a19; /* Changes the button background to a darker shade of orange when hovering */
+    }
+  
+    /* Styling for inline form elements (like input fields and dropdowns) */
+    .form-inline input,
+    .form-inline select {
+      padding: 5px; /* Adds padding inside the input fields and select boxes */
+      margin-right: 10px; /* Adds space between the input fields */
+    }
+  
+    /* Styling for each product card */
+    .card {
+      background: #f9f9f9; /* Sets the card background color to light grey */
+      border-radius: 6px; /* Rounds the corners of the card */
+      padding: 15px; /* Adds padding inside the card */
+      margin-bottom: 10px; /* Adds space below each card */
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Adds a shadow around the card */
+    }
+  
+    /* Styling for the "videos" section (for membership only) */
+    #videos {
+      margin-top: 30px; /* Adds space above the video section */
+      text-align: center; /* Centers the content inside the video section */
+    }
+  </style>  
+</head>
+<body>
+    <div class="container">
+        <!-- Main heading of the page. Name of the website. -->
+        <h1>🍽️ EcuaDominicanFoodRecipe.com</h1>
+      
+        <!-- Shows the user's balance and membership status -->
+        <!-- 💰 Balance shows how much money the user has. -->
+        <!-- 👑 Membership shows if the user has an active membership. -->
+        <p><strong>💰 Balance:</strong> <span id="balance">$1500</span></p>
+        <p><strong>👑 Membership:</strong> <span id="membership-status">Not Active</span></p>
+      
+        <!-- Button lets the user buy a membership. When clicked, it calls the buyMembership() function to activate the membership. -->
+        <button onclick="buyMembership()">Buy Membership ($15/month)</button>
+      
+        <!-- A horizontal line separates sections on the page. -->
+        <hr>
+      
+        <!-- Search and filter section where users can filter products by name, category, or price -->
+        <!-- The form uses inputs to allow the user to search and filter the products. -->
+        <form class="form-inline">
+          <!-- This input box allows the user to type in a product name to search for. It will call the filterProducts() function as the user types. -->
+          <input type="text" id="search" placeholder="Search by name" onkeyup="filterProducts()" />
+      
+          <!-- This drop-down menu allows the user to select a product category (Dominican, Ecuadorian, or Cooking Classes). -->
+          <!-- The filterProducts() function is called when the user selects a category. -->
+          <select id="category" onchange="filterProducts()">
+            <option value="">All Categories</option> <!-- Option shows all categories. -->
+            <option value="Ecuadorian">Ecuadorian</option> <!-- Option shows Ecuadorian products. -->
+            <option value="Class">Cooking Classes</option> <!-- Option shows cooking class products. -->
+          </select>
+      
+          <!-- This input box allows the user to set a maximum price to filter the products. -->
+          <!-- The filterProducts() function is called when the user types a price. -->
+          <input type="number" id="max-price" placeholder="Max Price" oninput="filterProducts()" />
+      
+          <!-- This button applies the filter settings . -->
+          <button type="button" onclick="filterProducts()">Filter</button>
+        </form>
+      
+        <!-- Lists all the products and services available -->
+        <h2>🛍️ Foods & Services</h2>
+        <!-- The product list will be dynamically created by JavaScript based on the available products. -->
+        <div id="product-list"></div>
+      
+        <!-- Exclusive videos that are only visible tO those that have an active membership -->
+        <div id="videos" style="display: none;">
+          <!-- These are embedded YouTube videos.Only those with active membership are able to see videos -->
+          <h2>🎥 Exclusive Member Videos</h2>
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/s8Fmezppr8g" frameborder="0" allowfullscreen></iframe>
+          <br><br>
+      
+         <iframe width="560" height="315" src="https://www.youtube.com/embed/f15Zz27FNC8" frameborder="0" allowfullscreen></iframe>
+          <br><br>
+         <iframe width="560" height="315" src="https://www.youtube.com/embed/CiqFDM991ck" frameborder="0" allowfullscreen></iframe>
+          <br><br>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/07KoMlg1uwA" frameborder="0" allowfullscreen></iframe>
+          <br><br>
+        </div>
+      </div>      
+    </div>
+  </div>
+
+  <!-- 📜 JavaScript Logic -->
+  <script>
+    // 📦 All Available Products
+    const products = [
+      // Each product is an object with details like ID, name, category, price, and availability
+      { id: 12, name: "Ceviche", category: "Ecuadorian", price: 22, available: true },
+      { id: 13, name: "Locro de Papa", category: "Ecuadorian", price: 17, available: true },
+      { id: 14, name: "Seco de chivo", category: "Ecuadorian", price: 19, available: true },
+      { id: 15, name: "Bolón de verde", category: "Ecuadorian", price: 12, available: true },
+      { id: 16, name: "Encebollado", category: "Ecuadorian", price: 24, available: true },
+      { id: 17, name: "Fanesca", category: "Ecuadorian", price: 25, available: true },
+      { id: 18, name: "Pescado con Coco", category: "Ecuadorian", price: 20, available: true },
+      { id: 19, name: "Espumillas", category: "Ecuadorian", price: 7, available: true },
+      { id: 20, name: "Dulce de higos", category: "Ecuadorian", price: 8, available: true },
+      { id: 21, name: "Flan de coco", category: "Ecuadorian", price: 5.50, available: true },
+      { id: 22, name: "Paila helado", category: "Ecuadorian", price: 3.50, available: true },
+      { id: 23, name: "Cooking Class by Chef Rodriguez", category: "Class", price: 75, available: true },
+    ];
+  
+    let balance = 1500;  //  starting at $1500, User's current balance,
+    let membership = false;  // Membership status (default is false)
+  
+    // ✅ Confirmation file function
+    // This function creates a confirmation text file after a purchase and triggers its download
+    function downloadConfirmation(productName, userEmail, price) {
+      const content = `Thank you for your purchase!\n\nProduct: ${productName}\nPrice: $${price}\nEmail: ${userEmail}\n\nEcuaDominicanFoodRecipe.com`;
+      const blob = new Blob([content], { type: "text/plain" }); // Create a Blob object for the content
+      const url = URL.createObjectURL(blob); // Create a URL for the Blob object
+      const a = document.createElement("a"); // Create an invisible link element
+      a.href = url; // Set the link's URL to the Blob URL
+      a.download = "confirmation.txt"; // Set the filename for the downloaded file
+      a.click(); // Trigger the download by simulating a click on the link
+    }
+  
+    // Function to display the products on the page
+    function renderProducts(productArray) {
+      const productList = document.getElementById("product-list");
+      productList.innerHTML = ""; // Clear the existing product list before adding new products
+  
+      // Loop through each product in the array and create HTML 
+      productArray.forEach(product => {
+        const card = document.createElement("div"); // Create a new div for the product
+        card.className = "card"; // Add a class for styling
+        card.innerHTML = `
+          <strong>${product.name}</strong> - $${product.price} (${product.category})<br>
+          ${product.available ? "✅ Available" : "❌ Unavailable"}<br>
+          ${product.available ? `<button onclick="buyProduct(${product.id})">Buy</button>` : ""}
+        `; // Display product details and a "Buy" button if available
+        productList.appendChild(card); // Add the product card to the page
+      });
+    }
+  
+    // Function to filter products based on user input (category,search term,  and maximum price)
+    function filterProducts() {
+      const search = document.getElementById("search").value.toLowerCase(); // Get the search term (case-insensitive)
+      const category = document.getElementById("category").value; // Get the selected category
+      const maxPrice = document.getElementById("max-price").value; // Get the max price entered by the user
+  
+      // Filter the products based on search, category, and max price
+      const filtered = products.filter(p =>
+        (p.name.toLowerCase().includes(search) || !search) &&  // Filter by name if search term is provided
+        (p.category === category || !category) &&  // Filter by category if one is selected
+        (p.price <= (maxPrice || Infinity)) // Filter by price if a max price is provided
+      );
+  
+      renderProducts(filtered); // Render the filtered list of products
+    }
+  
+    // Function to handle purchasing a product
+    function buyProduct(id) {
+      const product = products.find(p => p.id === id); // Find the selected product by its ID
+      if (product && product.available) { // Check if the product exists and is available
+        // Ask the user for a email and send a confirmation email of the purshase(s)
+        const userEmail = prompt("Enter your email for confirmation:");
+        if (!userEmail) {
+          alert("❌ Purchase cancelled. Must: Email is required.");
+          return; // Exit the function if no email is provided
+        }
+        // Check if the user has enough balance to be able to purchase the product
+        if (balance >= product.price) {
+          balance -= product.price; // Deduct the product price from the balance
+          document.getElementById("balance").textContent = `$${balance}`; // Update balance on the page
+          alert(`✅ Purchased ${product.name}!`);
+  
+          // Call the function to download the purchase confirmation as a text file
+          downloadConfirmation(product.name, userEmail, product.price);
+        } else {
+          alert("❌ Not enough balance.");
+        }
+      }
+    }
+  
+    // The Function to buy membership
+    function buyMembership() {
+      if (balance >= 15) { // Check if the user has enough balance for the membership
+        balance -= 15; // Lower the membership price from balance
+        membership = true; // Set membership status to true
+        document.getElementById("balance").textContent = `$${balance}`;
+        document.getElementById("membership-status").textContent = "Active"; // Update membership status
+        document.getElementById("videos").style.display = "block"; // Show the exclusive content section
+        alert("✅ Membership activated! Enjoy the exclusive content.");
+      } else {
+        alert("❌ Not enough balance to buy membership, no access to videos.");
+      }
+    }
+  
+    // ⏱️ Display Initial Product List
+    renderProducts(products); // Display all products when page is first loaded
+  </script>  
+</body>
+</html>
+
+
+
+
+
+
+{% endblock %}
