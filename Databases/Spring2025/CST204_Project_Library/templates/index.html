@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block body %}
+    {{ super() }}
+    <h3>Welcome to the Library Database Application</h3>
+    <p>Browse the available books below and borrow them if you're logged in:</p>
+
+    <h4>Available Books:</h4>
+    <div class="row">
+        {% for book in available_books %}
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <img src="https://via.placeholder.com/150" class="card-img-top" alt="{{ book.title }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ book.title }}</h5>
+                    <p class="card-text">{{ book.author }} (ISBN: {{ book.isbn }})</p>
+                    <p class="card-text">
+                        Copies Available: 
+                        <span class="{% if book.copies_available == 0 %}text-danger{% endif %}">
+                            {{ book.copies_available }}
+                        </span>
+                    </p>
+
+                    {% if current_user %}
+                    {% set borrowed_books = current_user.borrowed_books %}
+                    {% if book.copies_available > 0 %}
+                        {% if borrowed_books|length < 5 %}
+                            <form action="{{ url_for('request_book', book_id=book.book_id) }}" method="post">
+                                <button type="submit" class="btn btn-primary">Borrow Book</button>
+                            </form>
+                        {% else %}
+                            <button class="btn btn-secondary" disabled>You can't borrow more than 5 books</button>
+                        {% endif %}
+                    {% else %}
+                        <button class="btn btn-secondary" disabled>Out of Stock</button>
+                    {% endif %}
+                    {% else %}
+                    <button class="btn btn-secondary" disabled>Log in to Borrow</button>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="col-md-12">
+            <p>No books available right now. Please check back later.</p>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock %}

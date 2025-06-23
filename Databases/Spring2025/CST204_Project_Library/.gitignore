@@ -1,0 +1,29 @@
+#untracked files
+.env
+
+## No virtual environment shared
+MyVenv/
+
+## No sharing of cache
+__pycache__
+
+
+#dont share migration
+migrations/__pycache__
+migrations/versions/__pycache__/
+
+# Ignore MySQL dump files
+*.sql
+*.sql.gz
+
+# Ignore any other MySQL database or temporary files
+*.db
+*.sqlite
+
+# Ignore MySQL log files or error files
+*.log
+*.err
+
+# Ignore Python bytecode files
+__pycache__/
+*.py[cod]

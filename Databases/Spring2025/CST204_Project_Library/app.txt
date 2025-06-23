@@ -1,0 +1,35 @@
+from flask import Flask, render_template
+## flask with lowercase 'f', is a web framework to build applications
+## flask with uppercase 'F'. Flask is a class that represents the flask application
+
+# creates an instance of a class on the flask application
+# and this instance of the web app manages the routings for us
+# this flask also manages and handles HTTP requests like GET, POST, PUT, DELETE
+
+# it renders templates and it handles connections to address DB or APIs
+# and to actually load your HTML files
+# flask uses it's render_template function
+
+app = Flask(__name__)
+
+# it creates an instance of the Flask class
+# this instance is able to handle our web app components
+
+@app.route('/') ## tells instance that this is the inital route
+def home():
+    return render_template('index.html')
+
+@app.route('/about') ## tells instance that this is the inital route
+def home():
+    return render_template('about.html')
+
+if __name__ == '__main__':
+## name is a built in variable that stores the name of the current script
+## if the name of the file (app.py) is the same as (__main__) then run the app
+## automatically it changes app.py script to main file or '__main__'
+    app.run(debug = True) ## .run is a function that starts the flask dev server, and the debug
+                          ## messages
+
+# TUESDAY 12-1
+# THURSDAY 12-1
+# ROOM 531

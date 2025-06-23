@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Admin Dashboard
+{% endblock %}
+
+{% block body %}
+    {{ super() }}
+    <div class="container mt-5">
+        <h2 class="text-center">Admin Dashboard</h2>
+
+        <!-- Display Flash Messages -->
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="alert alert-warning">
+                    {% for message in messages %}
+                        <p>{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <!-- Display Pending Admin Requests -->
+        <div class="pending-requests mt-4">
+            <h3>Pending Admin Requests</h3>
+
+            {% if requests %}
+                <div class="list-group">
+                    {% for request in requests %}
+                        <div class="list-group-item d-flex justify-content-between align-items-center">
+                            <div>
+                                <p><strong>User:</strong> {{ request.user.username }}</p>
+                                <p><strong>Request Date:</strong> {{ request.request_date }}</p>
+                                <p><strong>Status:</strong> {{ request.status }}</p>
+                            </div>
+                            <div>
+                                <!-- Approve Button -->
+                                <a href="{{ url_for('approve_admin_request', request_id=request.request_id) }}" class="btn btn-success btn-sm">Approve</a>
+                                
+                                <!-- Deny Button -->
+                                <a href="{{ url_for('deny_admin_request', request_id=request.request_id) }}" class="btn btn-danger btn-sm">Deny</a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p>No pending requests at the moment.</p>
+            {% endif %}
+        </div>
+
+        <!-- Link to View All Users -->
+        <div class="mt-4">
+            <h4>Other Admin Actions</h4>
+            <a href="{{ url_for('users') }}" class="btn btn-primary">View All Users</a>
+        </div>
+    </div>
+{% endblock %}

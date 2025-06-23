@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Admin Request
+{% endblock %}
+
+{% block body %}
+    {{ super() }}
+    <div class="container mt-5">
+        <h2 class="text-center">Admin Request Page</h2>
+
+        <!-- Flash messages (if any) -->
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="alert alert-warning">
+                    {% for message in messages %}
+                        <p>{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <p class="text-center mt-4">
+            Hello, {{ username }}! If you'd like to request admin status, please do so below.
+        </p>
+
+        <!-- Request form or status display -->
+        {% if request_status %}
+            <div class="mt-4">
+                <h4>Your Admin Request Status: <span class="text-info">{{ request_status }}</span></h4>
+
+                {% if request_status == 'Pending' %}
+                    <p>Your request is still pending. Please wait for an admin to review it.</p>
+                {% elif request_status == 'Approved' %}
+                    <p>Congratulations! Your request has been approved. You are now an admin.</p>
+                {% elif request_status == 'Denied' %}
+                    <p>Unfortunately, your request was denied. Please contact the admin for more details.</p>
+                {% endif %}
+            </div>
+        {% else %}
+            <p class="mt-4">You haven't made a request yet. If you'd like to apply for admin status, click below.</p>
+
+            <form action="{{ url_for('request_admin_request') }}" method="POST">
+                <button type="submit" class="btn btn-primary">Submit Admin Request</button>
+            </form>
+        {% endif %}
+    </div>
+{% endblock %}
