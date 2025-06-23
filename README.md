@@ -17,9 +17,17 @@ Projects reflect the experiential learning focus of our programs, designed and m
 
 ## **Repository Structure**
 
-- **Databases/** — Includes SQL-based projects, schema designs, ER diagrams, and stored procedure practice.
-- **Data-Science/** — Features full-stack data science applications, machine learning models, EDA notebooks, and LLM demos.
-- **Computer-Science/** — Covers programming fundamentals, object-oriented projects, language-specific labs (e.g., Python, C#), and algorithmic thinking.
+- **Databases**
+  - Includes SQL-based projects, schema designs, ER diagrams, and stored procedure practice.
+- **Data-Science**
+  - Features full-stack data science applications, machine learning models, EDA notebooks, and LLM demos.
+- **Computer-Science**
+  - Covers programming fundamentals, object-oriented projects, language-specific labs (Python, Java), and algorithmic thinking.
+- **Templates/**
+  - Starter code for full-stack projects using **Flask**, **HTML**, **CSS**, and **JavaScript**.
+  - All students are encouraged to use this template as the base for their final project submissions.
+
+> *See `/Templates/` for the recommended project scaffolding.*
 
 Each folder contains subdirectories for different types of projects and student work. File naming and structure follow industry best practices to encourage portfolio-ready formatting.
 
