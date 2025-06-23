@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/static/css/signup.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <title>Create Account</title>
+</head>
+<body>
+    <div class="formulario">
+        <h1>Pycode</h1>
+        <h2>Create an Account</h2>
+
+        <form method="post" id="signup-form">
+            <div class="email">
+                <input type="email" id="email" required />
+                <label>Email</label>
+            </div>
+            <div class="username">
+                <input type="text" id="username" required />
+                <label>Username</label>
+            </div>
+            <div class="password">
+                <input type="password" id="password" required />
+                <label>Password</label>
+            </div>
+            <small id="password-help" class="password-requirements" style="display: none;">
+                Password must be at least 8 characters long, include 1 uppercase letter, 1 lowercase letter, and 1 special character.
+            </small>
+
+            <input type="submit" value="Sign Up" />
+            <div class="register">
+                Already have an account? 
+                <a href="{{ url_for('login_page') }}">Log in</a>
+            </div>
+        </form>
+
+        <div id="error-message" style="color: red; margin-top: 10px;"></div>
+        <div id="success-message" style="color: green; margin-top: 10px;"></div>
+    </div>
+
+    <script>
+        document.getElementById("signup-form").addEventListener("submit", function (e) {
+            e.preventDefault();
+    
+            const username = document.getElementById("username").value;
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+            const errorBox = document.getElementById("error-message");
+    
+            errorBox.textContent = "";
+    
+            fetch("/signup", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ username, email, password })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log("Signup response:", data);
+                if (data.message === "Signup successful!") {
+                    // If redirect URL is provided, go directly to Gmail auth
+                    if (data.redirect) {
+                        console.log("Signup successful, redirecting to Gmail authentication...");
+                        window.location.href = data.redirect;
+                    } else {
+                        // Fallback to home page
+                        console.log("Signup successful, redirecting to home page");
+                        window.location.href = "/";
+                    }
+                } else {
+                    errorBox.textContent = data.error || "Something went wrong.";
+                }
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                errorBox.textContent = "Could not connect to server.";
+            });
+        });
+    </script>
+    
+</body>
+</html>

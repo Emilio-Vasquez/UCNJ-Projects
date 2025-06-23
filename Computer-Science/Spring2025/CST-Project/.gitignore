@@ -1,0 +1,6 @@
+.env
+
+MyVenv
+venv
+
+__pycache__

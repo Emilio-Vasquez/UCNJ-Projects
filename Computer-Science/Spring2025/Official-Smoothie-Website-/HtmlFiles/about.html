@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Smoothie Social</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #fff0f5, #ffe4e1);
+      color: #333;
+      line-height: 1.6;
+    }
+    header {
+      background: linear-gradient(90deg, #ff69b4, #ff1493);
+      color: white;
+      padding: 2rem;
+      text-align: center;
+      border-bottom-left-radius: 40px;
+      border-bottom-right-radius: 40px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+    }
+    header h1 {
+      font-size: 3rem;
+      margin-bottom: 0.3rem;
+    }
+    nav {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      background-color: #ffa07a;
+      padding: 1rem;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      transition: background-color 0.3s, transform 0.2s;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+    }
+    nav a:hover {
+      background-color: #ff7f50;
+      transform: scale(1.1);
+    }
+    main {
+      max-width: 1100px;
+      margin: 2rem auto;
+      padding: 1.5rem;
+      background-color: white;
+      border-radius: 25px;
+      box-shadow: 0 6px 30px rgba(0, 0, 0, 0.1);
+      animation: fadeIn 1s ease;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .highlight {
+      background: linear-gradient(135deg, #f9f9f9, #e1f3ff);
+      padding: 2rem;
+      border-radius: 20px;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    .highlight img {
+      width: 90%;
+      max-width: 500px;
+      border-radius: 20px;
+      margin-top: 1rem;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      transition: transform 0.3s;
+    }
+    .highlight img:hover {
+      transform: scale(1.05);
+    }
+    .menu {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+    }
+    .smoothie-item {
+      background: #ffe5d9;
+      padding: 1.2rem;
+      border-radius: 20px;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .smoothie-item:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    }
+    .smoothie-item h3 {
+      margin: 0.5rem 0;
+      font-size: 1.4rem;
+    }
+    .smoothie-item p {
+      margin: 0;
+      font-size: 0.95rem;
+    }
+    footer {
+      background: linear-gradient(90deg, #ff69b4, #ff1493);
+      color: white;
+      text-align: center;
+      padding: 1.5rem;
+      margin-top: 2rem;
+      border-top-left-radius: 40px;
+      border-top-right-radius: 40px;
+      box-shadow: 0 -6px 20px rgba(0,0,0,0.2);
+    }
+    footer p {
+      margin: 0.3rem;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Smoothie Social</h1>
+    <p>Your go-to spot for fresh & fun smoothies 🍓🍌🥭</p>
+  </header>
+
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="menu.html">Menu</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+    <a href="register.html">Register</a>
+    <a href="review.html">Review</a>
+    <a href="cart.html">Cart</a>
+  </nav>
+
+  <main>
+    <section class="highlight">
+      <h2>About Us</h2>
+      <p style="max-width: 700px; margin: auto;">Hey smoothie fam! We’re fruit-obsessed, blender-happy humans who believe life’s better with a straw in one hand and a smoothie in the other. 🍓🥭✨ Smoothie Social was born out of our love for colorful, feel-good blends that taste as amazing as they look. Whether you’re team green machine or a berry babe, we’re here to serve up vibes, sips, and smoothie inspo. This isn’t just about smoothies — it’s a lifestyle. If you’re into good energy, chill vibes, and drinks that make your taste buds dance, you’re in the right spot. Let’s blend and be besties. 💕🍌</p>
+      <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; margin-top: 1.5rem;">
+        <img src="https://images.pexels.com/photos/1438077/pexels-photo-1438077.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Smoothie Social 1" style="width: 100%; max-width: 400px;">
+        <img src="https://images.pexels.com/photos/7937483/pexels-photo-7937483.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Smoothie Social 2" style="width: 100%; max-width: 400px;">
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Smoothie Social. Stay fruity and fabulous! 🍹✨</p>
+    <p>Follow us on <a href="https://www.instagram.com" style="color: #fff; text-decoration: underline;">Instagram</a>, <a href="https://www.facebook.com" style="color: #fff; text-decoration: underline;">Facebook</a>, and <a href="https://www.tiktok.com" style="color: #fff; text-decoration: underline;">TikTok</a>.</p>
+  </footer>
+
+</body>
+</html>

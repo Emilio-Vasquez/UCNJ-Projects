@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+    <title>Login - Pycode</title>
+</head>
+<body>
+    <div class="formulario">
+        <h1>Pycode</h1>
+        <h2>Login</h2>
+        <form id="login-form" method="post">
+            <div class="username">
+                <input type="text" id="username" required>
+                <label>User name</label>
+            </div>
+            <div class="password">
+                <input type="password" id="password" required>
+                <label>Password</label>
+            </div>
+            <div class="remember">Forgot your password?</div>
+            <input type="submit" value="Log in">
+            <div class="register">
+                I want to <a href="{{ url_for('signup_page') }}">make an account</a>
+            </div>
+        </form>
+
+        <div id="error-message" style="color: red; margin-top: 10px;"></div>
+    </div>
+
+    <script>
+        document.getElementById("login-form").addEventListener("submit", function (e) {
+            e.preventDefault();
+    
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+            const errorBox = document.getElementById("error-message");
+    
+            errorBox.textContent = "";
+    
+            fetch("/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ username, password })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log("Login response:", data);
+                if (data.message === "Login successful") {
+                    // Handle Gmail auth redirect if needed
+                    if (data.needs_gmail_auth && data.redirect) {
+                        console.log("Redirecting to Gmail authentication...");
+                        window.location.href = data.redirect;
+                    } else if (data.redirect) {
+                        // Use explicit redirect if provided
+                        console.log("Login successful, redirecting to:", data.redirect);
+                        window.location.href = data.redirect;
+                    } else {
+                        // Default redirect to home page
+                        console.log("Login successful, redirecting to home page");
+                        window.location.href = "/";
+                    }
+                } else {
+                    errorBox.textContent = data.error || data.message || "Something went wrong.";
+                }
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                errorBox.textContent = "Could not connect to server.";
+            });
+        });
+    </script>
+    
+</body>
+</html>

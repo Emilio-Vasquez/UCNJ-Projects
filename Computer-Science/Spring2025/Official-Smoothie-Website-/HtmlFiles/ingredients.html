@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Smoothie Ingredients</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #fffafc, #ffe4e1);
+      color: #333;
+    }
+    header {
+      background: linear-gradient(90deg, #ff69b4, #ff1493);
+      color: white;
+      padding: 2rem;
+      text-align: center;
+      border-bottom-left-radius: 40px;
+      border-bottom-right-radius: 40px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+    }
+    header h1 {
+      font-size: 3rem;
+      margin-bottom: 0.5rem;
+    }
+    nav {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      background-color: #ffa07a;
+      padding: 1rem;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      padding: 0.6rem 1.2rem;
+      border-radius: 20px;
+      transition: background-color 0.3s, transform 0.2s;
+    }
+    nav a:hover {
+      background-color: #ff7f50;
+      transform: scale(1.1);
+    }
+    main {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 2rem;
+      background-color: white;
+      border-radius: 25px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+      animation: fadeIn 1s ease;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      font-size: 2rem;
+      color: #ff4f81;
+    }
+    .menu {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+    }
+    .smoothie-item {
+      background: #ffe5d9;
+      padding: 1.2rem;
+      border-radius: 20px;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .smoothie-item:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    }
+    .smoothie-item h3 {
+      margin: 0.5rem 0;
+      font-size: 1.4rem;
+    }
+    .smoothie-item p {
+      margin: 0;
+      font-size: 1rem;
+    }
+    footer {
+      background: linear-gradient(90deg, #ff69b4, #ff1493);
+      color: white;
+      text-align: center;
+      padding: 1.5rem;
+      margin-top: 2rem;
+      border-top-left-radius: 40px;
+      border-top-right-radius: 40px;
+      box-shadow: 0 -6px 20px rgba(0,0,0,0.2);
+    }
+    footer p {
+      margin: 0.3rem;
+    }
+  </style>
+</head>
+<body>
+  <h1 id="smoothie-name">Smoothie</h1>
+  <ul id="ingredient-list">
+    <!-- Ingredients will be injected here -->
+  </ul>
+  <a href="index.html">← Back to menu</a>
+
+  <script>
+    // Define smoothie data
+    const smoothies = {
+      "berry-bliss": {
+        name: "Berry Bliss",
+        ingredients: ["Strawberries", "Blueberries", "Banana", "Almond Milk"]
+      },
+      "green-glow": {
+        name: "Green Glow",
+        ingredients: ["Spinach", "Kale", "Pineapple", "Coconut Water"]
+      },
+      "peanut-butter-power": {
+        name: "Peanut Butter Power",
+        ingredients: ["Peanut Butter", "Banana", "Oats", "Almond Milk"]
+      },
+      "coconut coast": {
+        name: "Coconut Coast",
+        ingredients: ["Coconut Milk", "Coconut Yogurt", "Banana", "Honey"]
+      },
+      "tropical tango": {
+        name: "Tropical Tango",
+        ingredients: ["Pineapple", "Strawberry", "Mango", "Peach", "Orange Juice"]
+      },
+      "sweet citrus": {
+      name: "Sweet Citrus",
+      ingredients: ["Lemon", "Orange", "Tangerine", "Grapefruit", "Pineapple Juice"]
+      },
+      "peachy keen": {
+        name: "Peachy Keen",
+        ingredients: ["Peach", "Pineapple", "Mango", "Coconut Water"]
+      },
+      "kiwi kick": {
+        name: "Kiwi Kick", 
+        ingredients: ["Kiwi", "Kale", "Strawberry", "Apple Juice"]
+      },
+      "papaya punch": {
+        name: "Papaya Punch",
+        ingredients: ["Papaya", "Peach", "Mango", "Orange Juice"]
+      }, 
+      "raspberry rush": {
+        name: "Raspberry Rush",
+        ingredients: ["Raspberry", "Blueberry", "Strawberry", "Blackberry", "Coconut Milk"]
+      }, 
+      "blueberry breeze": {
+        name: "Blueberry Breeze",
+        ingredients: ["Blueberry", "Pomegranate", "Blackberry", "Kale", "Apple Juice"]
+    };
+
+    // Get smoothie from URL
+    const params = new URLSearchParams(window.location.search);
+    const smoothieKey = params.get("smoothie");
+
+    // If it exists, display it
+    if (smoothies[smoothieKey]) {
+      document.getElementById("smoothie-name").textContent = smoothies[smoothieKey].name;
+      const list = document.getElementById("ingredient-list");
+
+      smoothies[smoothieKey].ingredients.forEach(ingredient => {
+        const li = document.createElement("li");
+        li.textContent = ingredient;
+        list.appendChild(li);
+      });
+    } else {
+      document.getElementById("smoothie-name").textContent = "Smoothie not found.";
+    }
+  </script>
+</body>
+</html>

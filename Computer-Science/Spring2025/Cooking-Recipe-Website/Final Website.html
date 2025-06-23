@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuickBites Recipes</title>
+    <style>
+        /* Global Styles */
+        :root {
+            --primary-color: #ff6f61;
+            --secondary-color: #e67e22;
+            --light-bg: #fff8f0;
+            --dark-text: #333;
+            --medium-text: #555;
+            --light-text: #666;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background-color: var(--light-bg);
+            color: var(--dark-text);
+        }
+        
+        /* Header & Navigation */
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            text-decoration: none;
+            color: white;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 20px;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 5px 10px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            background-color: rgba(255,255,255,0.2);
+        }
+        
+        /* Main Content Container */
+        .main-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 20px;
+            min-height: calc(100vh - 200px);
+        }
+        
+        /* Home Page Styles */
+        .hero {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .hero h1 {
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--medium-text);
+            margin-bottom: 20px;
+        }
+        
+        .hero-image {
+            width: 100%;
+            max-height: 400px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .login-box {
+            background-color: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        
+        .login-box h2 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        button, .btn {
+            display: inline-block;
+            padding: 12px;
+            margin: 5px 0;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .login-btn {
+            background-color: var(--primary-color);
+            color: white;
+            width: 100%;
+        }
+        
+        .guest-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            width: 100%;
+        }
+        
+        .signup-link {
+            margin-top: 15px;
+            text-align: center;
+        }
+        
+        .signup-link a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        /* Recipe Page Styles */
+        .page-title {
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.2rem;
+        }
+        
+        .search-bar {
+            margin: 2rem auto;
+            max-width: 600px;
+            display: flex;
+        }
+        
+        .search-bar input {
+            padding: 12px;
+            flex-grow: 1;
+            border: 1px solid #ccc;
+            border-radius: 4px 0 0 4px;
+            font-size: 1rem;
+        }
+        
+        .search-bar button {
+            padding: 12px 20px;
+            border: none;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+        }
+        
+        .recipe-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        .recipe-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .recipe-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .recipe-image {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .recipe-content {
+            padding: 20px;
+        }
+        
+        .recipe-title {
+            color: var(--primary-color);
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+        
+        .category {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            margin-bottom: 10px;
+        }
+        
+        .ingredients {
+            font-size: 0.9rem;
+            margin: 0.5rem 0;
+            color: var(--light-text);
+        }
+        
+        .ingredients strong {
+            color: var(--dark-text);
+        }
+        
+        .instructions {
+            display: none;
+            padding: 1rem;
+            background-color: #f9f9f9;
+            border-top: 1px solid #eee;
+        }
+        
+        .show-instructions {
+            display: block;
+            margin-top: 1rem;
+            padding: 0.8rem;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+        }
+        
+        .show-instructions:hover {
+            background-color: #e05a4f;
+        }
+        
+        .active-recipe {
+            grid-column: 1 / -1;
+        }
+        
+        .back-button {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        
+        /* Contact Page Styles */
+        .contact-container {
+            max-width: 600px;
+            margin: 3rem auto;
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .contact-container h2 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .contact-container p {
+            font-size: 1.1rem;
+            margin: 0.5rem 0;
+        }
+        
+        .contact-container a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        
+        .contact-container a:hover {
+            text-decoration: underline;
+        }
+        
+        .contact-form {
+            margin-top: 2rem;
+        }
+        
+        .contact-form label {
+            display: block;
+            margin-top: 1rem;
+            font-weight: bold;
+        }
+        
+        .contact-form input, 
+        .contact-form textarea {
+            width: 100%;
+            padding: 0.5rem;
+            margin-top: 0.3rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .contact-form button {
+            margin-top: 1.5rem;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.7rem 1.2rem;
+            font-size: 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 1.5rem 0;
+            margin-top: 3rem;
+        }
+        
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Utility Classes */
+        .hidden {
+            display: none;
+        }
+        
+        .text-center {
+            text-align: center;
+        }
+        
+        /* Page Transitions */
+        .page {
+            display: none;
+        }
+        
+        .page.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with Navigation -->
+    <header>
+        <div class="header-container">
+            <a href="#" class="logo" onclick="showPage('home')">QuickBites</a>
+            <nav>
+                <ul>
+                    <li><a href="#" onclick="showPage('home')">Home</a></li>
+                    <li><a href="#" onclick="showPage('simple-recipes')">Simple Recipes</a></li>
+                    <li><a href="#" onclick="showPage('gourmet-recipes')">Gourmet Recipes</a></li>
+                    <li><a href="#" onclick="showPage('discover')">Discover</a></li>
+                    <li><a href="#" onclick="showPage('contact')">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <div class="main-container">
+        <!-- Home Page -->
+        <div id="home" class="page active">
+            <div class="hero">
+                <h1>Welcome to QuickBites</h1>
+                <p>Discover delicious recipes for every occasion</p>
+                <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c" alt="Delicious food" class="hero-image">
+            </div>
+            
+            <div class="login-box">
+                <h2>Get Started</h2>
+                <form id="loginForm">
+                    <input type="email" placeholder="Email" required>
+                    <input type="password" placeholder="Password" required>
+                    <button type="submit" class="login-btn">Login</button>
+                </form>
+                
+                <p class="text-center">or</p>
+                
+                <button class="guest-btn" id="guestBtn">Continue as Guest</button>
+                
+                <div class="signup-link">
+                    Don't have an account? <a href="#">Sign up</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Simple Recipes Page -->
+        <div id="simple-recipes" class="page">
+            <h1 class="page-title">Simple Recipe Collection</h1>
+            
+            <div class="recipe-container" id="simpleRecipeContainer">
+                <!-- Recipe cards will be inserted here by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Gourmet Recipes Page -->
+        <div id="gourmet-recipes" class="page">
+            <h1 class="page-title">Gourmet Recipe Collection</h1>
+            
+            <div class="recipe-container" id="gourmetRecipeContainer">
+                <!-- Recipe cards will be inserted here by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Discover Recipes Page -->
+        <div id="discover" class="page">
+            <h1 class="page-title">Discover New Recipes</h1>
+            <p class="text-center">Find your next favorite dish!</p>
+            
+            <div class="search-bar">
+                <input type="text" placeholder="Search for a recipe..." id="searchInput">
+                <button id="searchBtn">Search</button>
+            </div>
+            
+            <section class="recipe-container" id="discoverRecipeContainer">
+                <!-- Recipe cards will be inserted here by JavaScript -->
+            </section>
+        </div>
+
+        <!-- Contact Page -->
+        <div id="contact" class="page">
+            <div class="contact-container">
+                <h1 class="page-title">Contact Us</h1>
+                
+                <h2>Jaidyn St-Cyr</h2>
+                <p>Email: <a href="mailto:jaidyn.st-cyr@owl.ucc.edu">jaidyn.st-cyr@owl.ucc.edu</a></p>
+
+                <h2>Zainab Jaaber</h2>
+                <p>Email: <a href="mailto:Zainab.Jaaber@owl.ucc.edu">Zainab.Jaaber@owl.ucc.edu</a></p>
+
+                <h2>Darian Bowen</h2>
+                <p>Email: <a href="mailto:Darian.Bowen@owl.ucc.edu">Darian.Bowen@owl.ucc.edu</a></p>
+
+                <p>We'd love to hear from you! Feel free to reach out with questions or recipe suggestions.</p>
+
+                <form class="contact-form" id="feedbackForm">
+                    <h3>Send Us Your Feedback</h3>
+                    <label for="name">Your Name:</label>
+                    <input type="text" id="name" name="name" required>
+
+                    <label for="email">Your Email:</label>
+                    <input type="email" id="email" name="email" required>
+
+                    <label for="message">Your Message:</label>
+                    <textarea id="message" name="message" rows="5" required></textarea>
+
+                    <button type="submit">Send Feedback</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <p>&copy; 2023 QuickBites Recipes. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Recipe Data
+        const simpleRecipes = [
+            {
+                id: 1,
+                name: "Chocolate Chip Cookies",
+                image: "https://images.unsplash.com/photo-1558961363-fa8fdf82db35",
+                ingredients: [
+                    "2 1/4 cups all-purpose flour",
+                    "1 tsp baking soda",
+                    "1 tsp salt",
+                    "1 cup (2 sticks) butter, softened",
+                    "3/4 cup granulated sugar",
+                    "3/4 cup packed brown sugar",
+                    "1 tsp vanilla extract",
+                    "2 large eggs",
+                    "2 cups (12-oz. pkg.) semi-sweet chocolate chips"
+                ],
+                instructions: [
+                    "Preheat oven to 375°F.",
+                    "Combine flour, baking soda and salt in small bowl.",
+                    "Beat butter, granulated sugar, brown sugar and vanilla extract in large mixer bowl until creamy.",
+                    "Add eggs one at a time, beating well after each addition.",
+                    "Gradually beat in flour mixture.",
+                    "Stir in chocolate chips.",
+                    "Drop by rounded tablespoon onto ungreased baking sheets.",
+                    "Bake for 9 to 11 minutes or until golden brown.",
+                    "Cool on baking sheets for 2 minutes; remove to wire racks to cool completely."
+                ]
+            },
+            {
+                id: 2,
+                name: "BLT Sandwich",
+                image: "https://images.unsplash.com/photo-1561758033-7e924f619b47",
+                ingredients: [
+                    "2 slices bread (white or whole wheat)",
+                    "3-4 strips bacon, cooked",
+                    "2-3 leaves lettuce",
+                    "2-3 slices tomato",
+                    "Mayonnaise to taste",
+                    "Salt and pepper to taste"
+                ],
+                instructions: [
+                    "Toast the bread if desired.",
+                    "Spread mayonnaise on one side of each bread slice.",
+                    "Layer lettuce, tomato slices, and bacon on one slice of bread.",
+                    "Season with salt and pepper.",
+                    "Top with the second slice of bread.",
+                    "Cut in half and serve immediately."
+                ]
+            },
+            {
+                id: 3,
+                name: "Peanut Butter and Jelly Sandwich",
+                image: "https://images.unsplash.com/photo-1603048719539-8fe144e9f718",
+                ingredients: [
+                    "2 slices bread (white or whole wheat)",
+                    "2 tbsp peanut butter",
+                    "2 tbsp jelly or jam (grape or strawberry work well)"
+                ],
+                instructions: [
+                    "Spread peanut butter on one slice of bread.",
+                    "Spread jelly on the other slice of bread.",
+                    "Press the two slices together with the spreads facing inward.",
+                    "Cut in half if desired and serve."
+                ]
+            },
+            {
+                id: 4,
+                name: "Simple Tomato Pasta",
+                image: "https://images.unsplash.com/photo-1555949258-eb67b1ef0ceb",
+                ingredients: [
+                    "8 oz pasta (spaghetti or penne)",
+                    "2 tbsp olive oil",
+                    "2 cloves garlic, minced",
+                    "1 can (14 oz) crushed tomatoes",
+                    "1/2 tsp salt",
+                    "1/4 tsp black pepper",
+                    "1/4 tsp red pepper flakes (optional)",
+                    "Fresh basil leaves for garnish",
+                    "Parmesan cheese for serving"
+                ],
+                instructions: [
+                    "Cook pasta according to package directions until al dente. Drain and set aside.",
+                    "While pasta cooks, heat olive oil in a large skillet over medium heat.",
+                    "Add minced garlic and sauté for 30 seconds until fragrant.",
+                    "Add crushed tomatoes, salt, black pepper, and red pepper flakes if using.",
+                    "Simmer for 10 minutes, stirring occasionally.",
+                    "Add cooked pasta to the skillet and toss to coat with the sauce.",
+                    "Serve garnished with fresh basil and grated Parmesan cheese."
+                ]
+            }
+        ];
+
+        const gourmetRecipes = [
+            {
+                id: 1,
+                name: "Creamy Garlic Parmesan Chicken",
+                category: "Dinner / Main Course",
+                image: "https://images.unsplash.com/photo-1603360946369-dc9bb6258143",
+                ingredients: [
+                    "4 boneless, skinless chicken breasts",
+                    "1 tbsp olive oil",
+                    "4 garlic cloves (minced)",
+                    "1 cup heavy cream",
+                    "½ cup grated Parmesan cheese",
+                    "1 tsp Italian seasoning",
+                    "Salt and pepper to taste",
+                    "Fresh parsley (for garnish)"
+                ],
+                instructions: [
+                    "Season chicken with salt and pepper.",
+                    "Heat olive oil in a skillet over medium heat. Cook chicken until golden and cooked through. Remove and set aside.",
+                    "In the same skillet, sauté garlic for 1 minute.",
+                    "Add cream, Parmesan, and Italian seasoning. Stir until thickened.",
+                    "Return chicken to the pan, spoon sauce over it, and simmer for 5 minutes.",
+                    "Garnish with parsley and serve."
+                ]
+            },
+            {
+                id: 2,
+                name: "Spicy Mango Salsa",
+                category: "Appetizer / Side Dish",
+                image: "https://images.unsplash.com/photo-1601493700631-2b16ec4b4716",
+                ingredients: [
+                    "2 ripe mangoes (diced)",
+                    "1 red bell pepper (diced)",
+                    "¼ cup red onion (finely chopped)",
+                    "1 jalapeño (seeded and minced)",
+                    "Juice of 1 lime",
+                    "¼ cup fresh cilantro (chopped)",
+                    "Salt to taste"
+                ],
+                instructions: [
+                    "Combine all ingredients in a bowl.",
+                    "Toss gently and chill for 20 minutes.",
+                    "Serve with tortilla chips or grilled chicken/fish."
+                ]
+            },
+            {
+                id: 3,
+                name: "Baked Zucchini Fries",
+                category: "Snack / Healthy Alternative",
+                image: "https://images.unsplash.com/photo-1596797038530-2c107229654b",
+                ingredients: [
+                    "2 medium zucchinis (cut into sticks)",
+                    "½ cup breadcrumbs",
+                    "¼ cup grated Parmesan cheese",
+                    "1 tsp garlic powder",
+                    "1 tsp Italian seasoning",
+                    "2 eggs (beaten)",
+                    "Salt and pepper to taste"
+                ],
+                instructions: [
+                    "Preheat oven to 425°F (220°C). Line a baking sheet with parchment paper.",
+                    "Mix breadcrumbs, Parmesan, garlic powder, and Italian seasoning.",
+                    "Dip zucchini sticks in egg, then breadcrumb mixture.",
+                    "Place on baking sheet and bake for 20–25 minutes or until crispy.",
+                    "Serve with marinara or ranch dipping sauce."
+                ]
+            },
+            {
+                id: 4,
+                name: "No-Bake Chocolate Oat Cookies",
+                category: "Dessert",
+                image: "https://images.unsplash.com/photo-1563805042-7684c019e1cb",
+                ingredients: [
+                    "½ cup butter",
+                    "2 cups sugar",
+                    "½ cup milk",
+                    "¼ cup unsweetened cocoa powder",
+                    "1 tsp vanilla extract",
+                    "½ cup peanut butter",
+                    "3 cups quick oats"
+                ],
+                instructions: [
+                    "In a saucepan, combine butter, sugar, milk, and cocoa. Bring to a boil for 1 minute.",
+                    "Remove from heat and stir in vanilla and peanut butter.",
+                    "Mix in oats until fully coated.",
+                    "Drop spoonfuls onto wax paper and let cool until set (about 30 minutes).",
+                    "Store in an airtight container."
+                ]
+            }
+        ];
+
+        const discoverRecipes = [
+            {
+                id: 1,
+                name: "Spaghetti Bolognese",
+                category: "Italian / Main Course",
+                image: "https://images.unsplash.com/photo-1555949258-eb67b1ef0ceb",
+                description: "A classic Italian pasta dish with rich meat sauce.",
+                ingredients: [
+                    "Ground beef",
+                    "Onion",
+                    "Garlic",
+                    "Carrots",
+                    "Celery",
+                    "Tomato paste",
+                    "Canned tomatoes",
+                    "Beef stock",
+                    "Spaghetti",
+                    "Olive oil",
+                    "Salt",
+                    "Pepper"
+                ],
+                instructions: [
+                    "Heat olive oil in a large pan and sauté chopped onion, garlic, carrots, and celery.",
+                    "Add ground beef and cook until browned.",
+                    "Stir in tomato paste and canned tomatoes, then add beef stock.",
+                    "Simmer for 45 minutes to 1 hour until sauce thickens.",
+                    "Meanwhile, cook spaghetti according to package instructions.",
+                    "Drain pasta and serve with the Bolognese sauce on top."
+                ]
+            },
+            {
+                id: 2,
+                name: "Avocado Toast",
+                category: "Breakfast / Healthy",
+                image: "https://images.unsplash.com/photo-1511690656952-34342bb7c2f2",
+                description: "Simple, healthy breakfast with smashed avocado and eggs.",
+                ingredients: [
+                    "Bread",
+                    "Ripe avocado",
+                    "Eggs",
+                    "Lemon juice",
+                    "Red pepper flakes",
+                    "Salt",
+                    "Pepper",
+                    "Olive oil"
+                ],
+                instructions: [
+                    "Toast bread until golden and crisp.",
+                    "Cut avocado in half, remove pit, and scoop flesh into a bowl.",
+                    "Mash avocado with lemon juice, salt, and pepper.",
+                    "Spread mashed avocado on toast.",
+                    "Fry or poach eggs to your preference.",
+                    "Place eggs on top of avocado toast, sprinkle with red pepper flakes.",
+                    "Drizzle with olive oil and serve immediately."
+                ]
+            },
+            {
+                id: 3,
+                name: "Chicken Curry",
+                category: "Indian / Main Course",
+                image: "https://images.unsplash.com/photo-1601050690597-df0568f70950",
+                description: "Spicy and flavorful chicken curry with rice.",
+                ingredients: [
+                    "Chicken thighs",
+                    "Onion",
+                    "Garlic",
+                    "Ginger",
+                    "Curry powder",
+                    "Coconut milk",
+                    "Tomatoes",
+                    "Vegetable oil",
+                    "Cilantro",
+                    "Rice"
+                ],
+                instructions: [
+                    "Heat oil in a large pot and sauté chopped onion until soft.",
+                    "Add minced garlic and ginger, cook for 1 minute.",
+                    "Add curry powder and stir for 30 seconds to release aromas.",
+                    "Add chicken pieces and brown on all sides.",
+                    "Pour in coconut milk and add chopped tomatoes.",
+                    "Simmer for 25-30 minutes until chicken is cooked through.",
+                    "Meanwhile, cook rice according to package instructions.",
+                    "Garnish curry with chopped cilantro and serve with rice."
+                ]
+            }
+        ];
+
+        // Page Navigation
+        function showPage(pageId) {
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Show the selected page
+            document.getElementById(pageId).classList.add('active');
+            
+            // Load content if needed
+            if (pageId === 'simple-recipes') {
+                displayRecipeCards('simpleRecipeContainer', simpleRecipes);
+            } else if (pageId === 'gourmet-recipes') {
+                displayRecipeCards('gourmetRecipeContainer', gourmetRecipes);
+            } else if (pageId === 'discover') {
+                displayRecipeCards('discoverRecipeContainer', discoverRecipes);
+            }
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+
+        // Function to display recipe cards
+        function displayRecipeCards(containerId, recipes) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+            
+            recipes.forEach(recipe => {
+                const card = document.createElement('div');
+                card.className = 'recipe-card';
+                
+                // Check if recipe has a category
+                const categoryHtml = recipe.category 
+                    ? `<span class="category">${recipe.category}</span>` 
+                    : '';
+                
+                // Check if recipe has a description
+                const descriptionHtml = recipe.description 
+                    ? `<p>${recipe.description}</p>` 
+                    : '';
+                
+                card.innerHTML = `
+                    <div class="recipe-image" style="background-image: url('${recipe.image}')"></div>
+                    <div class="recipe-content">
+                        ${categoryHtml}
+                        <h3 class="recipe-title">${recipe.name}</h3>
+                        ${descriptionHtml}
+                        <div class="ingredients">
+                            <strong>Ingredients:</strong> ${recipe.ingredients.join(', ')}
+                        </div>
+                        <button class="show-instructions">Show Instructions</button>
+                        <div class="instructions">
+                            <strong>Instructions:</strong>
+                            <ol>
+                                ${recipe.instructions.map(step => `<li>${step}</li>`).join('')}
+                            </ol>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+            
+            // Add event listeners to instruction buttons
+            document.querySelectorAll('.show-instructions').forEach(button => {
+                button.addEventListener('click', function() {
+                    const instructions = this.nextElementSibling;
+                    if (instructions.style.display === 'block') {
+                        instructions.style.display = 'none';
+                        this.textContent = 'Show Instructions';
+                    } else {
+                        instructions.style.display = 'block';
+                        this.textContent = 'Hide Instructions';
+                    }
+                });
+            });
+        }
+
+        // Function to show recipe details (for simple and gourmet recipes)
+        function showRecipeDetail(containerId, recipeId, recipes) {
+            const recipe = recipes.find(r => r.id === recipeId);
+            const container = document.getElementById(containerId);
+            
+            const categoryHtml = recipe.category 
+                ? `<span class="category">${recipe.category}</span>` 
+                : '';
+            
+            container.innerHTML = `
+                <div class="recipe-card active-recipe">
+                    <div class="recipe-image" style="background-image: url('${recipe.image}')"></div>
+                    <div class="recipe-content">
+                        ${categoryHtml}
+                        <h2>${recipe.name}</h2>
+                        
+                        <h3>Ingredients</h3>
+                        <ul>
+                            ${recipe.ingredients.map(ing => `<li>${ing}</li>`).join('')}
+                        </ul>
+                        
+                        <h3>Instructions</h3>
+                        <ol>
+                            ${recipe.instructions.map(step => `<li>${step}</li>`).join('')}
+                        </ol>
+                        
+                        <button class="back-button" onclick="displayRecipeCards('${containerId}', ${JSON.stringify(recipes).replace(/"/g, '&quot;')})">Back to All Recipes</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Event Listeners
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Login successful! Redirecting to recipes...');
+            showPage('simple-recipes');
+        });
+        
+        document.getElementById('guestBtn').addEventListener('click', function() {
+            sessionStorage.setItem('guestMode', 'true');
+            alert('Continuing as guest. Enjoy browsing!');
+            showPage('simple-recipes');
+        });
+        
+        document.getElementById('searchBtn').addEventListener('click', function() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            if (searchTerm.trim() === '') {
+                displayRecipeCards('discoverRecipeContainer', discoverRecipes);
+                return;
+            }
+            
+            const filteredRecipes = discoverRecipes.filter(recipe => 
+                recipe.name.toLowerCase().includes(searchTerm) || 
+                recipe.description.toLowerCase().includes(searchTerm) ||
+                recipe.ingredients.some(ing => ing.toLowerCase().includes(searchTerm))
+            );
+            
+            displayRecipeCards('discoverRecipeContainer', filteredRecipes);
+        });
+        
+        document.getElementById('feedbackForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you for your feedback! We appreciate your input.');
+            this.reset();
+        });
+
+        // Initialize the page
+        if (window.location.hash) {
+            const pageId = window.location.hash.substring(1);
+            showPage(pageId);
+        } else {
+            showPage('home');
+        }
+    </script>
+</body>
+</html>

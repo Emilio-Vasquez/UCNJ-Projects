@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Python Basic Code</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/LVL-3.css') }}" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Special+Gothic+Regular&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <img src="{{ url_for('static', filename='images/design_04112025.png') }}" alt="Pycode Logo" class="logo" />
+            <span class="site-name">Pycode</span>
+        </div>
+        <button class="image-button" onclick="openPopup()">
+            <img src="{{ url_for('static', filename='images/RkiMyoycj.png') }}" alt="Custom Button" />
+        </button>
+
+        <button class="logout-btn" onclick="showLogoutPopup()">Logout</button>
+    </header>
+
+    <main>
+        <div id="logout-popup" class="popup-overlay">
+            <div class="popup-content">
+                <h2>Are you sure you want to log out?</h2>
+                <div style="margin-top: 1.5rem;">
+                    <button onclick="confirmLogout(true)" class="logout-btn" style="background-color: #f7dc6f;">Yes</button>
+                    <button onclick="confirmLogout(false)" class="logout-btn" style="background-color: #3498db; margin-left: 1rem;">No</button>
+                </div>
+            </div>
+        </div>
+
+        <h1 id="quiz-title" class="special-gothic">Level 3: Lists, Dictionaries, Funcions and Clases</h1>
+        <div id="question-container" class="mb-6 special-gothic">
+            <!-- Preguntas se cargarán aquí -->
+        </div>
+
+        <!-- Sección para mostrar los resultados -->
+        <div id="results-container" class="hidden mt-6">
+            <!-- Eliminamos el título "Quiz Results" -->
+            <p class="text-lg text-center mb-4 special-gothic">Your Score: <span id="final-score">0</span></p>
+            <table class="summary-table" id="results-summary">
+                <thead>
+                    <tr>
+                        <th>Question</th>
+                        <th>Your Answer</th>
+                        <th>Correct Answer</th>
+                        <th>Result</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+            <button id="restart-button" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded w-full transition duration-300 ease-in-out special-gothic">
+                Restart Quiz
+            </button>
+        </div>
+
+        <div id="message-container" class="text-red-500 text-center mt-4 special-gothic">
+            <!-- Mensajes se mostrarán aquí -->
+        </div>
+        <div id="popup" class="popup-overlay">
+            <div class="popup-content">
+                <span class="close-btn" onclick="closePopup()">&times;</span>
+                <h2 class="special-gothic">Your Lives!</h2>
+                <p class="special-gothic">These are the lives and cash that you have.</p>
+            </div>
+        </div>
+        <div id="countdown" class="special-gothic"></div>
+        <div id="question-timer"> <span id="timer-seconds">08</span></div>
+    </main>
+
+    <script src="{{ url_for('static', filename='js/LVL-3.js') }}"></script>
+</body>
+</html>

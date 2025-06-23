@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Smoothie Social Cart</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #fffafc, #ffe4e1);
+      color: #333;
+    }
+    header, footer {
+      background: linear-gradient(90deg, #ff69b4, #ff1493);
+      color: white;
+      text-align: center;
+      padding: 1.5rem;
+      border-radius: 0 0 40px 40px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+    }
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      background-color: #ffa07a;
+      padding: 1rem;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      padding: 0.6rem 1.2rem;
+      border-radius: 20px;
+      transition: background-color 0.3s, transform 0.2s;
+    }
+    nav a:hover {
+      background-color: #ff7f50;
+      transform: scale(1.1);
+    }
+    main {
+      max-width: 1000px;
+      margin: 2rem auto;
+      padding: 2rem;
+      background-color: white;
+      border-radius: 25px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+    }
+    .menu {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+    }
+    .smoothie-item {
+      background: #ffe5d9;
+      padding: 1rem;
+      border-radius: 20px;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    .smoothie-item button {
+      margin-top: 0.5rem;
+      padding: 0.5rem 1rem;
+      background-color: #ffa07a;
+      color: white;
+      border: none;
+      border-radius: 15px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    .smoothie-item button:hover {
+      background-color: #ff7f50;
+    }
+    #cart {
+      margin-top: 2rem;
+      padding: 1rem;
+      background-color: #f0fff0;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+    }
+    .cart-item button {
+      background-color: #ff4f81;
+      padding: 0.3rem 0.6rem;
+      border: none;
+      border-radius: 10px;
+      color: white;
+      cursor: pointer;
+    }
+    .cart-item button:hover {
+      background-color: #ff1c6a;
+    }
+    #checkout-btn {
+      margin-top: 1rem;
+      padding: 0.6rem 1.2rem;
+      background-color: #ff69b4;
+      color: white;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+    }
+    #checkout-btn:hover {
+      background-color: #ff1493;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Smoothie Social</h1>
+    <p>Your go-to spot for fresh & fun smoothies 🍓🍌🥭</p>
+  </header>
+
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="menu.html">Menu</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+    <a href="register.html">Register</a>
+    <a href="review.html">Review</a>
+    <a href="cart.html">Cart</a>
+  </nav>
+
+  <main>
+    <h2 style="text-align:center;">Smoothie Menu</h2>
+    <div class="menu">
+      <div class="smoothie-item">
+        <h3>Berry Bliss</h3>
+        <p>$4.79</p>
+        <button onclick="addToCart('Berry Bliss', 4.79)">Add to Cart</button>
+      </div>
+      <div class="smoothie-item">
+        <h3>Green Glow</h3>
+        <p>$5.29</p>
+        <button onclick="addToCart('Green Glow', 5.29)">Add to Cart</button>
+      </div>
+      <div class="smoothie-item">
+        <h3>Peanut Butter Power</h3>
+        <p>$5.29</p>
+        <button onclick="addToCart('Peanut Butter Power', 5.29)">Add to Cart</button>
+      </div>
+      <div class="smoothie-item">
+        <h3>Coconut Coast</h3>
+        <p>$5.49</p>
+        <button onclick="addToCart('Coconut Coast', 5.49)">Add to Cart</button>
+      </div>
+        <div class="smoothie-item">
+            <h3>Tropical Tango</h3>
+            <p>$4.99</p>
+            <button onclick="addToCart('Tropical Tango', 4.99)">Add to Cart</button>
+            </div>
+      <div class="smoothie-item"> 
+        <h3>Sweet Citrus</h3>
+        <p>$5.29</p>
+        <button onclick="addToCart('Sweet Citrus', 5.29)">Add to Cart</button>
+      </div>
+      <div class="smoothie-item">
+        <h3>Summer Splash</h3>
+        <p>$4.79</p>
+        <button onclick="addToCart('Summer Splash', 4.79)">Add to Cart</button>
+      </div>
+      <div class="smoothie-item">
+        <h3>Tropical Green</h3>
+        <p>$4.79</p>
+        <button onclick="addToCart('Tropical Green', 4.49)">Add to Cart</button>
+      </div>
+      <div class="smoothie-item">
+        <h3>Crismon Crush</h3>
+        <p>$4.99</p>
+        <button onclick="addToCart('Crismon Crush', 4.99)">Add to Cart</button>
+      </div>  
+
+    <div id="cart">
+      <h2>Your Cart</h2>
+      <ul id="cart-items"></ul>
+      <p><strong>Total:</strong> $<span id="cart-total">0.00</span></p>
+      <button id="checkout-btn" onclick="checkout()">Checkout</button>
+    </div>
+  </main>
+
+  <footer>
+    &copy; 2025 Smoothie Social. Stay fruity and fabulous! 🍹✨
+  </footer>
+
+  <script>
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    function addToCart(name, price) {
+      cart.push({ name, price });
+      updateCart();
+    }
+
+    function removeFromCart(index) {
+      cart.splice(index, 1);
+      updateCart();
+    }
+
+    function updateCart() {
+      const cartItems = document.getElementById('cart-items');
+      const cartTotal = document.getElementById('cart-total');
+      cartItems.innerHTML = '';
+      let total = 0;
+      cart.forEach((item, index) => {
+        const li = document.createElement('li');
+        li.className = 'cart-item';
+        li.innerHTML = `${item.name} - $${item.price.toFixed(2)} <button onclick="removeFromCart(${index})">Remove</button>`;
+        cartItems.appendChild(li);
+        total += item.price;
+      });
+      cartTotal.textContent = total.toFixed(2);
+      localStorage.setItem('cart', JSON.stringify(cart));
+    }
+
+    function checkout() {
+      if (cart.length === 0) {
+        alert('Your cart is empty!');
+      } else {
+        alert('Thank you for your purchase!');
+        cart = [];
+        updateCart();
+        localStorage.removeItem('cart');
+      }
+    }
+
+    window.onload = updateCart;
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,203 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Discover Recipes</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background-color: #fff8f0;
+      color: #333;
+    }
+    header {
+      background-color: #ff6f61;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+    }
+    .search-bar {
+      margin: 2rem auto;
+      max-width: 500px;
+      display: flex;
+      justify-content: center;
+    }
+    .search-bar input {
+      padding: 0.5rem;
+      width: 80%;
+      border: 1px solid #ccc;
+      border-radius: 4px 0 0 4px;
+    }
+    .search-bar button {
+      padding: 0.5rem 1rem;
+      border: none;
+      background-color: #ff6f61;
+      color: white;
+      border-radius: 0 4px 4px 0;
+      cursor: pointer;
+    }
+    .recipes {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      padding: 2rem;
+    }
+    .recipe-card {
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      overflow: hidden;
+      transition: transform 0.2s;
+    }
+    .recipe-card:hover {
+      transform: scale(1.02);
+    }
+    .recipe-card img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+    }
+    .recipe-content {
+      padding: 1rem;
+    }
+    .recipe-title {
+      margin: 0 0 0.5rem;
+      font-size: 1.2rem;
+      color: #ff6f61;
+    }
+    .instructions {
+      display: none;
+      padding: 1rem;
+      background-color: #f9f9f9;
+      border-top: 1px solid #eee;
+    }
+    .show-instructions {
+      display: block;
+      margin-top: 0.5rem;
+      padding: 0.5rem;
+      background-color: #ff6f61;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      width: 100%;
+    }
+    .show-instructions:hover {
+      background-color: #e65a50;
+    }
+    .ingredients {
+      font-size: 0.9rem;
+      margin: 0.5rem 0;
+      color: #666;
+    }
+    .ingredients strong {
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Discover New Recipes</h1>
+    <p>Find your next favorite dish!</p>
+  </header>
+
+  <div class="search-bar">
+    <input type="text" placeholder="Search for a recipe..." />
+    <button>Search</button>
+  </div>
+
+  <section class="recipes">
+    <div class="recipe-card">
+      <img src="https://images.unsplash.com/photo-1555949258-eb67b1ef0ceb?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Spaghetti Bolognese" />
+      <div class="recipe-content">
+        <h3 class="recipe-title">Spaghetti Bolognese</h3>
+        <p>A classic Italian pasta dish with rich meat sauce.</p>
+        <div class="ingredients">
+          <strong>Ingredients:</strong> Ground beef, onion, garlic, carrots, celery, tomato paste, canned tomatoes, beef stock, spaghetti, olive oil, salt, pepper.
+        </div>
+        <button class="show-instructions">Show Instructions</button>
+        <div class="instructions">
+          <strong>Instructions:</strong>
+          <ol>
+            <li>Heat olive oil in a large pan and sauté chopped onion, garlic, carrots, and celery.</li>
+            <li>Add ground beef and cook until browned.</li>
+            <li>Stir in tomato paste and canned tomatoes, then add beef stock.</li>
+            <li>Simmer for 45 minutes to 1 hour until sauce thickens.</li>
+            <li>Meanwhile, cook spaghetti according to package instructions.</li>
+            <li>Drain pasta and serve with the Bolognese sauce on top.</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
+    <div class="recipe-card">
+      <img src="https://images.unsplash.com/photo-1511690656952-34342bb7c2f2?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Avocado Toast" />
+      <div class="recipe-content">
+        <h3 class="recipe-title">Avocado Toast</h3>
+        <p>Simple, healthy breakfast with smashed avocado and eggs.</p>
+        <div class="ingredients">
+          <strong>Ingredients:</strong> Bread, ripe avocado, eggs, lemon juice, red pepper flakes, salt, pepper, olive oil.
+        </div>
+        <button class="show-instructions">Show Instructions</button>
+        <div class="instructions">
+          <strong>Instructions:</strong>
+          <ol>
+            <li>Toast bread until golden and crisp.</li>
+            <li>Cut avocado in half, remove pit, and scoop flesh into a bowl.</li>
+            <li>Mash avocado with lemon juice, salt, and pepper.</li>
+            <li>Spread mashed avocado on toast.</li>
+            <li>Fry or poach eggs to your preference.</li>
+            <li>Place eggs on top of avocado toast, sprinkle with red pepper flakes.</li>
+            <li>Drizzle with olive oil and serve immediately.</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
+    <div class="recipe-card">
+      <img src="https://images.unsplash.com/photo-1601050690597-df0568f70950?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Chicken Curry" />
+      <div class="recipe-content">
+        <h3 class="recipe-title">Chicken Curry</h3>
+        <p>Spicy and flavorful chicken curry with rice.</p>
+        <div class="ingredients">
+          <strong>Ingredients:</strong> Chicken thighs, onion, garlic, ginger, curry powder, coconut milk, tomatoes, vegetable oil, cilantro, rice.
+        </div>
+        <button class="show-instructions">Show Instructions</button>
+        <div class="instructions">
+          <strong>Instructions:</strong>
+          <ol>
+            <li>Heat oil in a large pot and sauté chopped onion until soft.</li>
+            <li>Add minced garlic and ginger, cook for 1 minute.</li>
+            <li>Add curry powder and stir for 30 seconds to release aromas.</li>
+            <li>Add chicken pieces and brown on all sides.</li>
+            <li>Pour in coconut milk and add chopped tomatoes.</li>
+            <li>Simmer for 25-30 minutes until chicken is cooked through.</li>
+            <li>Meanwhile, cook rice according to package instructions.</li>
+            <li>Garnish curry with chopped cilantro and serve with rice.</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    document.querySelectorAll('.show-instructions').forEach(button => {
+      button.addEventListener('click', function() {
+        const instructions = this.nextElementSibling;
+        if (instructions.style.display === 'block') {
+          instructions.style.display = 'none';
+          this.textContent = 'Show Instructions';
+        } else {
+          instructions.style.display = 'block';
+          this.textContent = 'Hide Instructions';
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
+

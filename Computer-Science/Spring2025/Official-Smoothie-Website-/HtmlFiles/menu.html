@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Smoothie Social</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #fffafc, #ffe4e1);
+      color: #333;
+    }
+    header {
+      background: linear-gradient(90deg, #ff69b4, #ff1493);
+      color: white;
+      padding: 2rem;
+      text-align: center;
+      border-bottom-left-radius: 40px;
+      border-bottom-right-radius: 40px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+    }
+    header h1 {
+      font-size: 3rem;
+      margin-bottom: 0.5rem;
+    }
+    nav {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      background-color: #ffa07a;
+      padding: 1rem;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      padding: 0.6rem 1.2rem;
+      border-radius: 20px;
+      transition: background-color 0.3s, transform 0.2s;
+    }
+    nav a:hover {
+      background-color: #ff7f50;
+      transform: scale(1.1);
+    }
+    main {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 2rem;
+      background-color: white;
+      border-radius: 25px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+      animation: fadeIn 1s ease;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .menu-section h2 {
+      text-align: center;
+      margin-bottom: 2rem;
+      font-size: 2.2rem;
+      color: #ff4f81;
+    }
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+    }
+    .menu-item {
+      background: #ffe5d9;
+      padding: 1rem;
+      border-radius: 20px;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      transition: transform 0.3s, box-shadow 0.3s;
+      cursor: pointer;
+    }
+    .menu-item:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    }
+    .menu-item img {
+      width: 100%;
+      max-width: 220px;
+      border-radius: 15px;
+      margin-bottom: 0.8rem;
+    }
+    .menu-item span.item-name {
+      display: block;
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 0.3rem;
+    }
+    .menu-item span.price {
+      display: block;
+      font-size: 1rem;
+      color: #ff4f81;
+      margin-bottom: 0.5rem;
+    }
+    footer {
+      background: linear-gradient(90deg, #ff69b4, #ff1493);
+      color: white;
+      text-align: center;
+      padding: 1.5rem;
+      margin-top: 2rem;
+      border-top-left-radius: 40px;
+      border-top-right-radius: 40px;
+      box-shadow: 0 -6px 20px rgba(0,0,0,0.2);
+    }
+    footer p {
+      margin: 0.3rem;
+    }
+    #ingredient-list-container {
+      text-align: center;
+      margin: 2rem 0;
+    }
+    #ingredient-list li {
+      list-style: none;
+      margin: 0.3rem 0;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Smoothie Social</h1>
+    <p>Your go-to spot for fresh & fun smoothies 🍓🍌🥭</p>
+  </header>
+
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="menu.html">Menu</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+    <a href="register.html">Register</a>
+    <a href="review.html">Review</a>
+    <a href="cart.html">Cart</a>
+  </nav>
+
+  <main>
+    <section class="menu-section">
+      <h2>Our Delicious Menu</h2>
+      <div id="ingredient-list-container">
+        <h3 id="smoothie-name">Select a smoothie below to see its ingredients</h3>
+        <ul id="ingredient-list"></ul>
+      </div>
+      <div class="menu-grid">
+        <div class="menu-item" onclick="showIngredients('berry-bliss')">
+          <img src="https://www.cookinginmygenes.com/wp-content/uploads/2016/01/Blueberry-Bliss-Smoothie-8.jpg" alt="Berry Bliss">
+          <span class="item-name">Berry Bliss</span>
+          <span class="price">$4.79</span>
+        </div>
+        <div class="menu-item" onclick="showIngredients('green-glow')">
+          <img src="https://theavotree.co.nz/wp-content/uploads/2020/12/AvoTree2020_76-scaled.jpg" alt="Green Glow">
+          <span class="item-name">Green Glow</span>
+          <span class="price">$5.29</span>
+        </div>
+        <div class="menu-item" onclick="showIngredients('peanut-butter-power')">
+          <img src="https://www.wellplated.com/wp-content/uploads/2020/12/Peanut-Butter-Banana-Smoothie-recipe.jpg" alt="Peanut Butter Power">
+          <span class="item-name">Peanut Butter Power</span>
+          <span class="price">$5.29</span>
+        </div>
+        <div class="menu-item" onclick="showIngredients('coconut-coast')">
+          <img src="https://www.homecookingadventure.com/wp-content/uploads/2022/01/pineapple-coconut-banana-smoothie.jpg" alt="Coconut Coast">
+          <span class="item-name">Coconut Coast</span>
+          <span class="price">$5.49</span>
+        </div>
+        <div class="menu-item" onclick="showIngredients('tropical-tango')">
+          <img src="https://healthyfitnessmeals.com/wp-content/uploads/2018/06/tropical-protein-smoothie-7.jpg" alt="Tropical Tango">
+          <span class="item-name">Tropical Tango</span>
+          <span class="price">$4.99</span>
+        </div>
+        <div class="menu-item" onclick="showIngredients('sweet-citrus')">
+          <img src="https://flavorfulife.com/wp-content/uploads/2025/03/Citrus-Smoothie-hero.jpg" alt="Sweet Citrus"> 
+          <span class="item-name">Sweet Citrus</span>
+          <span class="price">$5.29</span>
+        </div>
+        <div class="menu-item" onclick="showIngredients('Summer Splash')">
+          <img src="https://www.wellplated.com/wp-content/uploads/2020/07/Creamy-Watermelon-Smoothie.jpg" alt="Summer Splash Smoothie">
+          <span class="item-name">Summer Splash</span>
+          <span class="price">$4.79</span>  
+        </div>
+        <div class="menu-item" onclick="showIngredients('Tropical Green')">
+          <img src="https://thealmondeater.com/wp-content/uploads/2021/07/Pineapple-Avocado-Smoothie-1-11.jpg" alt="Tropical Green Smoothie">
+          <span class="item-name">Tropical Green</span>
+          <span class="price">$4.79</span> 
+        </div>
+        <div class="menu-item" onclick="showIngredients('Crimson Crush')">
+          <img src="https://omnomally.com/wp-content/uploads/2014/01/Tropical-Plum-Smoothie-Om-Nom-Ally-530.jpg" alt="Crimson Crush Smoothie">
+          <span class="item-name">Crimson Crush</span>
+          <span class="price">$4.99</span> 
+      </div>
+      <div class="menu-item" onclick="showIngredients('Peachy Keen')"> 
+        <img src="https://www.dinneratthezoo.com/wp-content/uploads/2018/08/peach-smoothie-final-2-1024x1536.jpg" alt="Peachy Keen Smoothie">
+        <span class="item-name">Peachy Keen</span>
+        <span class="price">$5.49</span>
+      </div>
+        <div class="menu-item" onclick="showIngredients('Kiwi Kick')"> 
+          <img src="https://simplegreensmoothies.com/wp-content/uploads/kiwi-smoothie-strawberry-kiwi-smoothie-kiwi-smoothie-recipe-featured.jpg" alt="Kiwi Kick Smoothie">
+          <span class="item-name">Kiwi Kick</span>
+          <span class="price">$4.49</span>
+        </div>
+        <div class="menu-item" onclick="showIngredients('Papaya Punch')">
+          <img src="https://whatmollymade.com/wp-content/uploads/2024/09/Blueberry-Raspberry-Smoothie-15-768x768.jpg" alt="Papaya Punch Smoothie">
+          <span class="item-name">Papaya Punch</span>
+          <span class="price">$4.99</span>
+        </div>
+        <div class="menu-item" onclick="showIngredients('Raspberry Rush')">
+          <img src="https://whatmollymade.com/wp-content/uploads/2024/09/Blueberry-Raspberry-Smoothie-9.jpg" alt="Raspberry Rush Smoothie">
+          <span class="item-name">Raspberry Rush</span>
+          <span class="price">$5.29</span>
+        </div>
+        <div class="menu-item" onclick="showIngredients('Blueberry Breeze')">
+          <img src="https://www.acouplecooks.com/wp-content/uploads/2020/11/Strawberry-Blueberry-Smoothie-005.jpg" alt="Blueberry Breeze">
+          <span class="item-name">Blueberry Breeze</span>
+          <span class="price">$4.29</span>
+        </div>
+        </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Smoothie Social. Stay fruity and fabulous! 🍹✨</p>
+    <p>Follow us on <a href="https://www.instagram.com" style="color: #fff; text-decoration: underline;">Instagram</a>, <a href="https://www.facebook.com" style="color: #fff; text-decoration: underline;">Facebook</a>, and <a href="https://www.tiktok.com" style="color: #fff; text-decoration: underline;">TikTok</a>.</p>
+  </footer>
+
+  <script>
+    const smoothies = {
+      "berry-bliss": { name: "Berry Bliss", ingredients: ["Strawberries", "Blueberries", "Banana", "Almond Milk"] },
+      "green-glow": { name: "Green Glow", ingredients: ["Spinach", "Kale", "Pineapple", "Coconut Water"] },
+      "peanut-butter-power": { name: "Peanut Butter Power", ingredients: ["Peanut Butter", "Banana", "Oats", "Almond Milk"] },
+      "coconut-coast": { name: "Coconut Coast", ingredients: ["Coconut Milk", "Coconut Yogurt", "Banana", "Honey"] },
+      "tropical-tango": { name: "Tropical Tango", ingredients: ["Pineapple", "Strawberry", "Mango", "Peach", "Orange Juice"] },
+      "sweet-citrus": { name: "Sweet Citrus", ingredients: ["Lemon", "Orange", "Tangerine", "Grapefruit", "Pineapple Juice"] },
+      "Summer Splash": { name: "Summer Splash", ingredients: ["Raspberry", "Strawberry", "Watermelon", "Coconut Milk"] },
+      "Tropical Green": { name: "Tropical Green", ingredients: ["Kiwi", "Kale", "Strawberry", "Apple Juice"] },
+      "Crimson Crush": { name: "Crismon Crush", ingredients: ["Blueberry", "Pomegranate", "Blackberry", "Kale", "Apple Juice"] }
+    };
+
+    function showIngredients(key) {
+      const smoothie = smoothies[key];
+      if (smoothie) {
+        document.getElementById("smoothie-name").textContent = smoothie.name;
+        const list = document.getElementById("ingredient-list");
+        list.innerHTML = '';
+        smoothie.ingredients.forEach(ingredient => {
+          const li = document.createElement("li");
+          li.textContent = ingredient;
+          list.appendChild(li);
+        });
+      }
+    }
+  </script>
+
+</body>
+</html>
+

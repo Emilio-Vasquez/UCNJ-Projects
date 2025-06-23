@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Python Basic Code</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main_css.css') }}">
+</head>
+<body>
+  <header>
+    <div class="logo-container">
+      <img src="{{ url_for('static', filename='images/design_04112025.png') }}" alt="Pycode Logo" class="logo" />
+      <span class="site-name">Pycode</span>
+    </div>
+    <button class="image-button" onclick="openPopup()">
+      <img src="{{ url_for('static', filename='images/RkiMyoycj.png') }}" alt="Custom Button" />
+    </button>
+    
+    {% if session.get('user_id') %}
+        <button class="logout-btn" onclick="showLogoutPopup()">Logout</button>
+    {% else %}
+        <a href="{{ url_for('login_page') }}" class="logout-btn">Login</a>
+        <a href="{{ url_for('signup_page') }}" class="logout-btn">Sign Up</a>
+    {% endif %}
+  </header>
+
+  <main>
+    <div id="logout-popup" class="popup-overlay">
+      <div class="popup-content">
+        <h2>Are you sure you want to log out?</h2>
+        <div style="margin-top: 1.5rem;">
+          <button onclick="confirmLogout(true)" class="logout-btn" style="background-color: #f7dc6f;">Yes</button>
+          <button onclick="confirmLogout(false)" class="logout-btn" style="background-color: #3498db; margin-left: 1rem;">No</button>
+        </div>
+      </div>
+    </div>
+    <h1>Test Your Python Knowledge!</h1>
+    <div class="level-buttons">
+      <button class="level-btn" onclick="location.href='/level1'">Level 1</button>
+      <button class="level-btn" onclick="location.href='/level2'">Level 2</button>
+      <button class="level-btn" onclick="location.href='/level3'">Level 3</button>
+    </div>
+
+    <!-- Popup for Lives and Cash -->
+    <div id="popup" class="popup-overlay">
+      <div class="popup-content">
+        <span class="close-btn" onclick="closePopup()">&times;</span>
+        <h2>Your Balance</h2>
+        <p id="cash-display">Cash: $0</p>
+        <p id="lives-display">Lives: 0</p>
+        <button id="purchase-life-btn" onclick="purchaseLife()">Purchase Life for $100</button>
+      </div>
+    </div>
+  </main>
+
+  <script src="{{ url_for('static', filename='js/main_jv.js') }}"></script>
+  
+</body>
+</html>

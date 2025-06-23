@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basic Cooking Recipes Landing Page</title>
+    
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Your custom styles (if any) -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Fix JS file path if necessary -->
+    <script src="script.js" defer></script> <!-- Update with your correct JS file name -->
+</head>
+<body class="bg-gray-100">
+    <!-- Navigation -->
+    <header class="flex justify-between items-center bg-gray-800 p-4 text-white">
+        <a href="index.html" class="text-xl font-bold">Pleb Cooking</a>
+        <nav>
+            <ul class="flex space-x-4">
+                <li><a href="index.html" class="hover:text-gray-400">Home</a></li>
+                <li><a href="recipes.html" class="hover:text-gray-400">Recipes</a></li>
+                <li><a href="blog.html" class="hover:text-gray-400">Blog</a></li>
+                <li><a href="contact.html" class="hover:text-gray-400">Contact</a></li>
+                <li><a href="about.html" class="hover:text-gray-400">About Us</a></li>
+                <li><a href="login.html" class="hover:text-gray-400">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+    <!-- End Navigation -->
+
+    <!-- Hero Section -->
+    <section class="flex flex-col items-center justify-center h-64 bg-gray-200 text-center p-6">
+        <h1 class="text-3xl font-bold">Spicy Chicken Wings</h1>
+        <p class="mt-2">Spicy chicken is a flavorful dish that combines tender meat with bold, fiery seasonings. It's loved in many global cuisines.</p>
+        <div class="flex justify-center mt-4">
+            <div class="flex items-center mx-2">
+                <p>⏳ 30 minutes</p>
+            </div>
+            <div class="flex items-center mx-2">
+                <p>🍽️ Lunch</p>
+            </div>
+        </div>
+        <a href="recipes.html" class="mt-4 px-4 py-2 bg-orange-500 text-white rounded hover:bg-orange-600 transition">View Recipes</a>
+    </section>
+    <!-- End Hero Section -->
+
+    <!-- Category Section -->
+    <section class="container mx-auto my-10 p-6 bg-white rounded-lg shadow">
+        <div class="flex justify-between items-center mb-4">
+            <h2 class="text-2xl font-bold">Categories</h2>
+            <a href="all-categories.html" class="text-blue-500 hover:underline">View All</a>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            <a href="category/breakfast.html" class="bg-gray-100 p-4 text-center rounded-lg shadow hover:bg-gray-200 transition">
+                <h6 class="font-bold">Breakfast</h6>
+            </a>
+            <a href="category/vegan.html" class="bg-gray-100 p-4 text-center rounded-lg shadow hover:bg-gray-200 transition">
+                <h6 class="font-bold">Vegan</h6>
+            </a>
+            <a href="category/lunch.html" class="bg-gray-100 p-4 text-center rounded-lg shadow hover:bg-gray-200 transition">
+                <h6 class="font-bold">Lunch</h6>
+            </a>
+            <a href="category/dinner.html" class="bg-gray-100 p-4 text-center rounded-lg shadow hover:bg-gray-200 transition">
+                <h6 class="font-bold">Dinner</h6>
+            </a>
+            <a href="category/seafood.html" class="bg-gray-100 p-4 text-center rounded-lg shadow hover:bg-gray-200 transition">
+                <h6 class="font-bold">Seafood</h6>
+            </a>
+            <a href="category/dessert.html" class="bg-gray-100 p-4 text-center rounded-lg shadow hover:bg-gray-200 transition">
+                <h6 class="font-bold">Dessert</h6>
+            </a>
+        </div>
+    </section>
+    <!-- End Category Section -->
+
+    <!-- Recipes Section -->
+    <section class="container mx-auto my-10 p-6 bg-white rounded-lg shadow">
+        <div class="mb-6">
+            <h2 class="text-2xl font-bold">Delicious Recipes</h2>
+            <p>Trying new foods is a great way to explore different cultures and expand your palate.</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <a href="recipe/bacon-egg-cheese.html" class="bg-gray-100 p-4 rounded-lg shadow hover:bg-gray-200 transition">
+                <h5 class="mt-2 font-bold">Bacon Egg and Cheese Sandwich</h5>
+                <p class="text-gray-600">⏳ 10 minutes | 🍽️ Breakfast</p>
+            </a>
+            <a href="recipe/carrot-cake.html" class="bg-gray-100 p-4 rounded-lg shadow hover:bg-gray-200 transition">
+                <h5 class="mt-2 font-bold">Carrot Cake</h5>
+                <p class="text-gray-600">⏳ 2 hours | 🍽️ Dessert</p>
+            </a>
+            <a href="recipe/lobster.html" class="bg-gray-100 p-4 rounded-lg shadow hover:bg-gray-200 transition">
+                <h5 class="mt-2 font-bold">Lobster</h5>
+                <p class="text-gray-600">⏳ 25 minutes | 🍽️ Dinner</p>
+            </a>
+        </div>
+    </section>
+    <!-- End Recipes Section -->
+
+    <!-- Learn Section -->
+    <section class="container mx-auto my-10 p-6 bg-white rounded-lg shadow">
+        <div class="flex flex-col items-center">
+            <h2 class="text-2xl font-bold">Anyone Can Cook</h2>
+            <p class="mt-2 text-center">Cooking is a skill that grows with practice. With countless recipes available, anyone can start with simple dishes and build confidence.</p>
+            <a href="learn-more.html" class="mt-4 inline-block px-4 py-2 bg-orange-500 text-white rounded hover:bg-orange-600 transition">Learn More</a>
+        </div>
+    </section>
+    <!-- End Learn Section -->
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto text-center">
+            <p>&copy; 2025 Pleb Cooking. All rights reserved.</p>
+        </div>
+    </footer>
+    <!-- End Footer -->
+</body>
+</html>

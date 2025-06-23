@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Pleb Cooking</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-5">
+        <div class="container mx-auto text-center">
+            <h1 class="text-3xl font-bold">Pleb Cooking</h1>
+            <nav>
+                <ul class="flex justify-center space-x-4">
+                    <li><a href="#home.html" class="hover:text-gray-400">Home</a></li>
+                    <li><a href="#recipes.html" class="hover:text-gray-400">Recipes</a></li>
+                    <li><a href="#blog.html" class="hover:text-gray-400">Blog</a></li>
+                    <li><a href="#contact.html" class="hover:text-gray-400">Contact</a></li>
+                    <li><a href="#about.html" class="hover:text-gray-400">About Us</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="container mx-auto mt-10 p-8 bg-white rounded-lg shadow-lg">
+        <h2 class="text-2xl font-bold text-center mb-4">Contact Us</h2>
+        <p class="text-center mb-6">If you have any questions or feedback, we're here to help! Please fill out the form below, and we will get back to you as soon as possible.</p>
+        
+        <form class="space-y-4" action="submit_form.php" method="POST">
+            <div>
+                <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
+                <input type="text" id="name" name="name" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring focus:ring-opacity-50 focus:ring-indigo-500">
+            </div>
+            <div>
+                <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+                <input type="email" id="email" name="email" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring focus:ring-opacity-50 focus:ring-indigo-500">
+            </div>
+            <div>
+                <label for="message" class="block text-sm font-medium text-gray-700">Message</label>
+                <textarea id="message" name="message" rows="4" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring focus:ring-opacity-50 focus:ring-indigo-500"></textarea>
+            </div>
+            <button type="submit" class="w-full bg-orange-500 text-white rounded-md py-2 hover:bg-orange-600 transition duration-200">Send Message</button>
+        </form>
+    </section>
+
+    <footer class="bg-gray-800 text-white text-center p-4 mt-10">
+        <p>&copy; 2025 Pleb Cooking. All rights reserved.</p>
+    </footer>
+</body>
+</html>

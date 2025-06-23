@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipes - Pleb Cooking</title>
+
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="stylesheet" href="style.css"> <!-- Optional custom styles -->
+    
+    <script src="script.js" defer></script> <!-- Optional JS file -->
+</head>
+<body class="bg-gray-100">
+
+    <!-- Navigation -->
+    <header class="flex justify-between items-center bg-gray-800 p-4 text-white">
+        <a href="index.html" class="text-xl font-bold">Pleb Cooking</a>
+        <nav>
+            <ul class="flex space-x-4">
+                <li><a href="index.html" class="hover:text-gray-400">Home</a></li>
+                <li><a href="blog.html" class="hover:text-gray-400">Blog</a></li>
+                <li><a href="contact.html" class="hover:text-gray-400">Contact</a></li>
+                <li><a href="login.html" class="hover:text-gray-400">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+    <!-- End Navigation -->
+
+    <!-- Search Section -->
+    <section class="container mx-auto my-6 p-6">
+        <div class="bg-white rounded-lg shadow-lg p-6">
+            <h1 class="text-3xl font-bold text-center mb-4">Delicious Recipes</h1>
+            <div class="flex justify-center mb-6">
+                <input type="text" id="search" placeholder="Search for recipes..." class="border rounded-lg p-2 w-1/2 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+                <button class="ml-3 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition">Search</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="container mx-auto my-6 p-6 bg-white rounded-lg shadow">
+        <h2 class="text-2xl font-bold mb-4">Categories</h2>
+        <div class="flex flex-wrap gap-4">
+            <a href="recipes.html#vegan" class="bg-indigo-600 text-white py-2 px-4 rounded hover:bg-indigo-700 transition">Vegan</a>
+            <a href="recipes.html#vegetarian" class="bg-green-600 text-white py-2 px-4 rounded hover:bg-green-700 transition">Vegetarian</a>
+            <a href="recipes.html#gluten-free" class="bg-red-600 text-white py-2 px-4 rounded hover:bg-red-700 transition">Gluten-Free</a>
+            <a href="recipes.html#desserts" class="bg-yellow-600 text-white py-2 px-4 rounded hover:bg-yellow-700 transition">Desserts</a>
+        </div>
+    </section>
+
+    <!-- Recipes Section -->
+    <section class="container mx-auto my-10 p-6 bg-white rounded-lg shadow">
+        <h2 class="text-2xl font-bold mb-4">All Recipes</h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Recipe Card -->
+            <article class="bg-gray-100 p-4 rounded-lg shadow hover:bg-gray-200 transition duration-200">
+                <h3 class="text-xl font-semibold">Spicy Chicken Wings</h3>
+                <p class="text-gray-600">A delicious recipe for crispy and spicy chicken wings to satisfy your cravings.</p>
+                <div class="flex justify-between items-center mt-4">
+                    <a href="recipe/spicy-chicken-wings.html" class="text-indigo-600 hover:underline">View Recipe</a>
+                    <span class="text-yellow-500">⭐⭐⭐⭐☆ (4/5)</span>
+                </div>
+            </article>
+
+            <!-- Recipe Card -->
+            <article class="bg-gray-100 p-4 rounded-lg shadow hover:bg-gray-200 transition duration-200">
+                <h3 class="text-xl font-semibold">Vegan Tacos</h3>
+                <p class="text-gray-600">Flavorful and healthy vegan tacos loaded with fresh ingredients.</p>
+                <div class="flex justify-between items-center mt-4">
+                    <a href="recipe/vegan-tacos.html" class="text-indigo-600 hover:underline">View Recipe</a>
+                    <span class="text-yellow-500">⭐⭐⭐⭐⭐ (5/5)</span>
+                </div>
+            </article>
+
+            <!-- Recipe Card -->
+            <article class="bg-gray-100 p-4 rounded-lg shadow hover:bg-gray-200 transition duration-200">
+                <h3 class="text-xl font-semibold">Classic Margherita Pizza</h3>
+                <p class="text-gray-600">A classic Italian margherita pizza topped with fresh basil.</p>
+                <div class="flex justify-between items-center mt-4">
+                    <a href="recipe/margherita-pizza.html" class="text-indigo-600 hover:underline">View Recipe</a>
+                    <span class="text-yellow-500">⭐⭐⭐⭐⭐ (5/5)</span>
+                </div>
+            </article>
+
+            <!-- Recipe Card -->
+            <article class="bg-gray-100 p-4 rounded-lg shadow hover:bg-gray-200 transition duration-200">
+                <h3 class="text-xl font-semibold">Chocolate Chip Cookies</h3>
+                <p class="text-gray-600">Soft and chewy chocolate chip cookies that are a favorite.</p>
+                <div class="flex justify-between items-center mt-4">
+                    <a href="recipe/chocolate-chip-cookies.html" class="text-indigo-600 hover:underline">View Recipe</a>
+                    <span class="text-yellow-500">⭐⭐⭐⭐ (4/5)</span>
+                </div>
+            </article>
+
+            <!-- Recipe Card -->
+            <article class="bg-gray-100 p-4 rounded-lg shadow hover:bg-gray-200 transition duration-200">
+                <h3 class="text-xl font-semibold">Beef Stir-Fry</h3>
+                <p class="text-gray-600">A quick and easy beef stir-fry packed with vegetables and flavors.</p>
+                <div class="flex justify-between items-center mt-4">
+                    <a href="recipe/beef-stir-fry.html" class="text-indigo-600 hover:underline">View Recipe</a>
+                    <span class="text-yellow-500">⭐⭐⭐⭐ (4/5)</span>
+                </div>
+            </article>
+
+            <!-- Recipe Card -->
+            <article class="bg-gray-100 p-4 rounded-lg shadow hover:bg-gray-200 transition duration-200">
+                <h3 class="text-xl font-semibold">Caprese Salad</h3>
+                <p class="text-gray-600">A refreshing caprese salad with fresh tomatoes and mozzarella.</p>
+                <div class="flex justify-between items-center mt-4">
+                    <a href="recipe/caprese-salad.html" class="text-indigo-600 hover:underline">View Recipe</a>
+                    <span class="text-yellow-500">⭐⭐⭐⭐ (4/5)</span>
+                </div>
+            </article>
+        </div>
+    </section>
+    <!-- End Recipes Section -->
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white p-4 mt-10">
+        <div class="container mx-auto text-center">
+            <p>&copy; 2025 Pleb Cooking. All rights reserved.</p>
+        </div>
+    </footer>
+    <!-- End Footer -->
+
+    <script>
+        // Simple search functionality (optional)
+        document.getElementById('search').addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            const cards = document.querySelectorAll('.grid > article');
+            cards.forEach(card => {
+                const title = card.querySelector('h3').innerText.toLowerCase();
+                if (title.includes(searchTerm)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

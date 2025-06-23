@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - Pleb Cooking</title>
+
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="stylesheet" href="style.css"> <!-- Optional custom styles -->
+    
+    <script src="script.js" defer></script> <!-- Update with your correct JS file name -->
+</head>
+<body class="bg-gray-100">
+
+    <!-- Navigation -->
+    <header class="flex justify-between items-center bg-gray-800 p-4 text-white">
+        <a href="index.html" class="text-xl font-bold">Pleb Cooking</a>
+        <nav>
+            <ul class="flex space-x-4">
+                <li><a href="index.html" class="hover:text-gray-400">Home</a></li>
+                <li><a href="blog.html" class="hover:text-gray-400">Blog</a></li>
+                <li><a href="contact.html" class="hover:text-gray-400">Contact</a></li>
+                <li><a href="login.html" class="hover:text-gray-400">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+    <!-- End Navigation -->
+
+    <!-- Featured Post Section -->
+    <section class="container mx-auto my-10 p-6 bg-white rounded-lg shadow">
+        <h1 class="text-3xl font-bold text-center mb-6">Blog Posts</h1>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+            <!-- Featured Post -->
+            <article class="bg-gray-100 p-4 rounded-lg shadow hover:bg-gray-200 transition duration-200">
+                <h2 class="text-xl font-semibold">The Art of Cooking with Herbs</h2>
+                <p class="text-gray-600">Discover how to elevate your dishes using fresh herbs. Learn the best pairings and techniques for cooking with a variety of herbs.</p>
+                <a href="post/herbs.html" class="mt-4 block text-indigo-600 hover:underline">Read More</a>
+            </article>
+
+            <!-- Featured Post -->
+            <article class="bg-gray-100 p-4 rounded-lg shadow hover:bg-gray-200 transition duration-200">
+                <h2 class="text-xl font-semibold">Quick and Delicious Weeknight Dinners</h2>
+                <p class="text-gray-600">Struggling to come up with dinner ideas? Here are some quick and easy recipes to make your weeknights stress-free.</p>
+                <a href="post/weeknight-dinners.html" class="mt-4 block text-indigo-600 hover:underline">Read More</a>
+            </article>
+
+            <!-- Featured Post -->
+            <article class="bg-gray-100 p-4 rounded-lg shadow hover:bg-gray-200 transition duration-200">
+                <h2 class="text-xl font-semibold">Baking Basics for Beginners</h2>
+                <p class="text-gray-600">Unlock the secrets to successful baking with essential tips and techniques for every beginner baker.</p>
+                <a href="post/baking-basics.html" class="mt-4 block text-indigo-600 hover:underline">Read More</a>
+            </article>
+        </div>
+    </section>
+    <!-- End Featured Post Section -->
+
+    <!-- Recent Posts Section -->
+    <section class="container mx-auto my-10 p-6 bg-white rounded-lg shadow">
+        <h2 class="text-2xl font-bold mb-4">Recent Posts</h2>
+        <div class="space-y-4">
+            <!-- Post Item -->
+            <article class="border border-gray-200 p-4 rounded-lg shadow hover:shadow-lg transition duration-200">
+                <h3 class="text-lg font-semibold">5 Tips for Perfecting Your Pasta</h3>
+                <p class="text-gray-600">Learn how to cook pasta like a pro with these essential tips. From cooking times to sauces, we've got you covered!</p>
+                <a href="post/perfect-pasta.html" class="text-indigo-600 hover:underline">Read More</a>
+            </article>
+
+            <!-- Post Item -->
+            <article class="border border-gray-200 p-4 rounded-lg shadow hover:shadow-lg transition duration-200">
+                <h3 class="text-lg font-semibold">Meal Prep for Busy Lives</h3>
+                <p class="text-gray-600">Discover how to meal prep efficiently with our guide to planning, cooking, and storing your meals for the week.</p>
+                <a href="post/meal-prep.html" class="text-indigo-600 hover:underline">Read More</a>
+            </article>
+
+            <!-- Post Item -->
+            <article class="border border-gray-200 p-4 rounded-lg shadow hover:shadow-lg transition duration-200">
+                <h3 class="text-lg font-semibold">Exploring Global Cuisines</h3>
+                <p class="text-gray-600">Join us on a culinary journey as we explore diverse flavors, ingredients, and cooking techniques from around the world.</p>
+                <a href="post/global-cuisines.html" class="text-indigo-600 hover:underline">Read More</a>
+            </article>
+        </div>
+    </section>
+    <!-- End Recent Posts Section -->
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white p-4 mt-10">
+        <div class="container mx-auto text-center">
+            <p>&copy; 2025 Pleb Cooking. All rights reserved.</p>
+        </div>
+    </footer>
+    <!-- End Footer -->
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact - Discover Recipes</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #fff8f0;
+      margin: 0;
+      color: #333;
+    }
+    header {
+      background-color: #ff6f61;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+    }
+    .contact-container {
+      max-width: 600px;
+      margin: 3rem auto;
+      background-color: white;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    h2 {
+      color: #ff6f61;
+      margin-bottom: 1rem;
+    }
+    p {
+      font-size: 1.1rem;
+      margin: 0.5rem 0;
+    }
+    a {
+      color: #ff6f61;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    form {
+      margin-top: 2rem;
+    }
+    label {
+      display: block;
+      margin-top: 1rem;
+      font-weight: bold;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 0.5rem;
+      margin-top: 0.3rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 1rem;
+    }
+    button {
+      margin-top: 1.5rem;
+      background-color: #ff6f61;
+      color: white;
+      border: none;
+      padding: 0.7rem 1.2rem;
+      font-size: 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #e05a4f;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Contact Us</h1>
+  </header>
+
+  <div class="contact-container">
+    <h2>Jaidyn St-Cyr</h2>
+    <p>Email: <a href="mailto:jaidyn.st-cyr@owl.ucc.edu">jaidyn.st-cyr@owl.ucc.edu</a></p>
+
+    <h2>Zainab Jaaber</h2>
+    <p>Email: <a href="mailto:Zainab.Jaaber@owl.ucc.edu">Zainab.Jaaber@owl.ucc.edu</a></p>
+
+    <h2>Darian Bowen</h2>
+    <p>Email: <a href="mailto:Darian.Bowen@owl.ucc.edu">Darian.Bowen@owl.ucc.edu</a></p>
+
+    <p>We’d love to hear from you! Feel free to reach out with questions or recipe suggestions.</p>
+
+    <form action="#" method="POST">
+      <h3>Send Us Your Feedback</h3>
+      <label for="name">Your Name:</label>
+      <input type="text" id="name" name="name" required />
+
+      <label for="email">Your Email:</label>
+      <input type="email" id="email" name="email" required />
+
+      <label for="message">Your Message:</label>
+      <textarea id="message" name="message" rows="5" required></textarea>
+
+      <button type="submit">Send Feedback</button>
+    </form>
+  </div>
+
+</body>
+</html>
