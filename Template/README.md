@@ -6,6 +6,7 @@ This is a ready-to-use Flask full-stack starter project designed for instruction
 
 ## **Project Structure**
 
+```
 Template (you should rename this folder to your own specific project)/
 ├── app.py
 ├── .env # For environment variables (e.g., secret keys)
@@ -27,6 +28,7 @@ Template (you should rename this folder to your own specific project)/
 │ ├── js/
 │ │ └── script.js # JavaScript logic
 │ └── images/ # Static image assets
+```
 
 ## **Setup Instructions**
 
