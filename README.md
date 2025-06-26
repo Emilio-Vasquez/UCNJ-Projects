@@ -27,7 +27,10 @@ Projects reflect the experiential learning focus of our programs, designed and m
   - Starter code for full-stack projects using **Flask**, **HTML**, **CSS**, and **JavaScript**.
   - All students are encouraged to use this template as the base for their final project submissions.
 
-> *See `/Templates/` for the recommended project scaffolding.*
+> **This Flask template lives inside the `Template/` folder of the full UCNJ-Projects repository.**  
+> For a full breakdown of the structure, walkthrough, demo and usage examples, visit:
+> [https://github.com/Emilio-Vasquez/UCNJ-Projects-Template](https://github.com/Emilio-Vasquez/UCNJ-Projects-Template)
+> *See `/Template/` for the recommended project scaffolding.*
 
 Each folder contains subdirectories for different types of projects and student work. File naming and structure follow industry best practices to encourage portfolio-ready formatting.
 
