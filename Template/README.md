@@ -9,7 +9,7 @@ This is a ready-to-use Flask full-stack starter project designed for instruction
 ```
 Template (you should rename this folder to your own specific project)/
 ├── app.py
-├── .env # For environment variables (e.g., secret keys)
+├── .env # For environment variables (secret keys, so on...)
 ├── .gitignore # Hides .env and virtual environment from Git
 ├── requirements.txt # Add Python packages here, you can freeze your environment and pipe the libraries into this file
 ├── VirtualEnv/ # (Recommended) Virtual environment folder, you can rename it or create a new one: python -m venv MyVenv
