@@ -2,5 +2,8 @@
 
 MyVenv
 venv
+server.key
+server.crt
+config.py
 
 __pycache__

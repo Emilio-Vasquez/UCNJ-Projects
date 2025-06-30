@@ -12,9 +12,9 @@ class Config:
     MAIL_SERVER = 'smtp.gmail.com'
     MAIL_PORT = 587
     MAIL_USE_TLS = True
-    MAIL_USERNAME = os.getenv('pycodequiz@gmail.com')
-    MAIL_PASSWORD = os.getenv('dhydjvenutwwacwn')
-    MAIL_DEFAULT_SENDER = os.getenv('pycodequiz@gmail.com')
+    MAIL_USERNAME = os.getenv('secret_email@gmail.com')
+    MAIL_PASSWORD = os.getenv('secret_pass')
+    MAIL_DEFAULT_SENDER = os.getenv('secret_email@gmail.com')
 
     # Database configuration
     DB_HOST = os.getenv('DB_HOST')

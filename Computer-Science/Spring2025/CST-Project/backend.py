@@ -32,9 +32,9 @@ REDIRECT_URI = "http://localhost:5000/callback"
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USERNAME'] = 'pycodequiz@gmail.com'
-app.config['MAIL_PASSWORD'] = 'dhydjvenutwwacwn'
-app.config['MAIL_DEFAULT_SENDER'] = 'pycodequiz@gmail.com'
+app.config['MAIL_USERNAME'] = 'secret_email@gmail.com'
+app.config['MAIL_PASSWORD'] = 'secret_pass'
+app.config['MAIL_DEFAULT_SENDER'] = 'secret_email@gmail.com'
 
 mail = Mail(app)
 
@@ -124,14 +124,14 @@ def send_welcome_email(recipient_email):
     service = build('gmail', 'v1', credentials=credentials)
     message = MIMEMultipart()
     message['to'] = recipient_email
-    message['from'] = 'pycodequiz@gmail.com'  # Add this line
+    message['from'] = 'secret_email@gmail.com'  # Add this line
     message['subject'] = 'Welcome to Pycode!'
     body = 'Hello, \n\nThank you for signing up to Pycode. Have fun and good luck!'
     message.attach(MIMEText(body, 'plain'))
 
     raw_message = base64.urlsafe_b64encode(message.as_bytes()).decode()
     try:
-        service.users().messages().send(userId='pycodequiz@gmail.com', body={'raw': raw_message}).execute()
+        service.users().messages().send(userId='secret_email@gmail.com', body={'raw': raw_message}).execute()
         print("Welcome email sent!")
     except Exception as error:
         print(f"Error sending email: {error}")
@@ -307,7 +307,7 @@ def purchase_life():
                 # Updated email sending
                 msg = Message(
                     'Life Purchased',
-                    sender='pycodequiz@gmail.com',
+                    sender='secret_email@gmail.com',
                     recipients=[user['email']]
                 )
                 msg.body = "You successfully purchased a life for $100. Good luck on your next quiz!"
@@ -352,7 +352,7 @@ def earn_cash():
         if reward > 0:
             msg = Message(
                 'Cash Earned!',
-                sender='pycodequiz@gmail.com',
+                sender='secret_email@gmail.com',
                 recipients=[user_email]
             )
             msg.body = f"Congratulations! You earned {reward} cash for completing the quiz!"
