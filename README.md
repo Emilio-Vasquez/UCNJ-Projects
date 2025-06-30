@@ -56,6 +56,11 @@ Projects are designed to develop skills in:
 
 Most student projects are contributed through final coursework assignments or semester-long team-based experiences. If you're a current student or faculty member who would like to contribute, please contact Emilio Vasquez @ Emilio.Vasquez@ucc.edu or open a pull request with proper documentation.
 
-## **License**
+## **Licensing Note**
 
-All instructional materials are © Union College of Union County, NJ. Student projects are shared for educational purposes only and may be used with attribution.
+While this repository uses the MIT License for standard code sharing, please note:
+- All projects were created by students as part of Union College coursework.
+- Please attribute any reuse appropriately to the students or teams listed.
+- Commercial reuse of student projects should be coordinated through the UCNJ program.
+
+For questions, please contact Emilio Vasquez (emilio.vasquez@ucc.edu).
