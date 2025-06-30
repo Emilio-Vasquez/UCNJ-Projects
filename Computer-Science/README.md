@@ -27,7 +27,7 @@ Projects in this folder are structured as follows:
 
 ---
 
-## 🧩 Notes
+## Notes
 
 - All student projects in this repository are for **educational purposes** only and are intended to showcase coursework and collaborative development.
 - Please respect the intellectual property of student authors.  
