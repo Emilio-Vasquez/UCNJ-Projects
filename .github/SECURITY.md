@@ -31,9 +31,7 @@ If you discover a security vulnerability in any code or student project hosted h
 ## Disclaimer
 
 These projects are maintained for educational demonstration only.  
-Student projects are not guaranteed to meet production-grade security standards.  
-Use at your own risk, and always conduct a thorough code review before deploying any portion of these projects in a live environment.
 
 ---
 
-> **Union College of Union County, NJ — Data Science & Cyber Program**  
+> **Union College of Union County, NJ, Data Science & Cyber Program**  
