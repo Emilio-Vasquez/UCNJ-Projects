@@ -1,0 +1,226 @@
+<!--
+  premiumwebpage/premium.html
+  This page displays premium tier options for the application.
+  Users can choose between Free, Basic, and Premium tiers.
+  Includes a fun confetti animation for the highest tier.
+-->
+<!DOCTYPE html> <!-- HTML5 document type declaration -->
+<html lang="en"> <!-- Set language to English -->
+<head>
+  <meta charset="UTF-8"> <!-- Character encoding for Unicode support -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Mobile responsive scaling -->
+  <title>Premium Access</title> <!-- Browser tab title -->
+  <link rel="stylesheet" href="../style.css"> <!-- Main CSS file (go up one directory) -->
+  <!-- Auth expiration check: force logout when session expires (24h) -->
+  <script>
+    (function(){
+      try{
+        const raw = localStorage.getItem('authSession');
+        if(!raw){ window.location.href='../login.html'; return; }
+        const session = JSON.parse(raw);
+        if(!session.expiresAt || Date.now() > session.expiresAt){ localStorage.removeItem('authSession'); localStorage.removeItem('isAuthenticated'); window.location.href='../login.html'; return; }
+        const remaining = session.expiresAt - Date.now();
+        if(remaining>0){ setTimeout(()=>{ localStorage.removeItem('authSession'); localStorage.removeItem('isAuthenticated'); window.location.replace('../login.html'); }, remaining); }
+        setInterval(()=>{ const s = localStorage.getItem('authSession'); if(!s) window.location.href='../login.html'; try{ const ss=JSON.parse(s||'null'); if(!ss||!ss.expiresAt||Date.now()>ss.expiresAt){ localStorage.removeItem('authSession'); localStorage.removeItem('isAuthenticated'); window.location.href='../login.html'; } }catch(e){ localStorage.removeItem('authSession'); localStorage.removeItem('isAuthenticated'); window.location.href='../login.html'; } }, 60000);
+      }catch(e){ localStorage.removeItem('authSession'); localStorage.removeItem('isAuthenticated'); window.location.href='../login.html'; }
+    })();
+  </script>
+  
+  <!-- Small page-specific styles for the modal (kept local to this page) -->
+  <style>
+    /* Modal backdrop */
+    .modal { position: fixed; inset: 0; display: none; align-items: center; justify-content: center; background: rgba(0,0,0,0.45); z-index: 9998; }
+    .modal.open { display: flex; }
+    /* Modal panel */
+    .modal-content { background: var(--card, #fff); padding: 18px; border-radius: 10px; width: 320px; max-width: calc(100% - 40px); box-shadow: 0 8px 24px rgba(0,0,0,0.15); }
+    .modal-close { background: transparent; border: none; font-size: 20px; float: right; cursor: pointer; }
+    .modal-content h3 { margin: 0 0 8px 0; font-size: 18px; }
+    .modal-content label { display: block; margin: 8px 0; font-size: 14px; }
+    .modal-content input { width: 100%; padding: 8px; margin-top: 6px; box-sizing: border-box; border-radius: 6px; border: 1px solid #ddd; }
+    .modal-actions { display:flex; gap:8px; margin-top:12px; justify-content:flex-end; }
+    .note { margin-top:10px; font-size:12px; color:var(--muted,#666); }
+  </style>
+</head>
+<body>
+  <!-- Premium Tier Selection Container -->
+  <div class="premium-container">
+    <!-- Page Title: instruction for tier selection -->
+    <div class="premium-title">Choose Your Premium Tier</div>
+    
+    <!-- Premium Tier Cards: three tier options -->
+    <div class="tiers">
+      <!-- FREE Tier Card -->
+      <div class="tier">
+        <div class="tier-title">Free</div>
+        <div class="tier-price">$0/month</div>
+        <!-- Features list for free tier -->
+        <ul style="text-align:left; margin: 0 0 12px 0; padding-left: 18px;">
+          <li>Basic features</li>
+          <li>Limited support</li>
+        </ul>
+        <!-- Select button for free tier -->
+        <button class="tier-btn" onclick="selectTier('Free')">Select</button>
+      </div>
+      
+      <!-- BASIC Tier Card -->
+      <div class="tier">
+        <div class="tier-title">Basic</div>
+        <div class="tier-price">$9.99/month</div>
+        <!-- Features list for basic tier -->
+        <ul style="text-align:left; margin: 0 0 12px 0; padding-left: 18px;">
+          <li>All Free features</li>
+          <li>Priority support</li>
+          <li>More widgets</li>
+        </ul>
+        <!-- Select button for basic tier -->
+        <button class="tier-btn" onclick="selectTier('Basic')">Select</button>
+      </div>
+      
+      <!-- PREMIUM Tier Card (with fun name and special behavior) -->
+      <div class="tier">
+        <div class="tier-title">YOU GOT MONEYYYY</div>
+        <div class="tier-price">$1500/month</div>
+        <!-- Features list for premium tier -->
+        <ul style="text-align:left; margin: 0 0 12px 0; padding-left: 18px;">
+          <li>All Basic features</li>
+          <li>Personal assistant</li>
+          <li>VIP everything</li>
+        </ul>
+        <!-- Select button for premium tier (triggers confetti animation) -->
+        <button class="tier-btn" id="moneyBtn">Select</button>
+      </div>
+    </div>
+    
+    <!-- Card Entry Modal (hidden by default) -->
+    <div id="cardModal" class="modal" role="dialog" aria-hidden="true" aria-labelledby="modalTitle">
+      <div class="modal-content" role="document">
+        <button class="modal-close" id="modalCloseBtn" aria-label="Close payment form">&times;</button>
+        <h3 id="modalTitle">Enter Card Information</h3>
+        <form id="cardForm" novalidate>
+          <label for="cardName">Cardholder Name
+            <input id="cardName" name="cardName" type="text" autocomplete="cc-name" required />
+          </label>
+          <label for="cardNumber">Card Number
+            <!-- Mask the card number like a password so it's not visible on screen -->
+            <input id="cardNumber" name="cardNumber" type="password" inputmode="numeric" pattern="[0-9]*" autocomplete="cc-number" required />
+          </label>
+          <label for="cardExpiry">Expiry (MM/YY)
+            <input id="cardExpiry" name="cardExpiry" type="text" placeholder="MM/YY" autocomplete="cc-exp" required />
+          </label>
+          <label for="cardCVC">CVC
+            <!-- Mask CVC as well -->
+            <input id="cardCVC" name="cardCVC" type="password" inputmode="numeric" maxlength="4" autocomplete="cc-csc" required />
+          </label>
+          <div class="note">Don't worry it isn't real</div>
+          <div class="modal-actions">
+            <button type="submit" class="tier-btn">Confirm</button>
+            <button type="button" class="tier-btn" id="cancelBtn">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Container for confetti animation message -->
+    <div id="confettiMsg"></div>
+    
+    <!-- Back button to return to main dashboard -->
+    <a href="../to-do-project.html" class="back-btn">Back to Main</a>
+  </div>
+  
+  <!-- Script for premium tier selection and confetti animation + card modal handling -->
+  <script>
+    // Keep track of which tier the user selected so the modal can reference it
+    let selectedTier = null;
+
+    // When a user selects a tier, open the card-entry modal for that tier
+    function selectTier(tier) {
+      openCardModal(tier);
+    }
+
+    // Open the card modal and set the title to include the chosen tier
+    function openCardModal(tier) {
+      selectedTier = tier;
+      const modal = document.getElementById('cardModal');
+      const title = document.getElementById('modalTitle');
+      if (!modal || !title) return;
+      title.textContent = 'Enter card information for ' + tier;
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden', 'false');
+      // Focus the first input for better UX
+      const nameInput = document.getElementById('cardName');
+      if (nameInput) nameInput.focus();
+    }
+
+    // Close the modal and clear sensitive fields
+    function closeCardModal() {
+      const modal = document.getElementById('cardModal');
+      if (!modal) return;
+      modal.classList.remove('open');
+      modal.setAttribute('aria-hidden', 'true');
+      // Clear fields to ensure no data remains in the DOM
+      ['cardName','cardNumber','cardExpiry','cardCVC'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.value = '';
+      });
+      selectedTier = null;
+    }
+
+    // Wire up modal close and cancel buttons
+    document.addEventListener('DOMContentLoaded', () => {
+      const modalClose = document.getElementById('modalCloseBtn');
+      if (modalClose) modalClose.addEventListener('click', () => closeCardModal());
+      const cancelBtn = document.getElementById('cancelBtn');
+      if (cancelBtn) cancelBtn.addEventListener('click', () => closeCardModal());
+
+      // Form submission: this is a demo only. Do NOT store or send card data.
+      const cardForm = document.getElementById('cardForm');
+      if (cardForm) {
+        cardForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          // Show a gentle confirmation message indicating this is not real
+          const msg = document.getElementById('confettiMsg');
+          if (msg) {
+            msg.innerHTML = `<div class="confetti-message">Thank you — this was a demo. No real payment was processed for ${selectedTier}.</div>`;
+          } else {
+            alert('Thank you — this was a demo. No real payment was processed.');
+          }
+          // Close modal and wipe inputs so nothing remains in the DOM
+          closeCardModal();
+        });
+      }
+    });
+
+    // Special handling for premium tier button: trigger confetti and open modal
+    document.getElementById('moneyBtn').onclick = function(e) {
+      e.preventDefault(); // Stop default behavior
+      showConfetti(); // Celebrate
+      document.getElementById('confettiMsg').innerHTML = '<div class="confetti-message">OOOOO YOU REALLY GOT MONEYYY</div>';
+      openCardModal('YOU GOT MONEYYYY');
+    };
+
+    // Confetti: create and animate falling confetti pieces
+    function showConfetti() {
+      for (let i = 0; i < 120; i++) {
+        let conf = document.createElement('div');
+        conf.style.position = 'fixed';
+        conf.style.left = Math.random() * 100 + 'vw';
+        conf.style.top = '-40px';
+        conf.style.width = '12px';
+        conf.style.height = '18px';
+        conf.style.background = ['#bfa046','#fffbe6','#e0e0e0','#181818'][Math.floor(Math.random()*4)];
+        conf.style.opacity = 0.85;
+        conf.style.borderRadius = '4px';
+        conf.style.zIndex = 9999;
+        conf.style.transform = 'rotate(' + (Math.random()*360) + 'deg)';
+        conf.style.transition = 'top 1.8s cubic-bezier(.77,0,.18,1), left 1.8s cubic-bezier(.77,0,.18,1)';
+        document.body.appendChild(conf);
+        setTimeout(() => {
+          conf.style.top = (60 + Math.random()*30) + 'vh';
+          conf.style.left = (Math.random()*100) + 'vw';
+        }, 10);
+        setTimeout(() => { conf.remove(); }, 2000);
+      }
+    }
+  </script>
+</body>
+</html>

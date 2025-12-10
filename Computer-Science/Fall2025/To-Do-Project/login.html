@@ -1,0 +1,103 @@
+
+<!--
+  This is the login page for the TO DO?! TO DONE!!! app.
+  It provides both login and sign-up forms, with client-side validation and session management.
+  All UI elements are styled via login.css. The logic is handled in login.js.
+-->
+<!DOCTYPE html> <!-- HTML5 document type declaration -->
+<html lang="en"> <!-- Set language to English for accessibility and SEO -->
+<head>
+  <meta charset="UTF-8"> <!-- Character encoding for Unicode support -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Responsive scaling for mobile devices -->
+  <title>Login - TO DO?! TO DONE!!!</title> <!-- Browser tab title -->
+  <meta name="description" content="Secure login to your task management dashboard"> <!-- SEO description -->
+  <link rel="stylesheet" href="login.css"> <!-- Link to external CSS for styling -->
+</head>
+<body>
+  <div class="login-container"> <!-- Main container for centering the card -->
+    <div class="login-card"> <!-- Card UI (user interface) for login/signup -->
+      <!-- Logo / Branding section -->
+      <div class="login-header">
+        <h1 class="login-title">TO DO?! TO DONE!!!</h1> <!-- App name -->
+        <p class="login-subtitle">Your task management companion</p> <!-- Tagline -->
+      </div>
+
+      <!-- Tab Navigation: lets user switch between Login and Sign Up forms -->
+      <div class="auth-tabs">
+        <button type="button" class="auth-tab active" data-tab="login" aria-label="Login tab">Login</button> <!-- Login tab button -->
+        <button type="button" class="auth-tab" data-tab="signup" aria-label="Sign up tab">Sign Up</button> <!-- Sign Up tab button -->
+      </div>
+
+      <!-- Login Form: for existing users to log in -->
+      <form id="loginForm" class="auth-form active" novalidate> <!-- novalidate disables browser default validation so JS can handle it -->
+        <div class="form-group"> <!-- Email input group -->
+          <label for="loginEmail">Email</label>
+          <input type="email" id="loginEmail" name="email" placeholder="your@email.com" required aria-label="Email address"> <!-- Email field -->
+          <span class="error-msg" id="loginEmailError"></span> <!-- Error message for email -->
+        </div>
+
+        <div class="form-group"> <!-- Password input group -->
+          <label for="loginPassword">Password</label>
+          <input type="password" id="loginPassword" name="password" placeholder="••••••••" required aria-label="Password"> <!-- Password field -->
+          <span class="error-msg" id="loginPasswordError"></span> <!-- Error message for password -->
+        </div>
+
+        <div class="form-checkbox"> <!-- Remember me checkbox -->
+          <input type="checkbox" id="rememberMe" name="rememberMe"> <!-- Checkbox input -->
+          <label for="rememberMe">Remember me</label>
+        </div>
+
+        <button type="submit" class="auth-btn primary">Login</button> <!-- Submit button for login -->
+        <span class="form-message" id="loginMessage"></span> <!-- General login form message -->
+      </form>
+
+      <!-- Sign Up Form: for new users to create an account -->
+      <form id="signupForm" class="auth-form" novalidate>
+        <div class="form-group"> <!-- Name input group -->
+          <label for="signupName">Full Name</label>
+          <input type="text" id="signupName" name="name" placeholder="Your Name" required aria-label="Full name"> <!-- Name field -->
+          <span class="error-msg" id="signupNameError"></span> <!-- Error message for name -->
+        </div>
+
+        <div class="form-group"> <!-- Email input group -->
+          <label for="signupEmail">Email</label>
+          <input type="email" id="signupEmail" name="email" placeholder="your@email.com" required aria-label="Email address"> <!-- Email field -->
+          <span class="error-msg" id="signupEmailError"></span> <!-- Error message for email -->
+        </div>
+
+        <div class="form-group"> <!-- Password input group -->
+          <label for="signupPassword">Password</label>
+          <input type="password" id="signupPassword" name="password" placeholder="••••••••" required aria-label="Password (min 8 characters)"> <!-- Password field -->
+          <span class="error-msg" id="signupPasswordError"></span> <!-- Error message for password -->
+        </div>
+
+        <div class="form-group"> <!-- Confirm password input group -->
+          <label for="signupConfirm">Confirm Password</label>
+          <input type="password" id="signupConfirm" name="confirm" placeholder="••••••••" required aria-label="Confirm password"> <!-- Confirm password field -->
+          <span class="error-msg" id="signupConfirmError"></span> <!-- Error message for confirm password -->
+        </div>
+
+        <button type="submit" class="auth-btn primary">Create Account</button> <!-- Submit button for sign up -->
+        <span class="form-message" id="signupMessage"></span> <!-- General sign up form message -->
+      </form>
+
+      <!-- OAuth removed: only email/password login supported -->
+
+      <!-- Footer Link: forgot password option -->
+      <p class="login-footer">
+        <a href="#" id="forgotLink">Forgot password?</a> <!-- Link for password reset (demo only) -->
+      </p>
+    </div>
+
+    <!-- Status Message: modal for showing status updates/errors -->
+    <div class="status-modal" id="statusModal">
+      <div class="status-content">
+        <p id="statusText"></p> <!-- Text for status messages -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Login Script: main JS logic for login/signup -->
+  <script src="login.js"></script>
+</body>
+</html>

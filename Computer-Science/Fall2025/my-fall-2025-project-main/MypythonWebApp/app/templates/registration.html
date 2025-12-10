@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="signup-container">
+        <div class="signup-box">
+            <div class="signup-header">
+                <header>Sign Up</header>
+            </div>
+            {% if request.args.get('error') == 'username' %} <!--HTML reads error value from register.py-->
+                <p style="color: red; text-align: center;">Username must be at least 5 characters</p> <!--if the error is with the username, it shows this-->
+            {% elif request.args.get('error') == 'password' %}
+                <p style="color: red; text-align: center;">Password must be 8+ chars with an uppercase, lowercase, and symbol</p>
+            {% endif %}
+           <form action="/registration" method="POST">
+            <div class="input-box">
+                <input type="email" class="input-field" name="email" placeholder="Email" required>
+            </div>
+            <div class="input-box">
+                <input type="text" class="input-field" name="username" placeholder="Username" required>
+            <div class="user-req">
+                <p style="font-size: small;">Username must be at least 5 characters</p>
+            </div>
+        </div>
+        <div class="input-box">
+            <input type="password" class="input-field" name="password" placeholder="Password" required>
+        </div>
+        <p style="font-size: small;">Password must be:</p>
+            <div class="password-req">
+                <ul>
+                    <li>8 characters long</li>
+                    <li>1 uppercase</li>
+                    <li>1 lowercase</li>
+                    <li>1 Symbol</li>
+                </ul>
+        <button class="signup-btn" id="signup-submit" type="submit">
+            Complete Registration
+        </button>
+    </form>
+            <div class="login-link">
+                <p>Already have an account?<a href="/login"> Log In</a></p>
+            </div>
+        </div>
+    </div>
+{% endblock %}

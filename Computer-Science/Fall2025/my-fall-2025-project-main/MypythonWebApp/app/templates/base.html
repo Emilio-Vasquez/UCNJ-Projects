@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/ucnj_styles.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Kumbh+Sans:wght@100..900&display=swap" rel="stylesheet">
+    <title>{% block title %}My App{% endblock %}</title>
+</head>
+<body>
+    <nav class="navigation">
+        <div class="navigation__container">
+            <a href="/" id="navigation__logo" style="color: white;">La Isla Del Sabor</a>
+            <ul class="navigation__menu">
+                <li class="navigation__item"><a href="/" class="navigation__links">Home</a></li>
+                <li class="navigation__item"><a href="/menu" class="navigation__links">Menu</a></li>
+                <li class="navigation__item"><a href="/feedback" class="navigation__links">Feedback</a></li>
+                {% if session.get('user_id') %} <!-- if user is logged in, they'll have a log out button-->
+                    <li class="navigation__item"><a href="/logout" class="navigation__links">Log Out</a></li>
+                {% else %} <!--if user is not logged in, they'll have a log in button-->
+                    <li class="navigation__item"><a href="/login" class="navigation__links">Log In</a></li>
+                {% endif %} <!--just closes the if statement-->
+            </ul>
+        </div>
+    </nav>
+    <main>
+        {% block content %}
+        <!--page specific stuff-->
+        {% endblock %}
+    </main>
+</body>
+</html>

@@ -1,0 +1,222 @@
+<!--
+  feedback.html
+  This page allows users to submit feedback about the application.
+  Users can rate the app, select feedback category, and provide detailed messages.
+-->
+<!DOCTYPE html> <!-- HTML5 document type declaration -->
+<html lang="en"> <!-- Set language to English -->
+<head>
+  <meta charset="UTF-8"> <!-- Character encoding for Unicode support -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Mobile responsive scaling -->
+  <title>Feedback</title> <!-- Browser tab title -->
+  <!-- Auth expiration check: force logout when session expires (24h) -->
+  <script>
+    (function(){
+      try{
+        const raw = localStorage.getItem('authSession');
+        if(!raw){ window.location.href='login.html'; return; }
+        const session = JSON.parse(raw);
+        if(!session.expiresAt || Date.now() > session.expiresAt){
+          localStorage.removeItem('authSession'); localStorage.removeItem('isAuthenticated'); window.location.href='login.html'; return;
+        }
+        const remaining = session.expiresAt - Date.now();
+        if(remaining>0){ setTimeout(()=>{ localStorage.removeItem('authSession'); localStorage.removeItem('isAuthenticated'); window.location.replace('login.html'); }, remaining); }
+        setInterval(()=>{ const s = localStorage.getItem('authSession'); if(!s) window.location.href='login.html'; try{ const ss=JSON.parse(s||'null'); if(!ss||!ss.expiresAt||Date.now()>ss.expiresAt){ localStorage.removeItem('authSession'); localStorage.removeItem('isAuthenticated'); window.location.href='login.html'; } }catch(e){ localStorage.removeItem('authSession'); localStorage.removeItem('isAuthenticated'); window.location.href='login.html'; } }, 60000);
+      }catch(e){ localStorage.removeItem('authSession'); localStorage.removeItem('isAuthenticated'); window.location.href='login.html'; }
+    })();
+  </script>
+  <link rel="stylesheet" href="style.css"> <!-- Main CSS file -->
+</head>
+<body>
+  <!-- Sidebar Toggle Button: hamburger menu to open navigation -->
+  <button id="openSidebarBtn" onclick="openSidebar()" class="sidebar-toggle">☰</button>
+
+  <!-- Sidebar Navigation: links to all main pages -->
+  <nav class="sidebar" id="mySidebar">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeSidebar()">&times;</a> <!-- Close button -->
+    <a href="to-do-project.html#home">Home</a> <!-- Link to dashboard -->
+    <a href="future.html">Future Plans</a> <!-- Link to calendar -->
+    <a href="feedback.html">Feedback</a> <!-- Link to feedback form (this page) -->
+    <a href="about.html">About Us</a>
+  </nav>
+
+  <!-- Main Content: feedback form and submission -->
+  <div class="main-content">
+    <div class="feedback-container">
+      <a href="to-do-project.html" class="back-link">← Back to Home</a> <!-- Back to dashboard -->
+      <h1 class="feedback-title">Feedback</h1>
+      <p class="feedback-subtitle">
+        We'd love to hear from you! Your feedback helps us improve the experience. 
+        Please share your thoughts, suggestions, or report any issues.
+      </p>
+
+      <form id="feedbackForm">  <!-- Feedback form -->
+        <div class="form-group">    
+          <label for="name">Name *</label>  <!-- Name input field -->
+          <input type="text" id="name" name="name" placeholder="Your name" required> <!-- Required field -->
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email *</label>
+          <input type="email" id="email" name="email" placeholder="your@email.com" required>
+        </div>
+
+        <div class="form-group">
+          <label for="category">Category *</label>
+          <select id="category" name="category" required>
+            <option value="">Select a category</option>
+            <option value="bug">Bug Report</option>
+            <option value="feature">Feature Request</option>
+            <option value="improvement">Improvement</option>
+            <option value="general">General Feedback</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="subject">Subject *</label>
+          <input type="text" id="subject" name="subject" placeholder="Brief subject" required>
+        </div>
+
+        <div class="form-group">
+          <label>Rating *</label>
+          <div class="rating-group">
+            <span class="star" data-rating="1">★</span> <!-- Star rating -->
+            <span class="star" data-rating="2">★</span>
+            <span class="star" data-rating="3">★</span>
+            <span class="star" data-rating="4">★</span>
+            <span class="star" data-rating="5">★</span>
+            <span id="ratingText" style="color: #bfa046; margin-left: 12px; font-weight: 600;">No rating</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="message">Message *</label> <!-- Message input field -->
+          <textarea id="message" name="message" placeholder="Tell us what's on your mind..." required></textarea>
+        </div>
+
+        <button type="submit" class="feedback-btn">Send Feedback</button>
+        <div id="feedbackMessage" class="feedback-message"></div>
+        <a href="admin-feedback.html" class="admin-link">View Admin Panel</a>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    function openSidebar() {
+      document.getElementById('mySidebar').classList.add('open');
+      document.getElementById('openSidebarBtn').style.display = 'none';
+    }
+    function closeSidebar() {
+      document.getElementById('mySidebar').classList.remove('open');
+      document.getElementById('openSidebarBtn').style.display = 'block';
+    }
+
+    // Feedback form handling
+    let currentRating = 0;
+    const stars = document.querySelectorAll('.star');
+    const ratingText = document.getElementById('ratingText');
+
+    stars.forEach(star => {
+      star.addEventListener('click', () => {
+        currentRating = parseInt(star.dataset.rating);
+        ratingText.textContent = currentRating + ' star' + (currentRating !== 1 ? 's' : '');
+        updateStarDisplay();
+      });
+      star.addEventListener('mouseenter', () => {
+        const hoverRating = parseInt(star.dataset.rating);
+        stars.forEach((s, idx) => {
+          s.style.color = idx < hoverRating ? '#ffc107' : 'rgba(191,160,70,0.4)';
+        });
+      });
+    });
+
+    document.querySelector('.rating-group').addEventListener('mouseleave', updateStarDisplay);
+
+    function updateStarDisplay() {
+      stars.forEach((s, idx) => {
+        s.classList.toggle('active', idx < currentRating);
+        s.style.color = idx < currentRating ? '#ffc107' : 'rgba(191,160,70,0.4)';
+      });
+    }
+
+    document.getElementById('feedbackForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const category = document.getElementById('category').value;
+      const subject = document.getElementById('subject').value.trim();
+      const message = document.getElementById('message').value.trim();
+      const messageDiv = document.getElementById('feedbackMessage');
+
+      // Validation
+      if (!name || !email || !category || !subject || !message) {
+        messageDiv.className = 'feedback-message error';
+        messageDiv.textContent = 'Please fill out all required fields.';
+        return;
+      }
+
+      if (currentRating === 0) {
+        messageDiv.className = 'feedback-message error';
+        messageDiv.textContent = 'Please provide a rating.';
+        return;
+      }
+
+      // Email validation
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        messageDiv.className = 'feedback-message error';
+        messageDiv.textContent = 'Please enter a valid email address.';
+        return;
+      }
+
+      // Store feedback in localStorage
+      const feedback = {
+        name,
+        email,
+        category,
+        subject,
+        message,
+        rating: currentRating,
+        timestamp: new Date().toLocaleString()
+      };
+
+      let feedbackList = JSON.parse(localStorage.getItem('feedbackList')) || [];
+      feedbackList.push(feedback);
+      localStorage.setItem('feedbackList', JSON.stringify(feedbackList));
+
+      // Send email notification (using FormSubmit - free service)
+      const formData = new FormData();
+      formData.append('name', name);
+      formData.append('email', email);
+      formData.append('category', category);
+      formData.append('subject', subject);
+      formData.append('message', message);
+      formData.append('rating', currentRating + ' stars');
+      // Send the form data to FormSubmit's API (my email)
+      fetch('https://formsubmit.co/ajax/victorramos414@gmail.com', {
+        method: 'POST',
+        body: formData
+      }).then(() => {
+        messageDiv.className = 'feedback-message success, thank you for your input'; // Success message
+        messageDiv.textContent = '✓ Thank you for your feedback! We appreciate your input. A confirmation has been sent to your email.';
+        this.reset();
+        currentRating = 0;
+        updateStarDisplay();
+        ratingText.textContent = 'No rating';
+        setTimeout(() => { messageDiv.className = 'feedback-message'; }, 5000);
+      }).catch(() => {
+        // Still success if localStorage saved, email sending is optional
+        messageDiv.className = 'feedback-message success';
+        messageDiv.textContent = '✓ Thank you for your feedback! We appreciate your input.';
+        this.reset();
+        currentRating = 0;
+        updateStarDisplay();
+        ratingText.textContent = 'No rating';
+        setTimeout(() => { messageDiv.className = 'feedback-message'; }, 5000);
+      });
+    });
+  </script>
+</body>
+</html>

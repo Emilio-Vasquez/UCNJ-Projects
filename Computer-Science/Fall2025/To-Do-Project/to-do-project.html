@@ -1,0 +1,166 @@
+
+<!--
+  to-do-project.html
+  This is the main dashboard page for the TO DO?! TO DONE!!! app.
+  It includes navigation, widgets for tasks, weather, events, and a completion progress ring.
+  All interactivity is handled by script.js. Styling is in style.css.
+-->
+<!DOCTYPE html> <!-- HTML5 document type declaration -->
+<html lang="en"> <!-- Set language to English for accessibility and SEO -->
+<head>
+  <meta charset="UTF-8"> <!-- Character encoding for Unicode support -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Responsive scaling for mobile devices -->
+  <title>Modern Sleek Webpage</title> <!-- Browser tab title -->
+  <meta name="description" content="Modern sleek webpage for tasks, weather, and planning"> <!-- SEO description -->
+  <!-- Auth Check Script: redirects to login if not authenticated -->
+  <script>
+    // Auth expiration check: verifies session exists and hasn't expired.
+    // If expired or missing, clear session keys and redirect to login page.
+    (function() {
+      try {
+        const raw = localStorage.getItem('authSession');
+        if (!raw) { window.location.href = 'login.html'; return; }
+        const session = JSON.parse(raw);
+        // If expiresAt not present or already passed, force logout
+        if (!session.expiresAt || Date.now() > session.expiresAt) {
+          localStorage.removeItem('authSession');
+          localStorage.removeItem('isAuthenticated');
+          // Redirect to login - session expired
+          window.location.href = 'login.html';
+          return;
+        }
+        // Schedule automatic logout when the session actually expires
+        const remaining = session.expiresAt - Date.now();
+        if (remaining > 0) {
+          setTimeout(() => {
+            localStorage.removeItem('authSession');
+            localStorage.removeItem('isAuthenticated');
+            // Use location replace so user can't go back to protected page
+            window.location.replace('login.html');
+          }, remaining);
+        }
+        // Also, periodically verify session in case it's cleared by another tab
+        setInterval(() => {
+          const s = localStorage.getItem('authSession');
+          if (!s) window.location.href = 'login.html';
+          try {
+            const ss = JSON.parse(s || 'null');
+            if (!ss || !ss.expiresAt || Date.now() > ss.expiresAt) {
+              localStorage.removeItem('authSession');
+              localStorage.removeItem('isAuthenticated');
+              window.location.href = 'login.html';
+            }
+          } catch (e) {
+            localStorage.removeItem('authSession');
+            localStorage.removeItem('isAuthenticated');
+            window.location.href = 'login.html';
+          }
+        }, 60 * 1000); // check every minute
+      } catch (e) {
+        localStorage.removeItem('authSession');
+        localStorage.removeItem('isAuthenticated');
+        window.location.href = 'login.html';
+      }
+    })();
+  </script>
+  <link rel="stylesheet" href="style.css"> <!-- Link to main CSS file -->
+</head>
+<body>
+  <!-- Home Section: app title and premium link -->
+  <section id="home">
+    <h1 class="home-title">TO DO?! TO DONE!!!</h1> <!-- Main app title -->
+    <a href="premiumwebpage/premium.html" class="premium-btn">Go Premium</a> <!-- Premium upgrade link -->
+  </section>
+
+  <!-- Sidebar Toggle Button: opens sidebar navigation -->
+  <button type="button" id="openSidebarBtn" onclick="openSidebar()" class="sidebar-toggle" aria-label="Open sidebar">☰</button>
+
+  <!-- Sidebar Navigation: links to all main pages -->
+  <nav class="sidebar" id="mySidebar">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeSidebar()">&times;</a> <!-- Close sidebar button -->
+    <a href="#home">Home</a>
+    <a href="today.html">Today</a>
+    <a href="future.html">Future Plans</a>
+    <a href="feedback.html">Feedback</a>
+    <a href="about.html">About Us</a>
+    <div class="sidebar-divider"></div> <!-- Divider for visual separation -->
+    <a href="#" id="logoutBtn" class="logout-link">Logout</a> <!-- Logout button -->
+  </nav>
+
+  <!-- Search Bar: allows searching pages/content -->
+  <div class="search-container">
+    <button type="button" id="searchToggleBtn" class="search-toggle-btn" aria-label="Open search">🔍</button>
+    <div class="search-panel" id="searchPanel">
+      <input type="text" id="searchInput" class="search-bar" placeholder="Search pages & content..." autocomplete="off" aria-label="Search site">
+      <div id="searchResults" class="search-results"></div>
+    </div>
+  </div>
+
+  <!-- Main Content: contains all dashboard widgets -->
+  <div class="main-content">
+    <!-- TODAY Section: main dashboard area -->
+    <section id="today" class="today-section">
+      <h2 class="today-title">TODAY</h2>
+      <div class="today-widgets">
+        <!-- Completion Widget: shows progress ring and stats -->
+        <div class="completion-widget" id="completionWidget">
+          <h3>Today's Progress</h3>
+          <div class="progress-display">
+            <div class="progress-circle">
+              <svg class="progress-ring" width="80" height="80">
+                <circle cx="40" cy="40" r="35" class="progress-ring-bg"></circle> <!-- Background ring -->
+                <circle cx="40" cy="40" r="35" class="progress-ring-fill" id="progressRing"></circle> <!-- Fill ring (progress) -->
+              </svg>
+              <div class="progress-text">
+                <span id="completionPercent">0</span>% <!-- Completion percent -->
+              </div>
+            </div>
+          </div>
+          <div class="progress-stats">
+            <div class="stat">
+              <span class="stat-label">Completed</span>
+              <span class="stat-value" id="completedCount">0</span>
+            </div>
+            <div class="stat">
+              <span class="stat-label">Total</span>
+              <span class="stat-value" id="totalCount">0</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Weather Widget: shows current weather and city selector -->
+        <div class="weather-widget" id="weatherWidget">
+          <h3>Weather</h3>
+          <div id="currentCity" class="muted">City: Loading...</div> <!-- City name display -->
+          <div id="weatherData" style="margin-top:8px">Loading weather...</div> <!-- Weather info -->
+          <!-- City selection removed: now always shows default or stored city -->
+        </div>
+
+        <!-- Events Widget: shows current news/events -->
+        <div class="events-widget" id="eventsWidget">
+          <h3>Current Events</h3>
+          <div id="eventsData">Loading events...</div> <!-- News/events info -->
+        </div>
+
+        <!-- Tasks Widget: add/view tasks -->
+        <div class="tasks-widget" id="tasksWidget">
+          <h3>Tasks</h3>
+          <div class="task-bar">
+            <label for="taskDestination" class="sr-only">Destination</label> <!-- Hidden label for accessibility -->
+            <select id="taskDestination" aria-label="Task destination">
+              <option value="local">This Page</option>
+              <option value="today">Today</option>
+              <option value="future">Future Plans</option>
+            </select>
+            <input type="text" id="newTaskInput" placeholder="Add a new task..." aria-label="New task"> <!-- Task input -->
+            <button type="button" id="addTaskBtn" aria-label="Add task">Add</button> <!-- Add task button -->
+          </div>
+          <ul id="taskList" class="task-list"></ul> <!-- List of tasks -->
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script src="script.js"></script> <!-- Main JS logic for dashboard -->
+</body>
+</html>

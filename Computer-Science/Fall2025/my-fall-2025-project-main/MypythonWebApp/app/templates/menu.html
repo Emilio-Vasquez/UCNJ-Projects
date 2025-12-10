@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% block title %}menu{% endblock %}
+
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Restaurant Menu</title>
+<style>
+body {
+font-family: Arial, sans-serif;
+margin: 0;
+padding: 0;
+background-color: #f4f4f4;
+}
+header {
+background-color: #333;
+color: white;
+padding: 20px;
+text-align: center;
+}
+.menu-section {
+max-width: 800px;
+margin: 20px auto;
+background: white;
+padding: 20px;
+border-radius: 10px;
+box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+h2 {
+border-bottom: 2px solid #ddd;
+padding-bottom: 5px;
+}
+.item {
+display: flex;
+justify-content: space-between;
+margin: 10px 0;
+}
+.price {
+font-weight: bold;
+}
+</style>
+</head>
+<body>
+<header>
+<h1>Welcome to La Isla Del Sabor</h1>
+</header>
+
+<div class="menu-section">
+<h2>Appetizers</h2>
+<div class="item"><span>Alcapurrias</span><span class="price">$3.99</span></div>
+<div class="item"><span>Pastelillos (Beef/Chicken)</span><span class="price">$2.49</span></div>
+<div class="item"><span>Sorullitos de Maíz</span><span class="price">$4.99</span></div>
+</div>
+
+
+<div class="menu-section">
+<h2>Main Dishes</h2>
+<div class="item"><span>Arroz con Gandules & Pernil</span><span class="price">$13.99</span></div>
+<div class="item"><span>Mofongo (Chicken/Pork/Shrimp)</span><span class="price">$14.99</span></div>
+<div class="item"><span>Pollo Guisado</span><span class="price">$11.99</span></div>
+</div>
+
+
+<div class="menu-section">
+<h2>Desserts</h2>
+<div class="item"><span>Flan de Queso</span><span class="price">$4.99</span></div>
+<div class="item"><span>Tembleque</span><span class="price">$3.49</span></div>
+<div class="item"><span>Arroz con Dulce</span><span class="price">$4.49</span></div>
+</div>
+
+
+<div class="menu-section">
+<h2>Drinks</h2>
+<div class="item"><span>Malta</span><span class="price">$2.99</span></div>
+<div class="item"><span>Tamarindo Juice</span><span class="price">$2.49</span></div>
+<div class="item"><span>Piña Colada (Non‑Alcoholic)</span><span class="price">$3.99</span></div>
+</div>
+
+</body>
+</html>
+     
+     
+
+{% endblock %}

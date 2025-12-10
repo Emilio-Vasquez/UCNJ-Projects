@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Future Plans</title>
+  // css for the future plans page
+  <link rel="stylesheet" href="style.css">
+  <!-- Auth expiration check: force logout when session expires (24h) -->
+  <script>
+    (function(){
+      try{
+        const raw = localStorage.getItem('authSession');
+        if(!raw){ window.location.href='login.html'; return; }
+        const session = JSON.parse(raw);
+        if(!session.expiresAt || Date.now() > session.expiresAt){
+          localStorage.removeItem('authSession'); localStorage.removeItem('isAuthenticated'); window.location.href='login.html'; return;
+        }
+        const remaining = session.expiresAt - Date.now();
+        if(remaining>0){ setTimeout(()=>{ localStorage.removeItem('authSession'); localStorage.removeItem('isAuthenticated'); window.location.replace('login.html'); }, remaining); }
+        setInterval(()=>{ const s = localStorage.getItem('authSession'); if(!s) window.location.href='login.html'; try{ const ss=JSON.parse(s||'null'); if(!ss||!ss.expiresAt||Date.now()>ss.expiresAt){ localStorage.removeItem('authSession'); localStorage.removeItem('isAuthenticated'); window.location.href='login.html'; } }catch(e){ localStorage.removeItem('authSession'); localStorage.removeItem('isAuthenticated'); window.location.href='login.html'; } }, 60000);
+      }catch(e){ localStorage.removeItem('authSession'); localStorage.removeItem('isAuthenticated'); window.location.href='login.html'; }
+    })();
+  </script>
+ // this is the calendar  
+  <style>
+    .calendar-page-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+    .calendar-page-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+    .calendar-page-title {
+      font-size: 2rem;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+    .week-range-header {
+      font-size: 1.1rem;
+      color: #e0e0e0;
+      margin-bottom: 4px;
+    }
+    .calendar-page-nav {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 16px;
+    }
+    .calendar-page-nav button {
+      padding: 10px 20px;
+      border: 1.25px solid var(--accent);
+      border-radius: 8px;
+      background: rgba(191, 160, 70, 0.12);
+      color: var(--accent);
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .calendar-page-nav button:hover {
+      background: var(--accent);
+      color: #181818;
+    }
+    /* Full calendar styles */
+    .calendar-full {
+      background: var(--card);
+      border: 1.5px solid var(--accent);
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 32px;
+    }
+    .calendar-full-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .calendar-full-title {
+      font-size: 1.4rem;
+      color: var(--accent);
+      font-weight: 700;
+    }
+    .calendar-full-nav {
+      display: flex;
+      gap: 10px;
+    }
+    .calendar-full-nav button {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      border: 1px solid rgba(191, 160, 70, 0.2);
+      background: rgba(191, 160, 70, 0.12);
+      color: var(--accent);
+      cursor: pointer;
+      font-weight: 700;
+      transition: all 0.2s;
+    }
+    .calendar-full-nav button:hover {
+      background: var(--accent);
+      color: #181818;
+    }
+    
+    /* Large calendar grid */
+    .calendar-full-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 8px;
+    }
+    .calendar-full-weekdays {
+      display: contents;
+    }
+    .calendar-full-weekday {
+      text-align: center;
+      color: var(--accent);
+      font-weight: 700;
+      padding: 12px 8px;
+      border-bottom: 2px solid rgba(191, 160, 70, 0.2);
+      margin-bottom: 8px;
+    }
+    .calendar-full-days {
+      display: contents;
+    }
+    .calendar-full-day {
+      aspect-ratio: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.02);
+      color: #e0e0e0;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1.5px solid transparent;
+      transition: all 0.2s;
+      min-height: 60px;
+    }
+    .calendar-full-day:hover:not(.other-month) {
+      background: rgba(191, 160, 70, 0.12);
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+    .calendar-full-day.today {
+      background: var(--accent);
+      color: #181818;
+      font-size: 1.1rem;
+      border-color: var(--accent);
+    }
+    .calendar-full-day.other-month {
+      color: rgba(224, 224, 224, 0.3);
+      cursor: default;
+    }
+    
+    /* Weekly planner below calendar */
+    .weekly-planner {
+      margin-top: 32px;
+    }
+    .weekly-planner-title {
+      font-size: 1.6rem;
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+    .week-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 16px;
+    }
+    .day-card {
+      background: var(--card);
+      border: 1.5px solid rgba(191, 160, 70, 0.2);
+      border-radius: 12px;
+      padding: 16px;
+      transition: all 0.2s;
+    }
+    .day-card:hover {
+      border-color: var(--accent);
+      box-shadow: 0 4px 12px rgba(191, 160, 70, 0.1);
+    }
+    .day-header {
+      text-align: center;
+      margin-bottom: 12px;
+      border-bottom: 1.5px solid rgba(191, 160, 70, 0.2);
+      padding-bottom: 8px;
+    }
+    .day-name {
+      font-weight: 700;
+      color: var(--accent);
+      font-size: 0.95rem;
+    }
+    .day-date {
+      font-size: 0.8rem;
+      color: #b0b0b0;
+      margin-top: 4px;
+    }
+    .day-tasks {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .day-input-group {
+      display: flex;
+      gap: 6px;
+    }
+    .day-input-group input {
+      flex: 1;
+      padding: 8px 10px;
+      border: 1px solid rgba(191, 160, 70, 0.2);
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.02);
+      color: #e0e0e0;
+      font-size: 0.85rem;
+      outline: none;
+    }
+    .day-input-group input:focus {
+      border-color: var(--accent);
+      background: rgba(191, 160, 70, 0.08);
+    }
+    .day-add-btn {
+      padding: 8px 12px;
+      background: var(--accent);
+      color: #181818;
+      border: none;
+      border-radius: 6px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .day-add-btn:hover {
+      transform: scale(1.05);
+    }
+    .day-task-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      min-height: 30px;
+    }
+    .day-task-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 8px;
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.02);
+      font-size: 0.85rem;
+      color: #e0e0e0;
+    }
+    .day-task-item.completed {
+      color: rgba(224, 224, 224, 0.5);
+    }
+    .day-task-item.completed .task-text {
+      text-decoration: line-through;
+    }
+    .task-checkbox {
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+      accent-color: var(--accent);
+    }
+    .task-text {
+      flex: 1;
+      word-break: break-word;
+    }
+    .task-delete {
+      background: none;
+      border: none;
+      color: #e0e0e0;
+      cursor: pointer;
+      font-size: 0.8rem;
+      padding: 0;
+      transition: all 0.2s;
+    }
+    .task-delete:hover {
+      color: var(--accent);
+    }
+    
+    @media (max-width: 768px) {
+      .calendar-page-container {
+        padding: 12px;
+      }
+      .calendar-full {
+        padding: 16px;
+      }
+      .calendar-full-day {
+        min-height: 50px;
+        font-size: 0.9rem;
+      }
+      .calendar-full-weekday {
+        font-size: 0.85rem;
+      }
+      .week-grid {
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Sidebar Toggle Button -->
+  <button id="openSidebarBtn" onclick="openSidebar()" class="sidebar-toggle">☰</button>
+
+  <!-- Sidebar Navigation -->
+  <nav class="sidebar" id="mySidebar">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeSidebar()">&times;</a>
+    <a href="to-do-project.html#home">Home</a>
+    <a href="today.html">Today</a>
+    <a href="future.html">Future Plans</a>
+     <a href="about.html">About Us</a>
+     <a href="feedback.html">Feedback</a>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <div class="calendar-page-container">
+      <a href="to-do-project.html" class="back-link">← Back to Home</a>
+
+      <!-- Page Header with Week Info -->
+      <div class="calendar-page-header">
+        <h1 class="calendar-page-title">Future Plans</h1>
+        <div class="week-range-header" id="weekRangeHeader">Week of Jan 1 - Jan 7</div>
+        <div class="calendar-page-nav">
+          <button onclick="previousMonth()">← Previous Month</button>
+          <button onclick="nextMonth()">Next Month →</button>
+        </div>
+      </div>
+
+      <!-- Full Calendar -->
+      <div class="calendar-full">
+        <div class="calendar-full-header">
+          <h2 class="calendar-full-title" id="calendarFullMonth">January 2025</h2>
+        </div>
+        <div class="calendar-full-grid">
+          <div class="calendar-full-weekdays">
+            <div class="calendar-full-weekday">Sun</div>
+            <div class="calendar-full-weekday">Mon</div>
+            <div class="calendar-full-weekday">Tue</div>
+            <div class="calendar-full-weekday">Wed</div>
+            <div class="calendar-full-weekday">Thu</div>
+            <div class="calendar-full-weekday">Fri</div>
+            <div class="calendar-full-weekday">Sat</div>
+          </div>
+          <div class="calendar-full-days" id="calendarFullDays"></div>
+        </div>
+      </div>
+
+      <!-- Weekly Planner -->
+      <div class="weekly-planner">
+        <h2 class="weekly-planner-title">This Week's Plans</h2>
+        <div class="week-grid" id="weekGrid"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sidebar Functions -->
+  <script>
+    function openSidebar() {
+      document.getElementById('mySidebar').classList.add('open');
+      document.getElementById('openSidebarBtn').style.display = 'none';
+    }
+
+    function closeSidebar() {
+      document.getElementById('mySidebar').classList.remove('open');
+      document.getElementById('openSidebarBtn').style.display = 'block';
+    }
+  </script>
+
+  <!-- Main Script -->
+  <script>
+    let weekTasks = {};
+    let currentCalendarDate = new Date();
+    const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+    // Initialize week tasks from localStorage
+    function loadWeekTasks() {
+      const saved = localStorage.getItem('weekTasks');
+      weekTasks = saved ? JSON.parse(saved) : {};
+    }
+
+    function saveWeekTasks() {
+      localStorage.setItem('weekTasks', JSON.stringify(weekTasks));
+    }
+
+    // Get current week (Sunday to Saturday)
+    function getCurrentWeek() {
+      const today = new Date();
+      const day = today.getDay();
+      const diff = today.getDate() - day;
+      const sunday = new Date(today.setDate(diff));
+      const week = [];
+      for (let i = 0; i < 7; i++) {
+        const date = new Date(sunday);
+        date.setDate(date.getDate() + i);
+        week.push(new Date(date));
+      }
+      return week;
+    }
+
+    // Format week range for header
+    function displayWeekRange() {
+      const week = getCurrentWeek();
+      const start = week[0].toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+      const end = week[6].toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+      document.getElementById('weekRangeHeader').textContent = `Week of ${start} - ${end}`;
+    }
+
+    // Get unique key for each day
+    function getDayKey(date) {
+      return date.toISOString().split('T')[0];
+    }
+
+    // Add task to a specific day
+    function addDayTask(dayIndex) {
+      const input = document.querySelector(`#dayInput${dayIndex}`);
+      const text = input.value.trim();
+      if (!text) return;
+
+      const week = getCurrentWeek();
+      const dayKey = getDayKey(week[dayIndex]);
+
+      if (!weekTasks[dayKey]) {
+        weekTasks[dayKey] = [];
+      }
+
+      weekTasks[dayKey].push({
+        id: Date.now(),
+        text,
+        completed: false
+      });
+
+      saveWeekTasks();
+      input.value = '';
+      renderWeek();
+    }
+
+    // Toggle task completion
+    function toggleDayTask(dayIndex, taskId) {
+      const week = getCurrentWeek();
+      const dayKey = getDayKey(week[dayIndex]);
+      const task = weekTasks[dayKey]?.find(t => t.id === taskId);
+      if (task) {
+        task.completed = !task.completed;
+        saveWeekTasks();
+        renderWeek();
+      }
+    }
+
+    // Delete task
+    function deleteDayTask(dayIndex, taskId) {
+      const week = getCurrentWeek();
+      const dayKey = getDayKey(week[dayIndex]);
+      if (weekTasks[dayKey]) {
+        weekTasks[dayKey] = weekTasks[dayKey].filter(t => t.id !== taskId);
+        saveWeekTasks();
+        renderWeek();
+      }
+    }
+
+    // Render the week view
+    function renderWeek() {
+      const week = getCurrentWeek();
+      const weekGrid = document.getElementById('weekGrid');
+      weekGrid.innerHTML = '';
+
+      week.forEach((date, index) => {
+        const dayKey = getDayKey(date);
+        const tasks = weekTasks[dayKey] || [];
+        const dayName = dayNames[date.getDay()];
+        const dateStr = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+
+        const dayCard = document.createElement('div');
+        dayCard.className = 'day-card';
+
+        const dayHeader = document.createElement('div');
+        dayHeader.className = 'day-header';
+        dayHeader.innerHTML = `
+          <div class="day-name">${dayName}</div>
+          <div class="day-date">${dateStr}</div>
+        `;
+
+        const dayTasks = document.createElement('div');
+        dayTasks.className = 'day-tasks';
+
+        const inputGroup = document.createElement('div');
+        inputGroup.className = 'day-input-group';
+        inputGroup.innerHTML = `
+          <input type="text" id="dayInput${index}" placeholder="Add plan...">
+          <button class="day-add-btn" onclick="addDayTask(${index})">+</button>
+        `;
+
+        const taskList = document.createElement('ul');
+        taskList.className = 'day-task-list';
+
+        if (tasks.length === 0) {
+          taskList.innerHTML = '<li style="color: rgba(224,224,224,0.4); text-align: center; margin: auto;">No plans yet</li>';
+        } else {
+          tasks.forEach(task => {
+            const li = document.createElement('li');
+            li.className = `day-task-item ${task.completed ? 'completed' : ''}`;
+            li.innerHTML = `
+              <input type="checkbox" class="task-checkbox" ${task.completed ? 'checked' : ''} onchange="toggleDayTask(${index}, ${task.id})">
+              <span class="task-text">${escapeHtml(task.text)}</span>
+              <button class="task-delete" onclick="deleteDayTask(${index}, ${task.id})">✕</button>
+            `;
+            taskList.appendChild(li);
+          });
+        }
+
+        dayTasks.appendChild(inputGroup);
+        dayTasks.appendChild(taskList);
+        dayCard.appendChild(dayHeader);
+        dayCard.appendChild(dayTasks);
+        weekGrid.appendChild(dayCard);
+      });
+    }
+
+    // Render full calendar
+    function renderFullCalendar() {
+      const year = currentCalendarDate.getFullYear();
+      const month = currentCalendarDate.getMonth();
+      const today = new Date();
+
+      // Set header title
+      document.getElementById('calendarFullMonth').textContent = currentCalendarDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+
+      // Get first day of month and number of days
+      const firstDay = new Date(year, month, 1).getDay();
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+      const daysInPrevMonth = new Date(year, month, 0).getDate();
+
+      const calendarDays = document.getElementById('calendarFullDays');
+      calendarDays.innerHTML = '';
+
+      // Previous month days
+      for (let i = firstDay - 1; i >= 0; i--) {
+        const day = document.createElement('div');
+        day.className = 'calendar-full-day other-month';
+        day.textContent = daysInPrevMonth - i;
+        calendarDays.appendChild(day);
+      }
+
+      // Current month days
+      for (let i = 1; i <= daysInMonth; i++) {
+        const day = document.createElement('div');
+        day.className = 'calendar-full-day';
+
+        const isToday = today.getDate() === i && today.getMonth() === month && today.getFullYear() === year;
+        if (isToday) {
+          day.classList.add('today');
+        }
+
+        day.textContent = i;
+        calendarDays.appendChild(day);
+      }
+
+      // Next month days
+      const totalCells = calendarDays.children.length;
+      const remainingCells = 42 - totalCells;
+      for (let i = 1; i <= remainingCells; i++) {
+        const day = document.createElement('div');
+        day.className = 'calendar-full-day other-month';
+        day.textContent = i;
+        calendarDays.appendChild(day);
+      }
+    }
+
+    // Navigation functions
+    function previousMonth() {
+      currentCalendarDate.setMonth(currentCalendarDate.getMonth() - 1);
+      renderFullCalendar();
+      displayWeekRange();
+    }
+
+    function nextMonth() {
+      currentCalendarDate.setMonth(currentCalendarDate.getMonth() + 1);
+      renderFullCalendar();
+      displayWeekRange();
+    }
+
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    // Keyboard support
+    document.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        const input = document.activeElement;
+        if (input.id && input.id.startsWith('dayInput')) {
+          const index = input.id.replace('dayInput', '');
+          addDayTask(parseInt(index));
+        }
+      }
+    });
+
+    // Initialize
+    loadWeekTasks();
+    displayWeekRange();
+    renderWeek();
+    renderFullCalendar();
+  </script>
+</body>
+</html>

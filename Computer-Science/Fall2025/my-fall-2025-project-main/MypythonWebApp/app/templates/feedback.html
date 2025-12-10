@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="feedback-container">
+    <div class="feedback-header">
+        <h1>Feedback Form</h1>
+    </div>
+    <form method="POST" action="/feedback">
+        <div class="feedback-date">
+            <p>Enter date of experience (Optional)</p>
+            <input type="date" class="type" name="date">
+        </div>
+        <div class="feedback-email">
+            <p>E-mail address (Optional)</p>
+            <input type="email" name="email">
+        </div>
+        <div class="feedback-input">
+            <p>Tell us about your experience</p>
+            <textarea class="feedback-textarea" name="comment" required></textarea>
+        <div class="input-submission">
+            <button class="feedback-btn" id="feedback-submit">Submit Feedback</button>
+        </div>
+    </div>
+</form>
+{% endblock %}

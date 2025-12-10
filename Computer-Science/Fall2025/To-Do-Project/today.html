@@ -1,0 +1,236 @@
+<!--
+  today.html
+  This page displays today's tasks, stats, and allows adding, filtering, and managing todos.
+  All interactivity is handled by script.js. Styling is in style.css.
+-->
+<!DOCTYPE html> <!-- HTML5 document type declaration -->
+<html lang="en"> <!-- Set language to English for accessibility and SEO -->
+<head>
+  <meta charset="UTF-8"> <!-- Character encoding for Unicode support -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Responsive scaling for mobile devices -->
+  <title>Today</title> <!-- Browser tab title -->
+  <!-- Auth expiration check: force logout when session expires (24h) -->
+  <script>
+    (function(){
+      try{
+        const raw = localStorage.getItem('authSession');
+        if(!raw){ window.location.href='login.html'; return; }
+        const session = JSON.parse(raw);
+        if(!session.expiresAt || Date.now() > session.expiresAt){
+          localStorage.removeItem('authSession'); localStorage.removeItem('isAuthenticated'); window.location.href='login.html'; return;
+        }
+        const remaining = session.expiresAt - Date.now();
+        if(remaining>0){ setTimeout(()=>{ localStorage.removeItem('authSession'); localStorage.removeItem('isAuthenticated'); window.location.replace('login.html'); }, remaining); }
+        setInterval(()=>{ const s = localStorage.getItem('authSession'); if(!s) window.location.href='login.html'; try{ const ss=JSON.parse(s||'null'); if(!ss||!ss.expiresAt||Date.now()>ss.expiresAt){ localStorage.removeItem('authSession'); localStorage.removeItem('isAuthenticated'); window.location.href='login.html'; } }catch(e){ localStorage.removeItem('authSession'); localStorage.removeItem('isAuthenticated'); window.location.href='login.html'; } }, 60000);
+      }catch(e){ localStorage.removeItem('authSession'); localStorage.removeItem('isAuthenticated'); window.location.href='login.html'; }
+    })();
+  </script>
+  <link rel="stylesheet" href="style.css"> <!-- Main CSS file -->
+</head>
+<body>
+  <!-- Sidebar Toggle Button: opens sidebar navigation -->
+  <button id="openSidebarBtn" onclick="openSidebar()" class="sidebar-toggle">☰</button>
+
+  <!-- Sidebar Navigation: links to all main pages -->
+  <nav class="sidebar" id="mySidebar">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeSidebar()">&times;</a> <!-- Close sidebar button -->
+    <a href="to-do-project.html#home">Home</a>
+    <a href="today.html">Today</a>
+    <a href="future.html">Future Plans</a>
+    <a href="feedback.html">Feedback</a>
+    <a href="about.html">About Us</a>
+  </nav>
+
+  <!-- Main Content: contains all widgets and todo section -->
+  <div class="main-content">
+    <a href="to-do-project.html" class="back-link">← Back to Home</a> <!-- Back to dashboard -->
+
+    <!-- Date & Time Card: shows current day/date/time -->
+    <div class="date-time-card">
+      <div class="current-day" id="currentDay"></div> <!-- Day of week -->
+      <div class="current-date" id="currentDate"></div> <!-- Date -->
+      <div class="current-time" id="currentTime"></div> <!-- Time -->
+    </div>
+
+    <!-- Todo Section: add, view, and filter today's tasks -->
+    <div class="todo-section">
+      <h1 class="todo-title">Today's Tasks</h1>
+
+      <!-- Add Todo: input, priority, and add button -->
+      <div class="add-todo-bar">
+        <input type="text" id="todoInput" placeholder="Add a new task..."> <!-- Task input -->
+        <select id="prioritySelect" class="priority-select"> <!-- Priority dropdown -->
+          <option value="low">Low</option>
+          <option value="medium" selected>Medium</option>
+          <option value="high">High</option>
+        </select>
+        <button class="add-btn" onclick="addTodo()">Add</button> <!-- Add task button -->
+      </div>
+
+      <!-- Stats: total, completed, remaining -->
+      <div class="todo-stats">
+        <div class="stat">
+          <div class="stat-label">Total</div>
+          <div class="stat-value" id="totalCount">0</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">Completed</div>
+          <div class="stat-value" id="completedCount">0</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">Remaining</div>
+          <div class="stat-value" id="remainingCount">0</div>
+        </div>
+      </div>
+
+      <!-- Filter Buttons: filter by status/priority -->
+      <div class="filter-buttons">
+        <button class="filter-btn active" onclick="filterTodos('all')">All</button>
+        <button class="filter-btn" onclick="filterTodos('active')">Active</button>
+        <button class="filter-btn" onclick="filterTodos('completed')">Completed</button>
+        <button class="filter-btn" onclick="filterTodos('high')">High Priority</button>
+      </div>
+
+      <!-- Todo List: displays all tasks -->
+      <ul class="todo-list" id="todoList">
+        <div class="empty-state">
+          <div class="empty-state-icon">📝</div>
+          <p>No tasks yet. Add one to get started!</p>
+        </div>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    function openSidebar() {
+      document.getElementById('mySidebar').classList.add('open');
+      document.getElementById('openSidebarBtn').style.display = 'none';
+    }
+    function closeSidebar() {
+      document.getElementById('mySidebar').classList.remove('open');
+      document.getElementById('openSidebarBtn').style.display = 'block';
+    }
+
+    // Date & Time Display
+    function updateDateTime() {
+      const now = new Date();
+      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      document.getElementById('currentDay').textContent = now.toLocaleDateString('en-US', { weekday: 'long' });
+      document.getElementById('currentDate').textContent = now.toLocaleDateString('en-US', options);
+      document.getElementById('currentTime').textContent = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+    }
+    setInterval(updateDateTime, 1000);
+    updateDateTime();
+
+    // Todo Management
+    let todos = [];
+    let currentFilter = 'all';
+// puts todos to localStorage
+    function saveTodos() {
+      localStorage.setItem('todayTodos', JSON.stringify(todos));
+    }
+// Load todos from localStorage
+    function loadTodos() {
+      const saved = localStorage.getItem('todayTodos');
+      todos = saved ? JSON.parse(saved) : [];
+      renderTodos();
+      updateStats();
+    }
+// Add a new todo
+    function addTodo() {
+      const input = document.getElementById('todoInput');
+      const priority = document.getElementById('prioritySelect').value;
+      const text = input.value.trim();
+
+      if (!text) return;
+
+      todos.push({
+        id: Date.now(),
+        text,
+        completed: false,
+        priority,
+        createdAt: new Date().toLocaleString()
+      });
+
+      saveTodos();
+      input.value = '';
+      renderTodos();
+      updateStats();
+    }
+// Toggle todo completion status
+    function toggleTodo(id) {
+      const todo = todos.find(t => t.id === id);
+      if (todo) {
+        todo.completed = !todo.completed;
+        saveTodos(); // TOP DOWN DESIGN!!!
+        renderTodos();
+        updateStats();
+      }
+    }
+// Delete a todo
+    function deleteTodo(id) {
+      todos = todos.filter(t => t.id !== id);
+      saveTodos(); // TOP DOWN DESIGN!!!
+      renderTodos();
+      updateStats();
+    }
+// Filter todos based on selected filter
+    function filterTodos(filter) {
+      currentFilter = filter;
+      document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+      renderTodos();
+    }
+
+    function renderTodos() {
+      const list = document.getElementById('todoList');
+      let filtered = todos;
+// filters todo by priority
+      if (currentFilter === 'active') filtered = todos.filter(t => !t.completed);
+      else if (currentFilter === 'completed') filtered = todos.filter(t => t.completed);
+      else if (currentFilter === 'high') filtered = todos.filter(t => t.priority === 'high' && !t.completed);
+
+      if (filtered.length === 0) {
+        list.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📝</div><p>No tasks yet. Add one to get started!</p></div>';
+        return;
+      }
+// creates a new list item for each todo and appends it to the list. This is where the list items are created and added to the list.
+// The `map` function is used to create a new array of list items, and the `join` function is used to concatenate the array into a single string.
+// The `innerHTML` property of the `list` element is then set to this string, which updates the list on the page.
+// The `escapeHtml` function is used to prevent XSS attacks by escaping any HTML characters in the todo text.
+      list.innerHTML = filtered.map(todo => ` 
+        <li class="todo-item ${todo.completed ? 'completed' : ''}">
+          <input type="checkbox" class="todo-checkbox" ${todo.completed ? 'checked' : ''} onchange="toggleTodo(${todo.id})">
+          <span class="todo-text">${escapeHtml(todo.text)}</span>
+          <span class="todo-priority priority-${todo.priority}">${todo.priority}</span>
+          <button class="delete-btn" onclick="deleteTodo(${todo.id})">Delete</button>
+        </li>
+      `).join('');
+    }
+
+    function updateStats() {
+      const total = todos.length; // Counts how many tasks are in the list altogether.
+      const completed = todos.filter(t => t.completed).length; // filters how many tasks are completed.
+      const remaining = total - completed; // Calculates how many tasks are remaining.
+
+      document.getElementById('totalCount').textContent = total;
+      document.getElementById('completedCount').textContent = completed;
+      document.getElementById('remainingCount').textContent = remaining;
+    }
+
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    // Keyboard support
+    document.getElementById('todoInput').addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') addTodo();
+    });
+
+    // Load todos on page load
+    loadTodos();
+  </script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+## Enviorments
+.VitrualEnv/
+VitrualEnv/
+.env 
+.env/
+env/
+
+## Database files
+*.db 
+
+## Python Cache
+__pycache__/ 

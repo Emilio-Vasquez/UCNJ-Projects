@@ -1,0 +1,145 @@
+<!--
+  about.html
+  "About Us" page for the TO DO?! TO DONE!!! application.
+
+  This file contains a short description, two illustrative photos (one of a person
+  writing, another of a person exercising), and plenty of comments to explain
+  the structure and accessibility choices. The images are hotlinked from
+  Unsplash (free to use for demos). Replace with your own assets if desired.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>About Us - TO DO?! TO DONE!!!</title>
+  <link rel="stylesheet" href="style.css"> <!-- Reuse main stylesheet for consistent look -->
+  <!-- Auth expiration check: force logout when session expires (24h) -->
+  <script>
+    (function(){
+      try{
+        const raw = localStorage.getItem('authSession');
+        if(!raw){ window.location.href='login.html'; return; }
+        const session = JSON.parse(raw);
+        if(!session.expiresAt || Date.now() > session.expiresAt){ localStorage.removeItem('authSession'); localStorage.removeItem('isAuthenticated'); window.location.href='login.html'; return; }
+        const remaining = session.expiresAt - Date.now();
+        if(remaining>0){ setTimeout(()=>{ localStorage.removeItem('authSession'); localStorage.removeItem('isAuthenticated'); window.location.replace('login.html'); }, remaining); }
+        setInterval(()=>{ const s = localStorage.getItem('authSession'); if(!s) window.location.href='login.html'; try{ const ss=JSON.parse(s||'null'); if(!ss||!ss.expiresAt||Date.now()>ss.expiresAt){ localStorage.removeItem('authSession'); localStorage.removeItem('isAuthenticated'); window.location.href='login.html'; } }catch(e){ localStorage.removeItem('authSession'); localStorage.removeItem('isAuthenticated'); window.location.href='login.html'; } }, 60000);
+      }catch(e){ localStorage.removeItem('authSession'); localStorage.removeItem('isAuthenticated'); window.location.href='login.html'; }
+    })();
+  </script>
+  <!--
+    Small page-local styles to ensure the about page looks good without
+    changing the overall stylesheet. These are minimal and kept here to
+    keep the example self-contained.
+  -->
+  <style>
+    .about-container { max-width: 900px; margin: 28px auto; padding: 18px; }
+    .about-hero { display:flex; gap:18px; align-items:center; flex-wrap:wrap; }
+    .about-hero img { width:100%; max-width:420px; border-radius:10px; box-shadow:0 6px 18px rgba(0,0,0,0.08); }
+    .about-text { flex:1 1 300px; }
+    .about-title { font-size:28px; margin:4px 0 12px 0; }
+    .about-sub { color:var(--muted,#666); margin-bottom:12px; }
+    .about-section { margin-top:18px; }
+    .about-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:12px; }
+    @media (max-width:700px) { .about-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <!-- Sidebar Toggle Button: keeps same UX as other pages -->
+  <button id="openSidebarBtn" onclick="openSidebar()" class="sidebar-toggle">☰</button>
+
+  <!-- The site uses the same sidebar markup across pages; keeping links consistent is helpful. -->
+  <nav class="sidebar" id="mySidebar">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeSidebar()">&times;</a>
+    <a href="to-do-project.html#home">Home</a>
+    <a href="today.html">Today</a>
+    <a href="future.html">Future Plans</a>
+    <a href="feedback.html">Feedback</a>
+    <a href="about.html">About Us</a> <!-- Self link is okay to keep sidebar consistent -->
+    <div class="sidebar-divider"></div>
+    <a href="#" id="logoutBtn" class="logout-link">Logout</a>
+  </nav>
+
+  <!-- Main container for About content -->
+  <main class="about-container">
+    <!-- Page header: title and short subtitle -->
+    <header class="about-hero">
+      <!-- Image: person writing - used to illustrate planning, note-taking, and focus -->
+      <!--
+        Source: Unsplash (hotlinked) - good for demos. The 'alt' attribute describes
+        the image for screen-reader users and is important for accessibility.
+      -->
+      <img src="https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=800&q=60" alt="Person writing notes in a notebook, representing planning and focus">
+
+      <!-- Short description explaining team and mission -->
+      <div class="about-text">
+        <h1 class="about-title">About Us</h1>
+        <p class="about-sub">This webpage is made to be the ultimate to done all in one. It gets tiring going from one app to the other looking for basic daily information like news, weather, time and date.</p>
+        <!-- A few bullets describing values. Kept short and clear for scanning. -->
+        <ul>
+          <li>Simple features that focus on getting things done.</li>
+          <li>Privacy-focused: this demo stores data locally in your browser.</li>
+          <li>Designed in a sleek and modern taste in mind — currently in beta </li>
+          <li>Made for the people. </li>
+        </ul>
+      </div>
+    </header>
+
+    <!-- Additional section: showcase an active lifestyle image -->
+    <section class="about-section">
+      <h2>Why we care about balance</h2>
+      <!-- Two-column grid with image and short caption -->
+      <div class="about-grid">
+        <!-- Image: person exercising - illustrates health and balance -->
+        <!-- Using a second Unsplash image for demo purposes. Alt text explains what's pictured. -->
+        <figure>
+          <img src="https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=800&q=60" alt="Person exercising outdoors, representing health and work-life balance">
+          <figcaption style="font-size:13px;color:var(--muted,#666);">Taking breaks and staying active helps productivity.</figcaption>
+        </figure>
+
+        <!-- Short text block explaining why healthy habits matter for productivity -->
+        <div>
+          <p>
+            We believe good tools support good habits. The small rituals of planning, short focus sessions, and movement make a big difference over time.
+          </p>
+          <p>
+            This page is heavily commited to help you see your goals met. With constant updates and new features, we aim to make your daily routine easier and more productive.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer note with link back to main app -->
+    <div style="margin-top:18px;">
+      <a href="to-do-project.html" class="back-link">← Back to Dashboard</a>
+    </div>
+  </main>
+
+  <!-- Minimal script to support sidebar open/close (copied from other pages). Comments explain why it exists. -->
+  <script>
+    // Simple sidebar open/close helpers are present on multiple pages for consistent UX.
+    function openSidebar() {
+      document.getElementById('mySidebar').classList.add('open');
+      document.getElementById('openSidebarBtn').style.display = 'none';
+    }
+    function closeSidebar() {
+      document.getElementById('mySidebar').classList.remove('open');
+      document.getElementById('openSidebarBtn').style.display = 'block';
+    }
+
+    // Ensure logout button (if present) performs the same action as other pages.
+    document.addEventListener('DOMContentLoaded', () => {
+      const logoutBtn = document.getElementById('logoutBtn');
+      if (logoutBtn) {
+        logoutBtn.addEventListener('click', () => {
+          // Clear session keys used by the demo app and redirect to login
+          localStorage.removeItem('authSession');
+          localStorage.removeItem('isAuthenticated');
+          window.location.href = 'login.html';
+        });
+      }
+    });
+  </script>
+</body>
+</html>

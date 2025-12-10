@@ -1,0 +1,169 @@
+<!--
+  admin-feedback.html
+  This is the admin panel for viewing and managing user feedback.
+  Shows statistics like total feedback, average rating, and bug reports.
+-->
+<!DOCTYPE html> <!-- HTML5 document type declaration -->
+<html lang="en"> <!-- Set language to English -->
+<head>
+  <meta charset="UTF-8"> <!-- Character encoding for Unicode support -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Mobile responsive scaling -->
+  <title>Admin - Feedback</title> <!-- Browser tab title -->
+  <!-- Auth expiration check: force logout when session expires (24h) -->
+  <script>
+    (function(){
+      try{
+        const raw = localStorage.getItem('authSession');
+        if(!raw){ window.location.href='login.html'; return; }
+        const session = JSON.parse(raw);
+        if(!session.expiresAt || Date.now() > session.expiresAt){
+          localStorage.removeItem('authSession'); localStorage.removeItem('isAuthenticated'); window.location.href='login.html'; return;
+        }
+        const remaining = session.expiresAt - Date.now();
+        if(remaining>0){ setTimeout(()=>{ localStorage.removeItem('authSession'); localStorage.removeItem('isAuthenticated'); window.location.replace('login.html'); }, remaining); }
+        setInterval(()=>{ const s = localStorage.getItem('authSession'); if(!s) window.location.href='login.html'; try{ const ss=JSON.parse(s||'null'); if(!ss||!ss.expiresAt||Date.now()>ss.expiresAt){ localStorage.removeItem('authSession'); localStorage.removeItem('isAuthenticated'); window.location.href='login.html'; } }catch(e){ localStorage.removeItem('authSession'); localStorage.removeItem('isAuthenticated'); window.location.href='login.html'; } }, 60000);
+      }catch(e){ localStorage.removeItem('authSession'); localStorage.removeItem('isAuthenticated'); window.location.href='login.html'; }
+    })();
+  </script>
+  <link rel="stylesheet" href="style.css"> <!-- Main CSS file -->
+</head>
+<body>
+  <!-- Sidebar Toggle Button: hamburger (lol) menu to open navigation -->
+  <button id="openSidebarBtn" onclick="openSidebar()" class="sidebar-toggle">☰</button>
+
+  <!-- Sidebar Navigation: links to all main pages -->
+  <nav class="sidebar" id="mySidebar">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeSidebar()">&times;</a> <!-- Close button -->
+    <a href="to-do-project.html#home">Home</a> <!-- Link to dashboard -->
+    <a href="to-do-project.html#weather">Weather</a> <!-- Link to weather section -->
+    <a href="future.html">Future Plans</a> <!-- Link to calendar -->
+    <a href="feedback.html">Feedback</a> <!-- Link to feedback form -->
+    <a href="about.html">About Us</a>
+  </nav>
+
+  <!-- Main Content: admin panel with statistics and feedback list -->
+  <div class="main-content">
+    <a href="to-do-project.html" class="back-link">← Back to Home</a> <!-- Back to dashboard -->
+    <h1 class="admin-title">Admin Panel - Feedback</h1> <!-- Page title -->
+
+    <!-- Statistics cards: overview of feedback data -->
+    <div class="admin-stats">
+      <!-- Card 1: Total number of feedback submissions -->
+      <div class="stat-card">
+        <div class="stat-number" id="totalFeedback">0</div> <!-- Total feedback count -->
+        <div class="stat-label">Total Feedback</div>
+      </div>
+      <!-- Card 2: Average user rating across all feedback -->
+      <div class="stat-card">
+        <div class="stat-number" id="avgRating">0</div> <!-- Average star rating -->
+        <div class="stat-label">Avg Rating</div>
+      </div>
+      <!-- Card 3: Number of bug reports submitted -->
+      <div class="stat-card">
+        <div class="stat-number" id="bugReports">0</div> <!-- Bug report count -->
+        <div class="stat-label">Bug Reports</div>
+      </div>
+    </div>
+// <!-- Feedback List: display of all user feedback entries -->
+    <div style="margin-bottom: 24px;">
+      <button class="admin-btn" onclick="exportFeedback()">Export as CSV</button>
+      <button class="admin-btn danger" onclick="clearAllFeedback()">Clear All</button>
+    </div>
+
+    <div class="feedback-list" id="feedbackList">
+      <div class="no-feedback">No feedback received yet.</div>
+    </div>
+  </div>
+
+  <script>
+    function openSidebar() {
+      document.getElementById('mySidebar').classList.add('open');
+      document.getElementById('openSidebarBtn').style.display = 'none';
+    }
+    function closeSidebar() {
+      document.getElementById('mySidebar').classList.remove('open');
+      document.getElementById('openSidebarBtn').style.display = 'block';
+    }
+
+    function loadFeedback() {
+      const feedbackList = JSON.parse(localStorage.getItem('feedbackList')) || [];
+      const feedbackDiv = document.getElementById('feedbackList');
+      
+      // Update stats
+      document.getElementById('totalFeedback').textContent = feedbackList.length;
+      
+      const avgRating = feedbackList.length > 0 
+        ? (feedbackList.reduce((sum, f) => sum + (f.rating || 0), 0) / feedbackList.length).toFixed(1)
+        : 0;
+      document.getElementById('avgRating').textContent = avgRating;
+      
+      const bugCount = feedbackList.filter(f => f.category === 'bug').length;
+      document.getElementById('bugReports').textContent = bugCount;
+
+      if (feedbackList.length === 0) {
+        feedbackDiv.innerHTML = '<div class="no-feedback">No feedback received yet.</div>';
+        return;
+      }
+
+      const entries = feedbackList.slice().reverse();
+      feedbackDiv.innerHTML = entries.map((f, idx) => `
+        <div class="feedback-item">
+          <div class="feedback-header">
+            <div>
+              <div class="feedback-name">${f.name}</div>
+              <div class="feedback-email">${f.email}</div>
+            </div>
+            <div style="text-align: right;">
+              <span class="feedback-category">${f.category}</span>
+              <div class="feedback-rating">${'★'.repeat(f.rating)}${'☆'.repeat(5-f.rating)}</div>
+            </div>
+          </div>
+          <div class="feedback-subject">${f.subject}</div>
+          <div class="feedback-message">${f.message}</div>
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <span class="feedback-timestamp">${f.timestamp}</span>
+            <button class="admin-btn danger" onclick="deleteFeedback(${idx})">Delete</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function deleteFeedback(idx) {
+      let feedbackList = JSON.parse(localStorage.getItem('feedbackList')) || [];
+      feedbackList.splice(feedbackList.length - 1 - idx, 1);
+      localStorage.setItem('feedbackList', JSON.stringify(feedbackList));
+      loadFeedback();
+    }
+
+    function exportFeedback() {
+      const feedbackList = JSON.parse(localStorage.getItem('feedbackList')) || [];
+      if (feedbackList.length === 0) {
+        alert('No feedback to export.');
+        return;
+      }
+
+      let csv = 'Name,Email,Category,Subject,Rating,Message,Timestamp\n';
+      feedbackList.forEach(f => {
+        const msg = f.message.replace(/"/g, '""');
+        csv += `"${f.name}","${f.email}","${f.category}","${f.subject}",${f.rating},"${msg}","${f.timestamp}"\n`;
+      });
+
+      const blob = new Blob([csv], { type: 'text/csv' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `feedback_${new Date().toISOString().split('T')[0]}.csv`;
+      a.click();
+    }
+
+    function clearAllFeedback() {
+      if (confirm('Are you sure you want to delete all feedback? This cannot be undone.')) {
+        localStorage.removeItem('feedbackList');
+        loadFeedback();
+      }
+    }
+
+    loadFeedback();
+  </script>
+</body>
+</html>
