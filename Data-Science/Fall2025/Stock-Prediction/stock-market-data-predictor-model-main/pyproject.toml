@@ -1,0 +1,19 @@
+[project]
+name = "stock-market-data-predictor-model"
+version = "0.1.0"
+description = "Creating a 'heat number' that indicates if a company is going to introduce new stock volume"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "bs4>=0.0.2",
+    "dotenv>=0.9.9",
+    "flask>=3.1.2",
+    "flask-login>=0.6.3",
+    "index-py>=0.21.16",
+    "pandas>=2.3.2",
+    "plotly>=6.5.0",
+    "psycopg2-binary>=2.9.11",
+    "requests>=2.32.5",
+    "scikit-learn>=1.7.2",
+    "yfinance>=0.2.66",
+]

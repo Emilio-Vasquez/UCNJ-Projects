@@ -1,0 +1,39 @@
+
+{% extends "base.html" %}
+
+{% block title %}Feedback{% endblock %}
+
+{% block bg_image %}{{ url_for('static', filename='images/default-bg.jpg') }}{% endblock %}
+
+{% block content %}
+
+    {% if prediction_text %}
+        <h2 style="color: #000; margin: 0;">{{ prediction_text }}</h2>
+        <img src="data:image/png;base64,{{ data }}" style="max-width: 100%;"/>
+
+<div style="margin-top: 20px; background: white; padding: 15px; border-radius: 8px;">
+    <h3>Your Home vs. {{town}} Median</h3>
+    <table border="1" style="width: 100%; border-collapse: collapse; text-align: center;">
+        <tr style="background-color: #f2f2f2;">
+            <th style="padding: 10px;">Features</th>
+            <th style="padding: 10px;">Your House</th>
+            <th style="padding: 10px;">Town Median</th>
+            <th style="padding: 10px;">Difference Vs Town</th> </tr>
+        {% for row in comparison_table %}
+        <tr>
+            <td style="padding: 8px; text-align: left;">{{ row.feature }}</td>
+            <td style="padding: 8px;">{{ row.user }}</td>
+            <td style="padding: 8px;">{{ row.town }}</td>
+
+            <td style="padding: 8px; font-weight: bold; color: {% if '-' in row.diff %}black{% elif '+' in row.diff %}black{% else %}black{% endif %};">
+                {{ row.diff }}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+    {% endif %}
+
+<br>
+<a href="{{ url_for('main.home') }}">Back to Home</a>
+{% endblock %}

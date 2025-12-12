@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+
+{% block title %}Home - House App{% endblock %}
+
+{% block bg_image %}{{ url_for('static', filename='images/default-bg.jpg') }}{% endblock %}
+
+<body>
+{% block content %}
+<h1>Predict House Price</h1>
+
+
+<form action="/home" method="POST">
+
+    <label for="town">Select Town:</label>
+    <select id="town" name="town">
+        <option value="2901">Berkeley Heights</option>
+        <option value="2902">Clark</option>
+        <option value="2903">Cranford</option>
+        <option value="2904">Elizabeth</option>
+        <option value="2905">Fanwood</option>
+        <option value="2906">Garwood</option>
+        <option value="2907">Hillside</option>
+        <option value="2908">Kenilworth</option>
+        <option value="2909">Linden</option>
+        <option value="2910">Mountainside</option>
+        <option value="2911">New Providence</option>
+        <option value="2912">Plainfield</option>
+        <option value="2913">Rahway</option>
+        <option value="2914">Roselle</option>
+        <option value="2915">Roselle Park</option>
+        <option value="2916">Scotch Plains</option>
+        <option value="2917">Springfield</option>
+        <option value="2918">Summit</option>
+        <option value="2919">Union</option>
+        <option value="2920">Westfield</option>
+        <option value="2921">Winfield</option>
+    </select>
+    <br><br>
+
+
+    <label for="beds">Bedrooms:</label>
+    <select id="beds" name="beds">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+    </select>
+    <br><br>
+
+
+    <label for="full_baths">Full Bathrooms:</label>
+    <select id="full_baths" name="full_baths">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+    </select>
+    <br><br>
+
+
+    <label for="half_baths">Half Bathrooms:</label>
+    <select id="half_baths" name="half_baths">
+        <option value="0">0</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+    </select>
+    <br><br>
+
+
+    <label for="garage">Garage Capacity:</label>
+    <select id="garage" name="garage">
+        <option value="0">0 (None)</option>
+        <option value="1">1 Car</option>
+        <option value="2">2 Cars</option>
+        <option value="3">3+ Cars</option>
+    </select>
+    <br><br>
+
+
+    <label for="year">Year Built (1900-2024):</label>
+    <input type="number" id="year" name="year" min="1900" max="2025" placeholder="e.g. 1950" required>
+    <br><br>
+
+
+    <label for="acres">Lot Size (Acres, ~0.10):</label>
+    <input type="number" id="acres" name="acres" step="0.01" min="0.01" max="3.0" placeholder="e.g. 0.15" required>
+    <br><br>
+
+    <button type="submit">Predict Price</button>
+</form>
+    <!--  output to web  -->
+    {% if prediction_text %}
+        <div style="margin-top: 25px; padding: 15px; background: rgba(0, 0, 0, 0.6); border-radius: 10px; border: 1px solid #4CAF50;">
+            <h2 style="color: #76ff03; margin: 0;">{{ prediction_text }}</h2>
+        </div>
+    {% endif %}
+
+<br>
+<a href="{{ url_for('main.about') }}">Go to About Page</a>
+<br>
+<a href="{{ url_for('main.feedback') }}">Give us Feedback!</a>
+<br>
+<a href="{{ url_for('main.register') }}">Register!</a>
+<br>
+<a href="{{ url_for('main.login') }}">Login!</a>
+<br>
+{% endblock %}
+</body>
+</html>

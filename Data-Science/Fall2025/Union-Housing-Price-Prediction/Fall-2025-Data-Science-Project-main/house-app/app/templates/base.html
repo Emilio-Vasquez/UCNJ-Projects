@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}House App{% endblock %}</title>
+    #{Title Block & Default: Defines the title that appears in the browser tab.#}
+  
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <style> {#CSS Stylesheet: Links an external CSS file named #}
+        body {
+            /* This will be filled by other pages */
+            background-image: url('{% block bg_image %}{% endblock %}');
+        }
+    </style>
+</head>
+<body class="bg-custom">
+
+
+<div class="container" style="height:100vh; display:flex; justify-content:center; align-items:center;">
+    <div class="col-md-6">
+        
+        <div class="card card-glass shadow" style="padding:30px; border-radius:10px;"> {#Content Card: The main content box.#}
+           
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+</div>
+
+
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    {#JavaScript Link: Links an external JavaScript file (script.js)#}
+
+</body>
+</html>

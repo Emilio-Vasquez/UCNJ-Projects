@@ -1,0 +1,20 @@
+## VirtualEnv ignore
+.VirtualEnv
+venv/
+MyVenv/
+VirtualEnv/
+.env
+.env/
+env/
+### ignore .env 
+
+## database files
+*.database
+
+
+## ignore .env
+.env
+
+##python
+__pycache__/
+

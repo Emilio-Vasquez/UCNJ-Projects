@@ -1,0 +1,18 @@
+{% extends "base.html" %} {# This line tells the template engine (Jinja) that this file inherits its structure 
+(layout, header, footer, etc.) from a parent template file named base.html. #}
+
+{% block title %}About Us{% endblock %}
+{#Title Block: This overrides the title block defined in base.html.#}
+
+{% block bg_image %}{{ url_for('static', filename='images/default-bg.jpg') }}{% endblock %}
+{#Background Image Block: This overrides the bg_image block#}
+{% block content %}
+
+<h2>About Us</h2>
+{#heading#}
+<p>We help people find their dream homes.</p>
+<p>Our team tried to make house hunting easy.</p>
+
+<a href="{{ url_for('main.home') }}">Back to Home</a>
+{% endblock %}
+

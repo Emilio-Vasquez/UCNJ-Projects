@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}Charts{% endblock %}
+
+{% block content %}
+
+    <div class="container-fluid pt-4 px-4">
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-4">
+                <div class="card shadow p-3 mt-5 mb-5 rounded">
+                    <div class="card-header"><h5 class="card-title">Houses per Borough</h5></div>
+                    <div class="card-body"><canvas id="housesPerBoroughChart"></canvas></div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4">
+                <div class="card shadow p-3 mt-5 mb-5 rounded">
+                    <div class="card-header"><h5 class="card-title">Histogram: Sale Price</h5></div>
+                    <div class="card-body"><canvas id="salePriceHistChart"></canvas></div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4">
+                <div class="card shadow p-3 mt-5 mb-5 rounded">
+                    <div class="card-header"><h5 class="card-title">Histogram: Land Square Feet</h5></div>
+                    <div class="card-body"><canvas id="landSqftHistChart"></canvas></div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4">
+                <div class="card shadow p-3 mt-5 mb-5 rounded">
+                    <div class="card-header"><h5 class="card-title">Histogram: Gross Square Feet</h5></div>
+                    <div class="card-body"><canvas id="grossSqftHistChart"></canvas></div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4">
+                <div class="card shadow p-3 mt-5 mb-5 rounded">
+                    <div class="card-header"><h5 class="card-title">Square Feet vs. Sale Price</h5></div>
+                    <div class="card-body"><canvas id="sqftVsPriceScatterChart"></canvas></div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4">
+                <div class="card shadow p-3 mt-5 mb-5 rounded">
+                    <div class="card-header"><h5 class="card-title">Log(Square Feet) vs. Log(Price)</h5></div>
+                    <div class="card-body"><canvas id="logSqftVsPriceScatterChart"></canvas></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const DATA = {{chart_data | tojson | safe}} // It says error but it is okay lmao 
+    </script>
+
+    <script src="{{ url_for('static', filename="scripts/charts.js")}}"></script>
+
+{% endblock %}

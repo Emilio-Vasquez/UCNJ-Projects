@@ -1,0 +1,35 @@
+{% extends "authBase.html" %}
+{% set mode = "login" %}
+{% set page_title = "Login" %}
+
+{% block auth_form %}
+
+<div class="login-card fade-in">
+
+    <div class="login-header slide-down">
+        <h1>Welcome Back</h1>
+        <p>Log in to continue</p>
+    </div>
+
+    <div class="login-body fade-in-delay">
+
+        {% set action = url_for('main.login') %}
+        {% set button_text = "Log In" %}
+        {% set fields = [
+            {"type": "email", "name": "email", "placeholder": "Email"},
+            {"type": "password", "name": "password", "placeholder": "Password"}
+        ] %}
+
+        {% include "_auth_form.html" %}
+    </div>
+
+    <div class="login-footer fade-in-delay-2">
+        <p>
+            New here?
+            <a href="{{ url_for('main.register') }}">Create an account</a>
+        </p>
+    </div>
+
+</div>
+
+{% endblock %}

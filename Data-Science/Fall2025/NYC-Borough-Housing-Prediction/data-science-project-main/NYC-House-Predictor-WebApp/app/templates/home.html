@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 mb-3 mb-md-0">
+                <div class="card shadow p-3 mt-5 mb-5 rounded">
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold">Predict House Price</h5>
+                        <p class="card-text">Enter the features of the house you want to predict the price of.</p>
+                        <form method="POST" id="predictor_form">
+                            <div class="mb-3">
+                                <label for="borough" class="form-label">Borough</label>
+                                <select class="form-select" name="borough" id="borough" required>
+                                    <option value="Manhattan">Manhattan</option>
+                                    <option value="Bronx">Bronx</option>
+                                    <option value="Brooklyn">Brooklyn</option>
+                                    <option value="Queens">Queens</option>
+                                    <option value="Staten Island">Staten Island</option>
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="zip_code" class="form-label">Zip Code</label>
+                                <input type="number" class="form-control" id="zip_code" name="zip_code" min="1" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="propertyType" class="form-label">Property Type</label>
+                                <select class="form-select" id="propertyType" required>
+                                    <option value="01 ONE FAMILY DWELLINGS">Single Family Home</option>
+                                    <option value="02 TWO FAMILY DWELLINGS">Two Family Home</option>
+                                    <option value="03 THREE FAMILY DWELLINGS">Three Family Home</option>
+                                    <option value="07 RENTALS - WALKUP APARTMENTS">Small Apartament Building</option>
+                                    <option value="11 SPECIAL CONDO BILLING LOTS">Condo / Co-op</option>
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="gross_sqft" class="form-label">Gross Square Feet</label>
+                                <input type="number" class="form-control" id="gross_sqft" name="gross_sqft" min="1" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="land_sqft" class="form-label">Land Square Feet</label>
+                                <input type="number" class="form-control" id="land_sqft" name="land_sqft" min="0" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="year_built" class="form-label">Year Built</label>
+                                <input type="number" class="form-control" id="year_built" name="year_built" min="1" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <button type="button" onclick="makePrediction()" id="submitBtn" class="btn btn-primary">Predict</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card shadow p-3 mt-5 mb-5 rounded">
+                    <div class="card-body" id="resultArea">
+                        <h4 class="card-title fw-bold">Result</h4>
+                        <h5 class="card-text">Estimated Market Value:</h5>
+                        <h1 class="display-4 text-success fw-bold" id="priceDisplay">$0</h1>
+                        <p class="lead"><span class="fw-bold">Probable range:</span> <span id="rangeDisplay">...</span></p>
+                    </div>
+                    <div id="errorArea" class="alert alert-danger mt-3 d-none"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename="scripts/predictor.js")}}"></script>
+
+
+
+{% endblock %}

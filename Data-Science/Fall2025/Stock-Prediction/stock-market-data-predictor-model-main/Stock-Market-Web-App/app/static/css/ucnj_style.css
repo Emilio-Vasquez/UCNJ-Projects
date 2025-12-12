@@ -1,0 +1,554 @@
+/** web theme colors */
+
+/** Base colors */
+:root {
+        --clr-dark-a0: #ed0707;
+        --clr-light-a0: #ffffff;
+
+        /** Theme primary colors */
+        --clr-primary-a0: #ff3c00;
+        --clr-primary-a10: #f72626; 
+        --clr-primary-a20: #ffffff;
+        --clr-primary-a30: #ff1212;
+
+        /** Theme surface colors */
+        --clr-surface-a0: #ff0909;
+        --clr-surface-a10: #ff0c0c;
+        --clr-surface-a20: rgb(250, 18, 18);
+        --clr-surface-a30: #ffffff;
+
+        /** Theme tonal surface colors */
+        --clr-surface-tonal-a0: #ffffff;
+        --clr-surface-tonal-a10: #f8f8f8;
+        --clr-surface-tonal-a20: #545b53;
+        --clr-surface-tonal-a30: #6b7169;
+
+        /** Success colors */
+        --clr-success-a0: #22946e;
+        --clr-success-a10: #47d5a6;
+        --clr-success-a20: #9ae8ce;
+
+        /** Warning colors */
+        --clr-warning-a0: #a87a2a;
+        --clr-warning-a10: #d7ac61;
+        --clr-warning-a20: #ecd7b2;
+
+        /** Danger colors */
+        --clr-danger-a0: #9c2121;
+        --clr-danger-a10: #d94a4a;
+        --clr-danger-a20: #eb9e9e;
+
+        /** Info colors */
+        --clr-info-a0: #21498a;
+        --clr-info-a10: #4077d1;
+        --clr-info-a20: #92b2e5;
+}
+
+body {
+        font-family: "Space Mono", monospace;
+        font-weight: 400;
+        font-style: normal;
+        background-color: var(--clr-surface-tonal-a0);
+        padding: 20px;
+}
+
+h1 {
+        color: var(--clr-primary-a0);
+}
+
+
+
+a {
+        text-decoration: none;
+        color: var(--clr-light-a0);
+}
+
+h1 a {
+        font-weight: 500;
+
+        padding-bottom: 6px;
+}
+
+.navHeader {
+        background: var(--clr-surface-a0);
+        padding: 1rem 2rem;
+        border-bottom: 2px solid var(--clr-primary-a20);
+}
+
+.navContainer {
+        max-width: 1200px;
+        margin: 0 auto;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+}
+
+.webTitle a {
+        color: var(--clr-primary-a20);
+        text-decoration: none;
+        font-size: 1.6rem;
+        font-weight: 700;
+        font-family: "Space Mono", monospace;
+}
+
+.navMenu ul {
+        list-style: none;
+        margin: 1rem;
+        padding: 0;
+
+        display: flex;
+        gap: 2rem;
+}
+
+.navMenu a {
+        text-decoration: none;
+        color: var(--clr-light-a0);
+        font-weight: 500;
+        transition: 0.25s ease;
+        border-radius: 6px;
+        padding: 0.3rem 0.9rem;
+        margin: 0;
+}
+
+.navMenu a:hover {
+        color: var(--clr-primary-a20);
+        background: var(--clr-surface-tonal-a10);
+}
+
+.navMenu .login {
+        margin-left: 3rem;
+        padding: 0.5rem 0.9rem;
+        color: var(--clr-light-a0);
+        border-radius: 6px;
+        font-weight: 700;
+}
+.Abouttitle {
+        font-family: 'Arial', sans-serif;
+        font-size: 2rem;
+        color: #ffffff;
+        margin-bottom: 1rem;
+        text-align: center;
+}
+/*This is the style for the Go to Home function located in About page */
+a.my-home-link {
+  color: #007BFF;           /* Base color */
+  
+  text-decoration: none;        /* Remove default underline */
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  cursor: pointer;
+  display: inline-block;        /* So padding & border works nicely */
+  
+}/*This is the style for the Go to Home function located in About page */
+
+a.my-home-link:hover,
+a.my-home-link:focus {
+  color: #ffffff;
+  background-color: #0056b3;
+  text-decoration:none         /* You can add underline or not */
+  
+                 /* We'll define a custom focus style next */
+}
+
+/* Layout */
+.about-container {
+    max-width: 900px;
+    margin: auto;
+    padding: 2rem;
+    color: #222;
+}
+
+.about-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.about-title {
+    font-size: 2.4rem;
+    margin-bottom: 0.3rem;
+}
+
+.about-subtitle {
+    font-size: 1.15rem;
+    color: #555;
+}
+
+.about-section {
+    margin-top: 2rem;
+}
+
+.about-list {
+    list-style: none;
+    padding-left: 0;
+}
+
+.about-list li {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+    padding-left: 0.2rem;
+    display: flex;
+    align-items: center;
+}
+
+/* Animations */
+.fade-in {
+    opacity: 0;
+    animation: fadeIn 1s forwards ease-out;
+}
+
+.fade-in-delay {
+    opacity: 0;
+    animation: fadeIn 1s 0.3s forwards ease-out;
+}
+
+.fade-in-delay-2 {
+    opacity: 0;
+    animation: fadeIn 1s 0.6s forwards ease-out;
+}
+
+.fade-in-delay-3 {
+    opacity: 0;
+    animation: fadeIn 1s 0.9s forwards ease-out;
+}
+
+.slide-down {
+    position: relative;
+    top: -10px;
+    opacity: 0;
+    animation: slideDown 0.8s forwards ease-out;
+}
+
+@keyframes fadeIn {
+    to { opacity: 1; }
+}
+
+@keyframes slideDown {
+    to {
+        top: 0;
+        opacity: 1;
+    }
+}
+
+/* Button */
+.home-button {
+    display: inline-block;
+    margin-top: 1.3rem;
+    padding: 0.6rem 1.2rem;
+    background: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.bounce-hover:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Log in Page */
+/* Card container */
+.login-card {
+    max-width: 430px;
+    margin: 4rem auto;
+    background: #fff;
+    border-radius: 18px;
+    padding: 0 2.2rem 2.2rem
+    box-shadow:0px 15px 45px rgba(0, 0, 0, 0.10);
+    overflow:hidden;
+}
+
+/* Header */
+.login-header {
+    text-align: center;
+    padding: 2rem 1rem 1.6rem;
+    background: linear-gradient(135deg, #ff0000, #6a5af9);
+    color: rgb(255, 255, 255);
+    border-radius: 0 0 18px 18px;
+}
+
+.login-header h1 {
+    margin: 0;
+    font-size: 1.9rem;
+    font-weight: 600;
+}
+
+.login-header p {
+    margin-top: 0.4rem;
+    opacity: 0.9;
+    font-size: 0.95rem;
+}
+
+/* Body */
+.login-body {
+    margin-top: 2rem;
+}
+
+/* Footer */
+.login-footer {
+    margin-top: 1.8rem;
+    text-align: center;
+}
+
+.login-footer p {
+    font-size: 0.95rem;
+    color: #555;
+}
+
+.login-footer a {
+    color: #4f80ff;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.login-footer a:hover {
+    text-decoration: underline;
+}
+
+/* Animations */
+.fade-in {
+    opacity: 0;
+    animation: fadeIn 0.9s forwards ease-out;
+}
+
+.fade-in-delay {
+    opacity: 0;
+    animation: fadeIn 0.9s 0.25s forwards ease-out;
+}
+
+.fade-in-delay-2 {
+    opacity: 0;
+    animation: fadeIn 0.9s 0.45s forwards ease-out;
+}
+
+.slide-down {
+    opacity: 0;
+    transform: translateY(-10px);
+    animation: slideDown 0.95s forwards ease-out;
+}
+
+@keyframes fadeIn {
+    to { opacity: 1; }
+}
+
+@keyframes slideDown {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/*Register */
+
+/* Card container */    
+.auth-card {
+    max-width: 450px;
+    margin: 4rem auto;
+    background: #ffffff;
+    border-radius: 18px;
+    padding: 0 2.4rem 2.4rem;
+    box-shadow: 0 16px 40px rgba(0, 47, 255, 0.08);
+}
+
+/* Header with gradient */
+.auth-header {
+    text-align: center;
+    padding: 2rem 1rem 1.6rem;
+    background: linear-gradient(135deg, #d20000, #ff0a0a);
+    color: rgb(255, 255, 255);
+    border-radius: 0 0 18px 18px;
+}
+
+.auth-header h1 {
+    margin: 0;
+    font-size: 2rem;
+    font-weight: 600;
+}
+.auth-header p {
+    margin-top: 0.4rem;
+    font-size: 0.95rem;
+    opacity: 0.9;
+}
+
+/* Form body */
+.auth-body {
+    margin-top: 2rem;
+}
+
+/* Floating labels */
+.floating-label {
+    position: relative;
+    margin-bottom: 1.5rem;
+}
+
+.floating-label input {
+    width: 100%;
+    padding: 0.9rem 0.5rem 0.3rem 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    font-size: 1rem;
+    background: none;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.floating-label input:focus {
+    border-color: #00ff11;
+    box-shadow: 0 0 6px rgba(43, 255, 0, 0.3);
+    outline: none;
+}
+
+.floating-label label {
+    position: absolute;
+    top: 50%;
+    left: 0.5rem;
+    transform: translateY(-50%);
+    color: #ff0000;
+    font-size: 1rem;
+    transition: 0.2s;
+    pointer-events: none;
+}
+
+.floating-label input:focus + label,
+.floating-label input:not(:placeholder-shown) + label {
+    top: -0.6rem;
+    left: 0.5rem;
+    font-size: 0.8rem;
+    color: #ff0101;
+    background: #05df31;
+    padding: 0 0.2rem;
+}
+
+/* Submit button */
+.auth-body button {
+    width: 100%;
+    padding: 0.9rem 1rem;
+    background: #da0404e5;
+    color: rgb(255, 255, 255);
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+}
+
+.auth-body button:hover {
+    background: #010000;
+    transform: translateY(-2px);
+}
+
+/* Footer */
+.auth-footer {
+    margin-top: 1.8rem;
+    text-align: center;
+}
+
+.auth-footer p {
+    font-size: 0.95rem;
+    color: #555;
+}
+
+.auth-footer a {
+    color: #3d5f00;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.auth-footer a:hover {
+    text-decoration: underline;
+}
+
+
+/* Dashboard */
+.dashboard-container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 2rem;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.dashboard-header h1 {
+    font-size: 2.2rem;
+    margin-bottom: 0.2rem;
+}
+
+.dashboard-header p {
+    color: #555;
+    font-size: 1rem;
+    margin-bottom: 2rem;
+}
+
+
+/* Feedback page */
+.feedback-container {
+    max-width: 600px;
+    margin: 3rem auto;
+    padding: 2rem;
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.feedback-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.feedback-header h1 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.feedback-header p {
+    color: #555;
+    font-size: 1rem;
+}
+
+.feedback-form .form-group {
+    margin-bottom: 1.5rem;
+}
+
+.feedback-form label {
+    display: block;
+    margin-bottom: 0.3rem;
+    font-weight: 600;
+}
+
+.feedback-form input,
+.feedback-form textarea {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    font-size: 1rem;
+}
+
+.feedback-form input:focus,
+.feedback-form textarea:focus {
+    outline: none;
+    border-color: #4f80ff;
+    box-shadow: 0 0 6px rgba(79, 128, 255, 0.3);
+}
+
+.feedback-form button {
+    width: 100%;
+    padding: 0.9rem;
+    background: #e00000;
+    color: white;
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.feedback-form button:hover {
+    background: #000002;
+}

@@ -1,0 +1,39 @@
+{% extends "authBase.html" %}
+{% set mode = "Sign Up" %}
+{% set page_title = "Register" %}
+
+{% block auth_form %}
+
+<div class="auth-card">
+
+    <!-- Header -->
+    <div class="auth-header">
+        <h1>Create Account</h1>
+        <p>Sign up to get started</p>
+    </div>
+
+    <!-- Form -->
+    <div class="auth-body">
+
+        {% set action = url_for('main.register') %}
+        {% set button_text = "Sign Up" %}
+        {% set fields = [
+            {"type": "name", "name":"name", "placeholder":"Name"},
+            {"type": "email", "name": "email", "placeholder": "Email"},
+            {"type": "password", "name": "password", "placeholder": "Password"}
+        ] %}
+
+        {% include "_auth_form.html" %}
+    </div>
+
+    <!-- Footer -->
+    <div class="auth-footer">
+        <p>
+            Already have an account? 
+            <a href="{{ url_for('main.login') }}">Log in</a>
+        </p>
+    </div>
+
+</div>
+
+{% endblock %}

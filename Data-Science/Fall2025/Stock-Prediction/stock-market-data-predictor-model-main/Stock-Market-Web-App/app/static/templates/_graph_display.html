@@ -1,0 +1,6 @@
+{% macro graph_interface(plot_html, title='Graph Title') %}
+<div class="graph-container">
+        <h2>{{ title }}</h2>
+        <div class="plotly-graph">{{ plot_html | safe }}</div>
+</div>
+{% endmacro %}

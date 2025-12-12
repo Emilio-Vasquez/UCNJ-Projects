@@ -1,0 +1,33 @@
+{% extends "base.html"%}
+{% from "_graph_display.html" import graph_interface %}
+
+{% block content %}
+<!-- we need to create the html structure of the dashboard -->
+
+<div class="dashboard"> 
+<div class="ticker-input">
+        <form method="POST" action="/dashboard">
+    <input 
+        type="text" 
+        name="shout" 
+        placeholder="ENTER WORD" 
+        required
+        pattern="[A-Z]+"
+        title="Only ONE WORD using CAPITAL LETTERS is allowed."
+    />
+
+    <button type="submit">Submit</button>
+</form>
+
+</div>
+
+<div class="dashboard-grid">
+
+        {{ graph_interface(graph1, "Stock Amount over Stock Price") }}
+        {{ graph_interface(graph2, "__ over  __") }}
+        {{ graph_interface(graph3, "__ over __")}}
+
+</div>
+</div>
+
+{% endblock %}

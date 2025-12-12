@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}Register{% endblock %}
+
+{% block bg_image %}{{ url_for('static', filename='images/register-bg.jpg') }}{% endblock %}
+
+{% block content %}
+<h2>Create Account</h2>
+
+
+<form action="/register" method ="POST">
+    <div>
+        <label>Full Name</label>
+        <input type="text" name="name" placeholder="Enter your name">
+    </div>
+
+    <div>
+        <label>Email</label>
+        <input type="email" name="email" placeholder="Enter email">
+    </div>
+
+    <div>
+        <label>Password</label>
+        <input type="password" name="password" placeholder="Password">
+    </div>
+
+    <div>
+        <label>Confirm Password</label>
+        <input type="password" name="confirm_password" placeholder="Confirm password">
+    </div>
+
+    <button type="submit">Register</button>
+</form>
+
+<p>
+    Already have an account? <a href="/login">Login here</a>
+</p>
+<!---
+<p>
+    Back to <a href="{{url_for('main.home')}}"> home page </a>
+</p>
+--->
+{% endblock %}
+
+
+
+
+
+
+
+
+
+

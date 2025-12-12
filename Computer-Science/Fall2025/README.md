@@ -1,4 +1,4 @@
-## **Student Project Groups of Spring 2025**
+## **Student Project Groups of Fall 2025**
 
 **Groups of 1–4 members:**
 

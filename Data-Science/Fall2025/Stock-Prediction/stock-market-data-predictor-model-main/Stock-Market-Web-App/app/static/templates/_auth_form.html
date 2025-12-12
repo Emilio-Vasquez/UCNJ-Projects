@@ -1,0 +1,42 @@
+<script>
+async function sendRequets() {
+    const ack = document.querySelector(".acknoledge");
+
+    // 1. Try to grab the form (if it exists in the block)
+    const form = document.querySelector("form");
+
+    // 2. Use form action OR fallback to current page route
+    const url = form?.action || window.location.pathname;
+
+    try {
+        const res = await fetch(url, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({})  // or your fields
+        });
+
+        const data = await res.json();
+
+        if (data.success === true) {
+            ack.textContent = "Success!";
+            ack.style.color = "green";
+        } else {
+            ack.textContent = "Error: Something went wrong.";
+            ack.style.color = "red";
+        }
+
+    } catch (err) {
+        ack.textContent = "Network error.";
+        ack.style.color = "red";
+    }
+}
+</script>
+
+        
+<form method="POST" action="{{ action }}">
+        {% for field in fields %}
+        <input type="{{ field.type }}" name="{{ field.name }}" placeholder="{{ field.placeholder }}" required />
+        {% endfor %}
+
+        <button type="submit" onclick="sendRequets()">{{ button_text }}</button>
+</form>

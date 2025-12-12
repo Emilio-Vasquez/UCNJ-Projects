@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block bg_image %}{{ url_for('static', filename='images/login-bg.jpg') }}{% endblock %}
+
+{% block content %}
+<h2>Login</h2>
+{% with messages = get_flashed_messages(with_categories=true) %}
+{#Message Handling (Start): This is common in Flask/Jinja. It calls the framework function get_flashed_messages (which
+retrieves temporary messages stored in the session, like success or error notifications) #}
+
+  {% if messages %}
+    {% for category, message in messages %}
+      {% if category == 'success' %} 
+{# loop #}
+        <div style="background: lightgreen; padding: 10px; margin: 10px 0; border-radius: 5px;">
+          {{ message }}
+        </div>
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+
+<form action="/login" method ="POST">
+    <div>
+        <label>Email</label> 
+      {#Label: An HTML label for the email input field.#}
+        <input type="email" name="email" placeholder="Enter email">
+    </div>
+    
+    <div>
+        <label>Password</label>
+        <input type="password" name="password" placeholder="Password">
+    </div>
+    
+    <button type="submit">Login</button>
+</form>
+
+<p>
+    Don't have an account? <a href="/register">Register here</a> {# Registration Link: Provides a link to
+  the registration page (/register) for users who don't have an account. #}
+</p>
+
+{% endblock %}
+
+
+
+
+
+
+

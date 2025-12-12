@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Feedback{% endblock %}
+
+{% block navbar %}
+<nav class="navbar navbar-expand-lg navbar-custom">
+    <div class="container-fluid">
+        <a class="navbar-brand fw-bold fs-4" href="{{ url_for('home') }}">NYC House Price Predictor</a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarNavDropdown">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('home') }}">Home</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('charts') }}">Charts</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('feedback_page') }}">Feedback</a>
+                </li>
+
+                {% if session.get("is_admin") %}
+                <li class="nav-item">
+                    <a class="nav-link active" href="{{ url_for('admin_feedback') }}">Admin Feedback</a>
+                </li>
+                {% endif %}
+
+            </ul>
+
+            <a class="btn btn-outline-danger ms-lg-3" href="{{ url_for('logout') }}">Logout</a>
+        </div>
+    </div>
+</nav>
+{% endblock %}
+
+{% block content %}
+<h2 class="fw-bold mb-4">User Feedback</h2>
+
+<table class="table table-bordered table-striped shadow">
+    <thead class="table-dark">
+        <tr>
+            <th>ID</th>
+            <th>User ID</th>
+            <th>Feedback</th>
+            <th>Date</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for fb in feedback_list %}
+        <tr>
+            <td>{{ fb[0] }}</td>
+            <td>{{ fb[1] }}</td>
+            <td>{{ fb[2] }}</td>
+            <td>{{ fb[3] }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}
