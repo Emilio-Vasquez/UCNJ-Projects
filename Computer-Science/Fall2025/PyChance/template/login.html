@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PyChance Login</title>
+
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            background: #050505;
+            font-family: "Inter", sans-serif;
+            color: #d9ffe7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .top-bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 18px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-sizing: border-box;
+        }
+
+        .logo {
+            font-size: 32px;
+            font-weight: 700;
+            color: #00ff99;
+            letter-spacing: 1px;
+            text-shadow: 0 0 10px #00ff99;
+        }
+
+        .user-info {
+            text-align: right;
+            font-size: 17px;
+            color: #9effd1;
+        }
+
+        .card {
+            background: rgba(20, 20, 20, 0.6);
+            backdrop-filter: blur(12px);
+            padding: 45px 40px;
+            border-radius: 18px;
+            width: 340px;
+            border: 1px solid rgba(0, 255, 140, 0.15);
+            box-shadow: 0 0 25px rgba(0, 255, 120, 0.15);
+            animation: fadeIn 0.6s ease-out;
+            display: none; /* only show active */
+        }
+
+        .card.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        label {
+            font-size: 15px;
+            color: #c8ffec;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            background: #111;
+            color: #eafff6;
+            outline: none;
+            transition: 0.25s;
+        }
+
+        input:focus {
+            background: #181818;
+            box-shadow: 0 0 6px #00ff99;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            background: #00ff99;
+            color: black;
+            font-size: 17px;
+            transition: 0.25s;
+        }
+
+        button:hover {
+            background: hsl(153, 100%, 14%);
+            transform: scale(1.03);
+        }
+
+        .switch-btn {
+            margin-top: 18px;
+            font-size: 14px;
+            background: none;
+            color: #9effd1;
+            cursor: pointer;
+            border: none;
+        }
+
+        .switch-btn:hover {
+            text-decoration: underline;
+        }
+
+        .alert {
+            font-size: 14px;
+            text-align: center;
+            color: #ff4d4d;
+            margin-bottom: 12px;
+        }
+
+        .contact-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #00ff99;
+            color: black;
+            padding: 12px 18px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            box-shadow: 0 4px 12px rgba(0, 255, 140, 0.4);
+            transition: 0.25s;
+            z-index: 1000;
+        }
+
+        .contact-btn:hover {
+            background: #29ffb3;
+            transform: scale(1.05);
+        }
+
+    </style>
+</head>
+<!-- Contact Button -->
+<a href="mailto:can'thelpyousupport@pychance.com" class="contact-btn">Need Help?</a>
+
+<body>
+
+    <div class="top-bar">
+        <div class="logo">PyChance</div>
+        <div class="user-info">
+            User: <span id="username">---</span><br>
+            Points: <span id="points">0</span>
+        </div>
+    </div>
+
+    <!-- LOGIN BOX -->
+    <div id="loginCard" class="card active">
+        <form method="post">
+            <input type="hidden" name="action" value="login">
+
+            <label>Username:</label>
+            <input type="text" name="username" required>
+
+            <label>Password:</label>
+            <input type="password" name="password" required>
+
+            <button type="submit">Login</button>
+
+            <button type="button" class="switch-btn" onclick="switchCard('registerCard')">
+                Don't have an account? Register
+            </button>
+        </form>
+    </div>
+
+    <!-- REGISTER BOX -->
+    <div id="registerCard" class="card">
+
+        <form method="post">
+            <input type="hidden" name="action" value="register">
+
+            <label>Create Username:</label>
+            <input type="text" name="username" required>
+
+            <label>Create Password:</label>
+            <input type="password" name="password" required>
+
+            <label>Confirm Password:</label>
+            <input type="password" name="confirm" required>
+
+            <button type="submit">Create Account</button>
+
+            <button type="button" class="switch-btn" onclick="switchCard('loginCard')">
+                Already have an account? Login
+            </button>
+        </form>
+    </div>
+
+    <script>
+        function switchCard(id) {
+            document.getElementById("loginCard").classList.remove("active");
+            document.getElementById("registerCard").classList.remove("active");
+            document.getElementById(id).classList.add("active");
+        }
+    </script>
+
+</body>
+</html>

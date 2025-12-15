@@ -1,0 +1,101 @@
+ <!DOCTYPE html>
+<html>
+<head>
+    <title>Sneaker World - Login</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans">
+    <style>
+        body {
+            background-color: #00000000;
+            background-image: url("/assets/tre.jpeg");
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            color: white;
+            font-family: 'Open Sans';
+            text-align: center;
+        }
+        .nav {
+            background-color: #333333;
+            overflow: hidden;
+        }
+        .nav a {
+            float: left;
+            color: #f2f2f2;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            font-size: 17px;
+            background-color: #333333;
+            overflow: hidden;
+        }
+        .nav a:hover{
+            background-color: #ddd;
+            color: black;
+        }
+        input {
+            padding: 12px;
+            width: 250px;
+            margin: 10px;
+            border-radius: 5px;
+            border: none;
+        }
+
+        a.button {
+            color: white;
+            margin-top: 20px;
+            display: inline-block;
+            text-decoration: none;
+        }
+        .visButton{
+            background-color: white;
+            color: black;
+            padding: 15px 0px;
+            text-decoration: none;
+            border-radius: 10px;
+            font-size: 20px;
+            font-weight: bold;
+            display: inline-block;
+            width: 250px;
+        }
+        .visButton:hover{
+            background-color: gray;
+            color: white;
+        }
+        .error p {
+            color: red;
+            font-weight: bold;
+            border-radius: 0%;
+            font-size: 35px;
+        }
+    </style>
+</head>
+<body>
+    <div class="nav">
+        <a class="active" href="../index.html">Home</a>
+        <a href="shop.html">Shop</a>
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <h1>Log In</h1>
+
+    <form>
+        <div class="error" id="errorcatcher">
+        <input id="username" type="text" placeholder="Username"><br>
+        <input id="password" type="password" placeholder="Password"><br>
+        </div>
+        <br>
+        <input class="visButton" type="submit" onclick="login()" value="Login"><br>
+        <a class="visButton" href="register.html">Create an Account</a>
+    </form>
+
+    <br>
+
+    <script src="../scripts/login.js"></script>
+</body>
+</html>

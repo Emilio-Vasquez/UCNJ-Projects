@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewpoint" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}My Flask App{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/ucnj_style.css') }}">
+</head>
+
+<body>
+    <header>
+        <h1>UCNJ Flask Demo</h1>
+    </header>
+    <main>
+        {% block content %}
+
+        {% endblock %}
+    </main>
+    <footer>
+        <p>&copy; 2025 Union college - Joshua Juarez </p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/flash.js') }}"></script>
+    
+</body>
+
+</html>

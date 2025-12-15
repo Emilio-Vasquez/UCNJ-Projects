@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Slots</title>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script>
+        const confettiLib = window.confetti;
+    </script>
+
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+
+<body>
+
+<h1>Slot Machine</h1>
+
+<div id="slots" style="font-size: 50px; margin: 20px;">
+    <span id="s1">?</span>
+    <span id="s2">?</span>
+    <span id="s3">?</span>
+</div>
+
+<button onclick="spin()">Spin</button>
+
+<p id="result"></p>
+
+<script>
+// Confetti animation
+function confetti() {
+    const duration = 1000;
+    const end = Date.now() + duration;
+
+    (function frame() {
+        confettiLib({
+            particleCount: 3,
+            angle: 60,
+            spread: 55,
+            origin: { x: 0 }
+        });
+
+        confettiLib({
+            particleCount: 3,
+            angle: 120,
+            spread: 55,
+            origin: { x: 1 }
+        });
+
+        if (Date.now() < end) {
+            requestAnimationFrame(frame);
+        }
+    }());
+}
+
+// Slot machine logic
+function spin() {
+    const symbols = ["🍒", "⭐", "🍋", "🍉"];
+    let s1 = symbols[Math.floor(Math.random() * symbols.length)];
+    let s2 = symbols[Math.floor(Math.random() * symbols.length)];
+    let s3 = symbols[Math.floor(Math.random() * symbols.length)];
+
+    document.getElementById("s1").textContent = s1;
+    document.getElementById("s2").textContent = s2;
+    document.getElementById("s3").textContent = s3;
+
+    if (s1 === s2 && s2 === s3) {
+        document.getElementById("result").innerText = "Jackpot!";
+        confetti();
+    } else {
+        document.getElementById("result").innerText = "Try ag

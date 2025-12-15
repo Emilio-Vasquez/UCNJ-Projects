@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>PyChance</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/site.css') }}">
+</head>
+<body>
+  <header class="site-header">
+    <div class="logo">
+      <a href="{{ url_for('home') }}">PyChance</a>
+    </div>
+
+    <!-- NEW NAVBAR LINKS -->
+    <nav class="main-nav">
+      <a href="{{ url_for('games') }}">Games</a>
+      <a href="{{ url_for('about') }}">About</a>
+      <a href="{{ url_for('help_page') }}">Help</a>
+      <a href="{{ url_for('contact') }}">Contact</a>
+      <a href="{{ url_for('wallet') }}">Wallet</a>
+    </nav>
+
+    <div class="user-area">
+      <!-- NEW BALANCE DISPLAY -->
+      <span class="balance">
+        Balance: ${{ "%.2f"|format(current_balance) }}
+      </span>
+
+      {% if user %}
+        <span>Hi, {{ user.username }}</span>
+        <a href="{{ url_for('logout') }}" class="btn small">Logout</a>
+      {% else %}
+        <a href="{{ url_for('auth') }}" class="btn small">Login / Register</a>
+      {% endif %}
+    </div>
+  </header>
+
+  <main class="site-main">
+    {% block content %}{% endblock %}
+  </main>
+
+  <script>
+    function apiFetch(path, opts) {
+      return fetch(path, Object.assign({headers:{'Content-Type':'application/json'}}, opts));
+    }
+  </script>
+
+  {% block scripts %}{% endblock %}
+</body>
+</html>
+

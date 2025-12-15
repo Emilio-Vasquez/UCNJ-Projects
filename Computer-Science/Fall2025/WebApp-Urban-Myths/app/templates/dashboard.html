@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+    <h2>My Dashboard</h2>
+    <div>
+        <a href="/">Home</a>
+        <a href="/logout">Logout</a>
+    </div>
+</div>
+
+<!-- DASHBOARD CONTENT -->
+<div class="dashboard-container">
+
+    <div class="dashboard-header">
+        <h2>Dashboard</h2>
+        <p>Welcome, {{ username }}! You are logged in and verified 🎉</p>
+        <h2>Explore Urban Myths</h2>
+    </div>
+
+    <!-- SEARCH -->
+    <form method="GET" action="{{ url_for('main.dashboard') }}" class="search-bar">
+    <input
+        type="text"
+        name="q"
+        placeholder="Search urban myths..."
+        value="{{ request.args.get('q', '') }}"
+    >
+    <button type="submit">Search</button>
+    </form>
+
+    <!-- MYTH GRID -->
+    <div class="myth-grid">
+        {% for myth in myths %}
+        <div class="myth-card">
+
+            <img
+                src="{{ url_for('static', filename='images/' + myth.image) }}"
+                alt="{{ myth.name }}"
+            >
+
+            <h3>{{ myth.name }}</h3>
+            <p>{{ myth.short_description }}</p>
+
+            <a class="read-more" href="{{ url_for('main.myth_detail', myth_id=myth.id) }}">
+                Read More
+            </a>
+
+        </div>
+        {% endfor %}
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+    © 2025 Union College - Joshua Juarez
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PyChance - Coin Flip</title>
+<link rel="stylesheet" href="static2/style.css">
+<style>
+/* Coin */
+.coin {
+    width: 150px;
+    height: 150px;
+    perspective: 1000px;
+    margin: 20px auto;
+    position: relative;
+}
+.coin .side {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 150px;
+    font-weight: bold;
+    font-size: 24px;
+    position: absolute;
+    backface-visibility: hidden;
+    color: #050505;
+}
+.coin .heads { background: #00ff99; }
+.coin .tails { background: #ff0066; transform: rotateY(180deg); }
+
+.flip-animate {
+    animation: flip 2s ease-in-out;
+}
+@keyframes flip {
+    0% { transform: rotateY(0deg); }
+    100% { transform: rotateY(1800deg); }
+}
+
+/* Bet input & button styling */
+.bet-container {
+    margin-top: 15px;
+    text-align: center;
+}
+.bet-container input {
+    width: 100px;
+    padding: 6px 10px;
+    border-radius: 6px;
+    border: 1px solid #00ff99;
+    background: #111;
+    color: #d9ffe7;
+    font-size: 16px;
+    margin-right: 10px;
+}
+.bet-container button {
+    padding: 6px 12px;
+    border-radius: 6px;
+    border: none;
+    background: #00ff99;
+    color: #050505;
+    font-weight: bold;
+    cursor: pointer;
+}
+.bet-container button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+</style>
+</head>
+<body>
+
+<header>
+    <div class="logo">PyChance</div>
+    <div class="user-info">
+        User: <span id="usernameDisplay"></span><br>
+        Points: <span id="pointsDisplay"></span>
+    </div>
+</header>
+
+<div id="coinflipView" class="game-view" style="display:flex;">
+
+    <!-- Leaderboard -->
+    <div class="leaderboard">
+        <h3>Leaderboard</h3>
+        <p>Wins: <span id="coinWins">0</span></p>
+        <p>Computer Wins: <span id="computerWins">0</span></p>
+    </div>
+
+    <!-- Main Game Box -->
+    <div class="game-container">
+        <h2>Coin Flip</h2>
+
+        <div id="coin" class="coin">
+            <div class="side heads">HEADS</div>
+            <div class="side tails">Tails</div>
+        </div>
+
+        <div style="display:flex; gap:10px; justify-content:center;">
+            <button onclick="setGuess('Heads')" disabled>Heads</button>
+            <button onclick="setGuess('Tails')" disabled>Tails</button>
+        </div>
+
+        <div class="bet-container">
+            <input type="number" id="betAmount" min="1" placeholder="Enter bet" oninput="checkBet()">
+            <button onclick="flipCoin()">Flip Coin</button>
+        </div>
+
+        <button id="restartBtn" style="display:none; margin-top:10px;" onclick="restartGame()">Restart</button>
+
+        <p id="coinResult"></p>
+        <p id="roundDisplay">Round: 0 / 5</p>
+        <p id="gameMessage" style="font-weight:bold; color:#ffffff;"></p>
+
+           <div class="rules-box">
+        <h4>Rules</h4>
+        <p>Your opponent is the Computer</p>
+        <p>You have 5 chances to win against it.</p>
+        <p>If your guess is right, you win bet points.</p>
+        <p>If wrong, you lose bet points.</p>
+        <p>At the end of the 5 chances, if the Computer's guess is more than yours, Computer wins.</p>
+        <p>If Computer wins, all accumulated points are lost.</p>
+        <p>This game is based on chance only.</p>
+        <p>Good luck!</p>
+    </div>
+
+
+        <a href="homepage.html" class="back">Back</a>
+    </div>
+
+    <div class="history">
+        <h3>Gaming History</h3>
+        <ul id="coinHistory"></ul>
+        <p id="totalPoints" style="font-weight:bold; margin-top:10px;"></p>
+    </div>
+</div>
+
+<div class="bottom-buttons">
+    <a href="login.html" class="logout">Logout</a>
+    <a href="mailto:can'thelpyousupport@pychance.com">Need Help?</a>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<script>
+// Load user info
+let currentUser = localStorage.getItem("pychance_user") || "Player1";
+let points = parseInt(localStorage.getItem("points") || 50);
+document.getElementById('usernameDisplay').textContent = currentUser;
+document.getElementById('pointsDisplay').textContent = points;
+
+// Game variables
+let coinWins = 0, computerWins = 0, round = 0;
+let userGuess = null, maxRounds = 5, bet = 0;
+let wonBets = []; // store bets for rounds the user won
+let allBets = []; // store all bets for all rounds
+const guessButtons = document.querySelectorAll('#coinflipView button[onclick^="setGuess"]');
+const betInput = document.getElementById('betAmount');
+
+// Enable guess buttons only if bet is valid
+function checkBet() {
+    bet = parseInt(betInput.value);
+    const canPlay = bet > 0 && bet <= points;
+    guessButtons.forEach(btn => btn.disabled = !canPlay);
+}
+
+// Set guess
+function setGuess(choice){
+    userGuess = choice;
+    document.getElementById('coinResult').textContent = "You picked " + choice;
+}
+
+function flipCoin() {
+    if(!bet || bet <= 0) return alert("Enter a valid bet amount!");
+    if(!userGuess) return alert("Pick Heads or Tails!");
+    if(round >= maxRounds) return alert("Game over. Click Restart.");
+
+    allBets.push(bet); // track every bet
+
+    const coin = document.getElementById('coin');
+    const result = Math.random() < 0.5 ? "Heads" : "Tails";
+    const computerChoice = Math.random() < 0.5 ? "Heads" : "Tails";
+
+    // Coin animation
+    coin.style.transform = "rotateY(0deg)";
+    coin.classList.remove("flip-animate");
+    void coin.offsetWidth; 
+    coin.classList.add("flip-animate");
+
+    setTimeout(() => {
+        coin.classList.remove("flip-animate");
+        coin.style.transform = result === "Heads" ? "rotateY(0deg)" : "rotateY(180deg)";
+
+        let roundMsg = "";
+        if(userGuess === result){
+            coinWins++;
+            wonBets.push(bet); // store the bet since user won this round
+            confetti({ particleCount: 100, spread: 70, origin: {y:0.6} });
+            roundMsg = `You won this round! Bet: ${bet} pts`;
+        } else {
+            computerWins++;
+            roundMsg = `Computer won this round. Bet: ${bet} pts`;
+        }
+
+        round++;
+        document.getElementById('coinResult').textContent = `Coin: ${result} | Computer: ${computerChoice}`;
+        document.getElementById('coinWins').textContent = coinWins;
+        document.getElementById('computerWins').textContent = computerWins;
+        document.getElementById('roundDisplay').textContent = `Round: ${round} / ${maxRounds}`;
+        document.getElementById('gameMessage').textContent = roundMsg;
+
+        addHistory('coinHistory', 'Coin Flip', result, userGuess === result ? bet : -bet, userGuess, computerChoice);
+
+        userGuess = null;
+        betInput.value = "";
+        guessButtons.forEach(btn => btn.disabled = true);
+
+        if(round === maxRounds){
+            // Game finished, evaluate total outcome
+            let totalWonBets = wonBets.reduce((a,b)=>a+b,0);
+            let totalAllBets = allBets.reduce((a,b)=>a+b,0);
+            let finalMsg = "";
+
+            if(coinWins > computerWins){
+                // user wins overall, add only bets from rounds they won
+                points += totalWonBets;
+                finalMsg = `You won the game! Points gained from your won rounds: ${totalWonBets}`;
+            } else {
+                // computer wins overall, deduct all bets
+                points -= totalAllBets;
+                if(points < 0) points = 0;
+                finalMsg = `Computer won the game. Points deducted from all rounds: ${totalAllBets}`;
+            }
+
+            document.getElementById('pointsDisplay').textContent = points;
+            document.getElementById('gameMessage').textContent = finalMsg;
+            document.getElementById('totalPoints').textContent = `Total points affected: ${coinWins > computerWins ? totalWonBets : totalAllBets}`;
+            localStorage.setItem('points', points);
+            document.getElementById('restartBtn').style.display = "block";
+
+            wonBets = [];
+            allBets = [];
+        }
+
+    }, 2000);
+}
+
+function addHistory(listId, game, result, pointsChange, userPick, computerPick){
+    const li = document.createElement('li');
+    const sign = pointsChange >= 0 ? "+" : "";
+    li.innerHTML = `
+        <span>${game}: You picked ${userPick}, Computer picked ${computerPick}, Result: ${result} (${sign}${pointsChange} pts)</span>
+        <span class='history-time'>${new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})}</span>
+    `;
+    document.getElementById(listId).appendChild(li);
+}
+
+function restartGame(){
+    coinWins = 0;
+    computerWins = 0;
+    round = 0;
+    wonBets = [];
+    allBets = [];
+    userGuess = null;
+    bet = 0;
+
+    document.getElementById('coinWins').textContent = 0;
+    document.getElementById('computerWins').textContent = 0;
+    document.getElementById('roundDisplay').textContent = `Round: 0 / ${maxRounds}`;
+    document.getElementById('coinResult').textContent = "";
+    document.getElementById('gameMessage').textContent = "";
+    document.getElementById('totalPoints').textContent = "";
+    document.getElementById('restartBtn').style.display = "none";
+    document.getElementById('coin').style.transform = "rotateY(0deg)";
+    betInput.value = "";
+    guessButtons.forEach(btn => btn.disabled = true);
+
+    document.getElementById('coinHistory').innerHTML = "";
+}
+</script>
+
+
+</body>
+</html>

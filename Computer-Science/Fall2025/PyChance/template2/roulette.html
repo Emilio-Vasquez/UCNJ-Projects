@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PyChance - Roulette</title>
+<link rel="stylesheet" href="static2/style.css">
+<style>
+/* Roulette container */
+.roulette-container {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    margin: auto;
+}
+
+/* Wheel segments */
+#wheel {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: conic-gradient(
+        red 0deg 36deg,
+        black 36deg 72deg,
+        red 72deg 108deg,
+        black 108deg 144deg,
+        red 144deg 180deg,
+        black 180deg 216deg,
+        red 216deg 252deg,
+        black 252deg 288deg,
+        red 288deg 324deg,
+        black 324deg 360deg
+    );
+    transition: transform 3s cubic-bezier(.17,.67,.83,.67);
+}
+
+/* Pointer */
+#wheel-pointer {
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    width: 20px;
+    height: 40px;
+    transform: translateX(-50%) rotate(180deg);
+    background: #00ff99;
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+    z-index: 10;
+}
+
+/* Bet input & button styling */
+.bet-container {
+    margin-top: 15px;
+    text-align: center;
+}
+.bet-container input {
+    width: 100px;
+    padding: 6px 10px;
+    border-radius: 6px;
+    border: 1px solid #00ff99;
+    background: #111;
+    color: #d9ffe7;
+    font-size: 16px;
+    margin-right: 10px;
+}
+.bet-container button {
+    padding: 6px 12px;
+    border-radius: 6px;
+    border: none;
+    background: #00ff99;
+    color: #050505;
+    font-weight: bold;
+    cursor: pointer;
+}
+.bet-container button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Round summary styling */
+#roundSummary {
+    margin-top: 20px;
+    padding: 10px;
+    background: #111;
+    border-radius: 8px;
+    color: #fff;
+}
+#roundSummary ul {
+    list-style: none;
+    padding-left: 0;
+}
+</style>
+</head>
+<body>
+
+<header>
+    <div class="logo">PyChance</div>
+    <div class="user-info">
+        User: <span id="usernameDisplay"></span><br>
+        Points: <span id="pointsDisplay"></span>
+    </div>
+</header>
+
+<div class="game-view" style="display:flex;">
+
+    <!-- Leaderboard -->
+    <div class="leaderboard">
+        <h3>Leaderboard</h3>
+        <p>Wins: <span id="rouletteWins">0</span></p>
+        <p>Computer Wins: <span id="computerWins">0</span></p>
+
+        <!-- Round Summary Container -->
+        <div id="roundSummary">
+            <h4>Round Summary</h4>
+            <ul id="roundSummaryList"></ul>
+        </div>
+    </div>
+
+    <!-- Main Game Box -->
+    <div class="game-container">
+        <h2>Roulette</h2>
+
+        <div class="roulette-container">
+            <div id="wheel-pointer"></div>
+            <div id="wheel"></div>
+        </div>
+
+        <div style="display:flex; gap:10px; margin-top:10px; justify-content:center;">
+            <button onclick="setGuess('Red')" disabled>Red</button>
+            <button onclick="setGuess('Black')" disabled>Black</button>
+            <button onclick="setGuess('Even')" disabled>Even</button>
+            <button onclick="setGuess('Odd')" disabled>Odd</button>
+        </div>
+
+        <!-- Bet section -->
+        <div class="bet-container">
+            <input type="number" id="betAmount" min="1" placeholder="Enter bet" oninput="checkBet()">
+            <button onclick="spinRoulette()">Spin</button>
+        </div>
+
+        <button id="restartBtn" style="display:none; margin-top:10px;" onclick="restartGame()">Restart</button>
+
+        <p id="rouletteResult"></p>
+        <p id="roundDisplay">Round: 0 / 5</p>
+        <p id="gameMessage" style="font-weight:bold; color:#ffffff;"></p>
+
+        <!-- Rules -->
+        <div class="rules-box">
+            <h4>Rules</h4>
+            <p>Your opponent is the Computer</p>
+            <p>You have 5 spins to beat the Computer.</p>
+            <p>Place a bet before each spin.</p>
+            <p>If your guess is correct (Red/Black/Even/Odd), you win your bet points.</p>
+            <p>If wrong, your bet is deducted from your points.</p>
+            <p>At the end of 5 spins, if the Computer has more wins, it wins the match.</p>
+            <p>This game is based on chance only.</p>
+            <p>Good luck!</p>
+        </div>
+
+        <a href="homepage.html" class="back">Back</a>
+    </div>
+
+    <!-- History -->
+    <div class="history">
+        <h3>Gaming History</h3>
+        <ul id="rouletteHistory"></ul>
+        <p id="totalPoints" style="font-weight:bold; margin-top:10px;"></p>
+    </div>
+</div>
+
+<div class="bottom-buttons">
+    <a href="login.html" class="logout">Logout</a>
+    <a href="mailto:can'thelpyousupport@pychance.com">Need Help?</a>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<script>
+// User info
+let username = localStorage.getItem("pychance_user") || "Player1";
+let points = parseInt(localStorage.getItem("points") || 50);
+document.getElementById("usernameDisplay").textContent = username;
+document.getElementById("pointsDisplay").textContent = points;
+
+function updateUserInfo() {
+    username = localStorage.getItem("pychance_user") || "Player1";
+    points = parseInt(localStorage.getItem("points") || 50);
+    document.querySelectorAll("#usernameDisplay, #usernameCenter").forEach(el => el.textContent = username);
+    document.getElementById("pointsDisplay").textContent = points;
+}
+setInterval(updateUserInfo, 1000);
+
+// Game variables
+let userGuess = null, rouletteWins = 0, computerWins = 0, round = 0, maxRounds = 5, bet = 0;
+let wonBets = [];   // Bets the user won
+let allBets = [];   // All bets placed
+const wheel = document.getElementById("wheel");
+const guessButtons = document.querySelectorAll('.game-container button[onclick^="setGuess"]');
+const betInput = document.getElementById('betAmount');
+
+// Enable guess buttons only if bet is valid
+function checkBet() {
+    bet = parseInt(betInput.value);
+    const canPlay = bet > 0 && bet <= points;
+    guessButtons.forEach(btn => btn.disabled = !canPlay);
+}
+
+// Set guess
+function setGuess(g) {
+    userGuess = g;
+    document.getElementById("rouletteResult").textContent = "You picked " + g;
+}
+
+// Spin roulette
+function spinRoulette() {
+    if(!bet || bet <= 0) return alert("Enter a valid bet amount!");
+    if(bet > points) return alert("Not enough points!");
+    if(!userGuess) return alert("Pick an option first!");
+    if(round >= maxRounds) return alert("Game over. Click Restart.");
+
+    allBets.push(bet); // Track all bets
+
+    const numbers = [
+        {num:0, color:"Green"},
+        {num:1, color:"Red"}, {num:2, color:"Black"},
+        {num:3, color:"Red"}, {num:4, color:"Black"},
+        {num:5, color:"Red"}, {num:6, color:"Black"},
+        {num:7, color:"Red"}, {num:8, color:"Black"},
+        {num:9, color:"Red"}, {num:10, color:"Black"}
+    ];
+
+    const result = numbers[Math.floor(Math.random() * numbers.length)];
+    const computerChoice = numbers[Math.floor(Math.random() * numbers.length)];
+
+    const fullRotations = 360 * 6;
+    const offset = (result.num / numbers.length) * 360;
+    const finalRotation = fullRotations + offset;
+    wheel.style.transform = `rotate(${finalRotation}deg)`;
+
+    setTimeout(() => {
+        const isEven = result.num % 2 === 0 && result.num !== 0;
+        const isOdd = result.num % 2 === 1;
+        const correct = (userGuess === result.color) || (userGuess === "Even" && isEven) || (userGuess === "Odd" && isOdd);
+
+        let pointsChange = 0;
+        let roundMsg = "";
+        if(correct){
+            rouletteWins++;
+            wonBets.push(bet); // Track won bet
+            pointsChange = bet;
+            roundMsg = `You won this round! +${pointsChange} pts`;
+            confetti({ particleCount: 90, spread: 65, origin: { y: 0.6 } });
+        } else {
+            computerWins++;
+            pointsChange = -bet;
+            roundMsg = `Computer won this round. -${bet} pts`;
+        }
+
+        round++;
+        document.getElementById("rouletteResult").textContent = `Number: ${result.num} (${result.color}) | Computer: ${computerChoice.color}`;
+        document.getElementById("rouletteWins").textContent = rouletteWins;
+        document.getElementById("computerWins").textContent = computerWins;
+        document.getElementById("roundDisplay").textContent = `Round: ${round} / ${maxRounds}`;
+        document.getElementById("gameMessage").textContent = roundMsg;
+
+        addHistory("rouletteHistory", "Roulette", result.num, pointsChange, userGuess, computerChoice.color);
+
+        userGuess = null;
+        betInput.value = "";
+
+        if(round === maxRounds){
+            let totalWonBets = wonBets.reduce((a,b)=>a+b,0);
+            let totalAllBets = allBets.reduce((a,b)=>a+b,0);
+            let msg = "";
+
+            if(rouletteWins > computerWins){
+                points += totalWonBets;
+                msg = `You won the match! Points gained from rounds you won: ${totalWonBets}`;
+            } else {
+                points -= totalAllBets;
+                if(points < 0) points = 0;
+                msg = `Computer won the match. Points deducted from all rounds: ${totalAllBets}`;
+            }
+
+            document.getElementById("pointsDisplay").textContent = points;
+            document.getElementById("gameMessage").textContent = msg;
+            document.getElementById("totalPoints").textContent = `Total points affected: ${rouletteWins > computerWins ? totalWonBets : totalAllBets}`;
+            localStorage.setItem("points", points);
+            document.getElementById("restartBtn").style.display = "block";
+
+            // Reset round-specific trackers
+            wonBets = [];
+            allBets = [];
+        }
+    }, 3500);
+}
+
+// Add history
+function addHistory(listId, game, result, pointsChange, userPick, computerPick){
+    const li = document.createElement('li');
+    const sign = pointsChange >= 0 ? "+" : "";
+    li.innerHTML = `<span>${game}: You picked ${userPick}, Computer picked ${computerPick}, Result: ${result} (${sign}${pointsChange} pts)</span>
+        <span class='history-time'>${new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})}</span>`;
+    document.getElementById(listId).appendChild(li);
+}
+
+// Restart
+function restartGame() {
+    rouletteWins = 0;
+    computerWins = 0;
+    round = 0;
+    wonBets = [];
+    allBets = [];
+    userGuess = null;
+    bet = 0;
+
+    document.getElementById("rouletteWins").textContent = 0;
+    document.getElementById("computerWins").textContent = 0;
+    document.getElementById("roundDisplay").textContent = `Round: 0 / ${maxRounds}`;
+    document.getElementById("rouletteResult").textContent = "";
+    document.getElementById("gameMessage").textContent = "";
+    document.getElementById("totalPoints").textContent = "";
+    document.getElementById("restartBtn").style.display = "none";
+    document.getElementById("roundSummaryList").innerHTML = "";
+    betInput.value = "";
+    guessButtons.forEach(btn => btn.disabled = true);
+    wheel.style.transform = "rotate(0deg)";
+}
+</script>
+</body>
+</html>

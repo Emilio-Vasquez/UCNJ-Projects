@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Coin Flip</h1>
+
+<div class="container">
+    <button onclick="play('heads')">Heads</button>
+    <button onclick="play('tails')">Tails</button>
+
+    <p id="result"></p>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+
+<script src="{{ url_for('static', filename='static/confettiL.js') }}"></script>
+
+<script>
+async function play(choice) {
+    const response = await fetch("/play_coinflip", {
+        method: "POST",
+        headers: {"Content-Type": "application/x-www-form-urlencoded"},
+        body: `choice=${choice}`
+    });
+
+    const data = await response.json();
+
+    document.getElementById("result").innerText =
+        "Result: " + data.result + (data.win ? " — You win!" : " — You lose...");
+
+    if (data.win) {
+        launchConfetti();
+    }
+}
+
+function launchConfetti() {
+    const duration = 1000;
+    const end = Date.now() + duration;
+
+    (function frame() {
+        confettiLib({
+            particleCount: 3,
+            angle: 60,
+            spread: 55,
+            origin: { x: 0 }
+        });
+
+        confettiLib({
+            particleCount: 3,
+            angle: 120,
+            spread: 55,
+            origin: { x: 1 }
+        });
+
+        if (Date.now() < end) {
+            requestAnimationFrame(frame);
+        }
+    }());
+}
+</script>
+
+{% endblock %}

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PyChance</title>
+<link rel="stylesheet" href="static2/style.css">
+</head>
+<body>
+
+<header>
+  <div class="logo">PyChance</div>
+
+  <div class="menu-container">
+    <button class="menu-button" onclick="toggleMenu()">Menu</button>
+    <div class="menu-links" id="menuLinks">
+      <a href="homepage.html">Home</a>
+      <a href="wallet.html">Wallet</a>
+      <a href="about.html">About</a>
+        <a href="contact.html">Contact Us</a>
+    </div>
+  </div>
+
+  <div class="user-info">
+    User: <span id="usernameDisplay"></span><br>
+    Points: <span id="pointsDisplay"></span>
+  </div>
+</header>
+
+<!-- Centered welcome message -->
+<div id="welcome" style="text-align:center; font-size:30px; margin: -175px 0;">
+<div id="welcome">Welcome, <span id="usernameCenter"></span>!</div>
+</div>
+
+<div id="homePage" class="games-selection">
+    <a href="coinflip.html" class="game-card">
+        <img src="https://1b-f.s3.eu-west-1.amazonaws.com/a/146196-A15C1B6A-D5AE-41A2-9C20-912324FA259B-0-1598508964.gif">
+        <p>Coin Flip</p>
+    </a>
+
+    <a href="roulette.html" class="game-card">
+        <img src="https://media.giphy.com/media/26uf2YTgF5upXUTm0/200w.gif">
+        <p>Roulette</p>
+    </a>
+
+    <a href="slots.html" class="game-card">
+        <img src="https://media4.giphy.com/media/EahYBxGgJHLZ6/giphy.gif">
+        <p>Slots</p>
+    </a>
+</div>
+
+<div class="bottom-buttons">
+    <a href="login.html" class="logout">Logout</a>
+    <a href="mailto:Can'thelpyousupport@pychance.com">Need Help?</a>
+</div>
+
+<script src="static/script.js"></script>
+<script>
+  // Menu toggle
+  function toggleMenu() {
+    const menu = document.getElementById("menuLinks");
+    menu.style.display = menu.style.display === "flex" ? "none" : "flex";
+  }
+
+  // Update user info everywhere
+  function updateUserInfo() {
+    const username = localStorage.getItem("username") || "Player1";
+    const points = parseInt(localStorage.getItem("points") || 50);
+
+    document.getElementById("usernameDisplay").textContent = username;
+    document.getElementById("pointsDisplay").textContent = points;
+    document.getElementById("usernameCenter").textContent = username;
+  }
+
+  updateUserInfo();
+</script>
+<script>
+function updateUserInfo() {
+    const username = localStorage.getItem("pychance_user") || "Player1";
+    const points = parseInt(localStorage.getItem("points") || 50);
+    document.getElementById("usernameDisplay").textContent = username;
+    document.getElementById("pointsDisplay").textContent = points;
+    document.getElementById("usernameCenter").textContent = username;
+}
+updateUserInfo();
+setInterval(updateUserInfo, 1000);
+
+function changePoints(amount) {
+    let points = parseInt(localStorage.getItem("points") || 50);
+    points += amount;
+    if(points < 0) points = 0;
+    localStorage.setItem("points", points);
+    updateUserInfo();
+}
+</script>
+
+</body>
+</html>

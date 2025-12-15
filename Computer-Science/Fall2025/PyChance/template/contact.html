@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+  <h2>Contact Us</h2>
+  <p>
+    If you need help or want to report an issue with the site,
+    you can reach us at:
+  </p>
+  <p class="fs-5">
+    <strong>Email:</strong>
+    <a href="mailto:{{ support_email }}">{{ support_email }}</a>
+  </p>
+
+  <hr>
+
+  <h5>Send us a message (demo form)</h5>
+  <p>This form is for demonstration only and does not send real emails.</p>
+
+  <form>
+    <div class="mb-3">
+      <label class="form-label">Your Name</label>
+      <input type="text" class="form-control" placeholder="Enter your name">
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Your Email</label>
+      <input type="email" class="form-control" placeholder="name@example.com">
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Message</label>
+      <textarea class="form-control" rows="4" placeholder="Describe your issue or question"></textarea>
+    </div>
+    <button type="button" class="btn btn-primary">Submit (Demo)</button>
+  </form>
+{% endblock %}

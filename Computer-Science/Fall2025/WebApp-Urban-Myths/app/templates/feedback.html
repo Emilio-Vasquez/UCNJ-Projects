@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Feedback</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<!-- NAVBAR (unchanged) -->
+<div class="navbar">
+    <div class="logo">Urban Myths</div>
+    <div>
+        <a href="/login">Login</a>
+        <a href="/about">About</a>
+        <a href="/feedback">Feedback</a>
+        <a href="/">Home</a>
+    </div>
+</div>
+
+<!-- CENTERED CONTENT -->
+<div class="page-center">
+
+    <div class="feedback-card">
+
+        <h2>Submit Your Feedback</h2>
+        <p class="subtitle">
+            We value your thoughts! Please share any suggestions, issues, or ideas on how we can improve this application.
+        </p>
+
+        <form method="POST">
+            <textarea
+                name="feedback"
+                placeholder="Your feedback..."
+                required
+            ></textarea>
+
+            <button type="submit">Submit Feedback</button>
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+</html>

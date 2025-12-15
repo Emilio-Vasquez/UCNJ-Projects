@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PyChance - Wallet</title>
+<link rel="stylesheet" href="static2/style.css">
+
+<style>
+body {
+    font-family: "Inter", sans-serif;
+    background: #050505;
+    color: #d9ffe7;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 10px 30px;
+}
+
+.logo {
+    font-size: 32px;
+    font-weight: bold;
+    color: #00ff99;
+}
+
+.menu-container {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.menu-button {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 6px;
+    background: #00ff99;
+    color: #050505;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.menu-links {
+    display: none;
+    flex-direction: column;
+    margin-top: 5px;
+}
+
+.menu-links a {
+    text-decoration: none;
+    color: #d9ffe7;
+    padding: 4px 0;
+}
+
+.user-info {
+    text-align: right;
+}
+
+.wallet-container {
+    margin-top: 40px;
+    background: #111;
+    padding: 30px;
+    border-radius: 12px;
+    width: 95%;
+    max-width: 500px;
+    text-align: center;
+}
+
+.wallet-container input, .wallet-container select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 8px;
+    margin-bottom: 15px;
+    border-radius: 6px;
+    border: 1px solid #00ff99;
+    background: #050505;
+    color: #d9ffe7;
+    font-size: 16px;
+}
+
+.wallet-container button {
+    padding: 10px;
+    width: 100%;
+    border-radius: 6px;
+    border: none;
+    background: #00ff99;
+    color: #050505;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+#walletMessage {
+    margin-top: 15px;
+    font-weight: bold;
+    color: #00ff99;
+}
+
+.history-container {
+    margin-top: 30px;
+    background: #111;
+    padding: 20px;
+    border-radius: 12px;
+    width: 95%;
+    max-width: 500px;
+}
+
+.history-container h3 {
+    color: #00ff99;
+}
+
+ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+li {
+    padding: 6px 0;
+    border-bottom: 1px solid #00ff99;
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">PyChance</div>
+
+  <div class="menu-container">
+    <button class="menu-button" onclick="toggleMenu()">Menu</button>
+    <div class="menu-links" id="menuLinks">
+      <a href="homepage.html">Home</a>
+      <a href="wallet.html">Wallet</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact Us</a>
+    </div>
+  </div>
+
+  <div class="user-info">
+    User: <span id="usernameDisplay"></span><br>
+    Points: <span id="pointsDisplay"></span>
+  </div>
+</header>
+
+<div class="wallet-container">
+  <h2>Wallet</h2>
+
+  <p>Your Current Points: <strong id="pointsCurrent"></strong></p>
+  <p>Cash Value: $<span id="cashValue"></span></p>
+
+  <hr style="border:1px solid #00ff99; margin:25px 0;">
+
+  <!-- BUY POINTS -->
+  <h3 style="color:#00ff99;">Buy Points</h3>
+  <label>Amount to Purchase (USD)</label>
+  <input type="number" id="buyAmount" min="1" placeholder="10">
+
+  <label>Payment Method</label>
+  <select id="paymentMethod">
+    <option value="card">Credit/Debit Card</option>
+    <option value="bank">Bank Transfer</option>
+  </select>
+
+  <input type="text" id="cardNumber" placeholder="Card Number (xxxx-xxxx-xxxx-xxxx)">
+  <input type="text" id="cardName" placeholder="Name on Card">
+  <input type="text" id="expiry" placeholder="Expiry (MM/YY)">
+  <input type="text" id="cvv" placeholder="CVV">
+
+  <button onclick="buyPoints()">Buy Points</button>
+
+  <hr style="border:1px solid #00ff99; margin:25px 0;">
+
+  <!-- SELL / CASH OUT -->
+  <h3 style="color:#00ff99;">Cash Out Points</h3>
+  <label>Points to Cash Out</label>
+  <input type="number" id="sellPoints" min="1" placeholder="0">
+
+  <button onclick="sellPoints()">Cash Out</button>
+
+  <p id="walletMessage"></p>
+</div>
+
+<div class="history-container">
+  <h3>Wallet History</h3>
+  <ul id="walletHistory"></ul>
+</div>
+
+<script>
+const username = localStorage.getItem("username") || "Player1";
+let points = parseInt(localStorage.getItem("points") || 25);
+let walletHistory = JSON.parse(localStorage.getItem("walletHistory_" + username)) || [];
+
+document.getElementById("usernameDisplay").textContent = username;
+document.getElementById("pointsDisplay").textContent = points;
+
+function toggleMenu() {
+  const menu = document.getElementById("menuLinks");
+  menu.style.display = menu.style.display === "flex" ? "none" : "flex";
+}
+
+// ===== NEW CONVERSION FUNCTIONS =====
+function pointsToCash(pts) {
+  return (pts * 0.0025).toFixed(2); // 100 pts = $0.25
+}
+
+function cashToPoints(cash) {
+  return Math.floor(cash * 400); // $1 = 400 points
+}
+
+function updateUI() {
+  document.getElementById("pointsCurrent").textContent = points;
+  document.getElementById("pointsDisplay").textContent = points;
+  document.getElementById("cashValue").textContent = pointsToCash(points);
+  renderHistory();
+}
+
+function renderHistory() {
+  const box = document.getElementById("walletHistory");
+  box.innerHTML = "";
+  if (walletHistory.length === 0) {
+    box.innerHTML = "<li>No transactions yet.</li>";
+    return;
+  }
+  walletHistory.slice().reverse().forEach(h => {
+    const li = document.createElement("li");
+    li.textContent = `${h.action}: ${h.amount} (${h.time})`;
+    box.appendChild(li);
+  });
+}
+
+function buyPoints() {
+  const amount = parseFloat(document.getElementById("buyAmount").value);
+  if (!amount || amount <= 0) {
+    alert("Enter a valid dollar amount.");
+    return;
+  }
+
+  const purchasedPoints = cashToPoints(amount); // FIXED
+  points += purchasedPoints;
+  localStorage.setItem("points", points);
+
+  walletHistory.push({
+    action: "Bought Points",
+    amount: purchasedPoints + " pts",
+    time: new Date().toLocaleString()
+  });
+  localStorage.setItem("walletHistory_" + username, JSON.stringify(walletHistory));
+
+  updateUI();
+  alert(`${username}, ${purchasedPoints} points have been added to your account.`);
+  document.getElementById("buyAmount").value = "";
+}
+
+function sellPoints() {
+  const sellAmount = parseInt(document.getElementById("sellPoints").value);
+
+  if (!sellAmount || sellAmount < 1) return;
+  if (sellAmount > points) {
+    alert("You don't have that many points.");
+    return;
+  }
+
+  const cashValue = pointsToCash(sellAmount); // FIXED
+
+  points -= sellAmount;
+  localStorage.setItem("points", points);
+
+  walletHistory.push({
+    action: "Cashed Out",
+    amount: `${sellAmount} pts → $${cashValue}`,
+    time: new Date().toLocaleString()
+  });
+  localStorage.setItem("walletHistory_" + username, JSON.stringify(walletHistory));
+
+  updateUI();
+  alert(`${username}, $${cashValue} has been added to your bank account.`);
+  document.getElementById("sellPoints").value = "";
+}
+
+updateUI();
+</script>
+
+</body>
+</html>

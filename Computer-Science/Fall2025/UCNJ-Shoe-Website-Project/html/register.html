@@ -1,0 +1,97 @@
+ <!DOCTYPE html>
+<html>
+<head>
+    <title>Sneaker World - Register</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans">
+    <style>
+        body {
+            background-image: url("../assets/jus.jpg");
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-color: #000000;
+            backdrop-filter: blur(10pt);
+            color: white;
+            font-family: "Open Sans";
+            text-align: center;
+            height: 100%
+        }
+        input {
+            padding: 12px;
+            width: 250px;
+            margin: 10px;
+            border-radius: 5px;
+            border: none;
+        }
+        .nav {
+            background-color: #333333;
+            overflow: hidden;
+        }
+        .nav a {
+            float: left;
+            color: #f2f2f2;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            font-size: 17px;
+        }
+        .nav a:hover{
+            background-color: #ddd;
+            color: black;
+        }
+        a.button {
+            color: white;
+            margin-top: 20px;
+            display: inline-block;
+            text-decoration: none;
+        }
+        .visButton{
+            background-color: white;
+            color: black;
+            padding: 15px 25px;
+            margin: 20px;
+            text-decoration: none;
+            border-radius: 10px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .visButton:hover{
+            background-color: gray;
+            color: white;
+        }
+        .holder{
+            margin-top: 100px
+        }
+    </style>
+</head>
+<body>
+    <script src="../scripts/register.js"></script>
+    <div class="nav">
+        <a href="../index.html">Home</a>
+        <a href="/html/shop.html">Shop</a>
+    </div>
+    <div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <h1>Create Your Account</h1>
+
+    <form accept-charset="utf-8" id="registerform"> 
+        <input id="username" type="text" placeholder="Enter Username"><br>
+        <input id="email" type="email" placeholder="Enter Email"><br>
+        <input id="password" type="password" placeholder="Enter Password"><br>
+        <input id="submit" class="visButton" type="submit" onclick="register()" value="Register">
+    </form>
+    </div>
+
+    <br>
+
+
+</body>
+</html>

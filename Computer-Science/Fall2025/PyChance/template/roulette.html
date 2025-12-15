@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Roulette</title>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script>
+        const confettiL = window.confetti;
+    </script>
+
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+
+    <h1>Roulette</h1>
+
+    <p>Pick a number (0–36):</p>
+
+    <input id="guess" type="number" min="0" max="36">
+    <button onclick="spin()">Spin</button>
+
+    <p id="result"></p>
+
+    <script>
+    // Confetti function
+    function confetti() {
+        const duration = 1000;
+        const end = Date.now() + duration;
+
+        (function frame() {
+            confettiLib({
+                particleCount: 3,
+                angle: 60,
+                spread: 55,
+                origin: { x: 0 }
+            });
+
+            confettiLib({
+                particleCount: 3,
+                angle: 120,
+                spread: 55,
+                origin: { x: 1 }
+            });
+
+            if (Date.now() < end) {
+                requestAnimationFrame(frame);
+            }
+        }());
+    }
+
+    // roulette logic
+    function spin() {
+        let guess = document.getElementById("guess").value;
+        let roll = Math.floor(Math.random() * 37);
+
+        document.getElementById("result").innerText =
+            "The ball landed on " + roll + (parseInt(guess) === roll ? " — You win!" : " — You lose");
+
+        if (parseInt(guess) === roll) {
+            confetti();
+        }
+    }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,164 @@
+ <!DOCTYPE html>
+<html>
+<head>
+    <title>Sneaker World - Shop</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans">
+    <style>
+        body {
+            background-image: url("../assets/jus.jpg");
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-color: #000000;
+            backdrop-filter: blur(10pt);
+            color: white;
+            font-family: 'Open Sans';
+            text-align: center;
+            height: 100%
+        }
+        .nav{
+            background-color: #333;
+            overflow: hidden;
+        }
+        .nav a {
+            float: left;
+            color: #f2f2f2;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            font-size: 17px;
+        }
+        .nav a:hover{
+            background-color: #ddd;
+            color: black;
+        }
+        input {
+            padding: 12px;
+            width: 250px;
+            margin: 10px;
+            border-radius: 5px;
+            border: none;
+        }
+        a.button {
+            color: white;
+            margin-top: 20px;
+            display: inline-block;
+            text-decoration: none;
+        }
+        .container {
+        display: grid;
+        border-radius: 45px;
+        grid-template-columns: auto auto auto;
+        background-color: #00000045;
+        padding: 25px;
+        align-items: stretch;
+        }
+
+        .imgButton{
+            text-align:center;
+        }
+
+        .name{
+            color: white;
+            font-size: 5pt;
+        }
+
+        .visButton{
+            background-color: white;
+            color: black;
+            padding: 15px 25px;
+            margin: 20px;
+            text-decoration: none;
+            border-radius: 10px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .visButton:hover{
+            background-color: gray;
+            color: white;
+        }
+
+        .container div {
+        background-color: #00000000;
+        border: 0px solid black;
+        padding: 1px;
+        font-size: 30px;
+        text-align: center;
+        }
+
+        img {
+        display: box;
+        width:500px;
+        height:500px;
+        border-radius: 25px;
+        }
+
+    </style>
+</head>
+<body>
+    <div id='navbar' class="nav">
+        <a class="active" href="../index.html">Home</a>
+        <a href="shop.html">Shop</a>
+        <a id='login' style="float: right;" href="login.html">Log In</a>
+        <a href="checkout.html" id="cart" style="float: right;"> Cart (0)</a>
+    </div>
+    <h1>Catalogue</h1>
+
+    <div class="container">
+    <div class="test">
+        <img src="../assets/AIRJORDAN1LOWSE.webp">
+        <div class="name">Air Jordan 1 Low SE</div>
+        <div class="name">$15</div>
+        <div class="imgButton"><button class="visButton" onclick="addToCart('AIRJORDAN1LOWSE', 15)">Add to cart</button></div>
+    </div>
+    <div><img src="../assets/AIRJORDAN12RETRO.webp">
+        <div class="name">Air Jordan 12 Retro</div>
+        <div class="name">$20</div>
+        <div class="imgButton"><button class="visButton" onclick="addToCart('AIRJORDAN12RETRO', 20)">Add to cart</button></div>
+    </div>
+    <div><img src="../assets/AIRJORDAN4RETRO.webp">
+        <div class="name">Air Jordan 4 Retro</div>
+        <div class="name">$14</div>
+        <div class="imgButton"><button class="visButton" onclick="addToCart('AIRJORDAN4RETRO', 14)">Add to cart</button></div>
+    </div>  
+    <div><img src="../assets/JORDANFLIGHTCOURT.webp">
+        <div class="name">Jordan Flight Court</div>
+        <div class="name">$18</div>
+        <div class="imgButton"><button class="visButton" onclick="addToCart('JORDANFLIGHTCOURT', 18)">Add to cart</button></div>
+    </div>
+    <div><img src="../assets/JORDANZION4.webp">
+        <div class="name">Jordan Zion 4</div>
+        <div class="name">$19</div>
+        <div class="imgButton"><button class="visButton" onclick="addToCart('JORDANZION4', 19)">Add to cart</button></div>
+    </div>
+    <div><img src="../assets/AIRJORDAN3RETROMEX.avif">
+        <div class="name">Air Jordan 3 Retro Mex</div>
+        <div class="name">$12</div>
+        <div class="imgButton"><button class="visButton" onclick="addToCart('AIRJORDAN3RETROMEX', 12)">Add to cart</button></div>
+    </div>
+    <div><img src="../assets/AIRJORDAN14G.avif">
+        <div class="name">Air Jordan 14G</div>
+        <div class="name">$10</div>
+        <div class="imgButton"><button class="visButton" onclick="addToCart('AIRJORDAN14G', 10)">Add to cart</button></div>
+    </div>
+    <div><img src="../assets/AIRJORDAN9RETROBOOTNRG.avif">
+        <div class="name">Air Jordan 9 Retro Boot NRG</div>
+        <div class="name">$25</div>
+        <div class="imgButton"><button class="visButton" onclick="addToCart('AIRJORDAN9RETROBOOTNRG', 25)">Add to cart</button></div>
+    </div>
+    <div><img src="../assets/JORDANAIRREV.avif">
+        <div class="name">Jordan Air Rev</div>
+        <div class="name">$27</div>
+        <div class="imgButton"><button class="visButton" onclick="addToCart('JORDANAIRREV', 27)">Add to cart</button></div>
+    </div>
+    <div><img src="../assets/SABRINA3.avif">
+        <div class="name">Sabrina 3</div>
+        <div class="name">$30</div>
+        <div class="imgButton"><button class="visButton" onclick="addToCart('JORDANAIRREV', 30)">Add to cart</button></div>
+    </div>
+    </div>
+    <a href="about.html" class="button">About</a>
+    <script src="../scripts/shop.js"></script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+  <h2>Help & Support</h2>
+  <p>If you are having trouble using the site, check the common questions below.</p>
+
+  <h5 class="mt-3">How do I add funds?</h5>
+  <p>
+    Go to the <a href="{{ url_for('wallet') }}">Wallet</a> page, enter an amount,
+    and click <strong>Add Funds</strong>. Your balance will update at the top of the page.
+  </p>
+
+  <h5>Do I need real money?</h5>
+  <p>
+    No. This is a demo project for a class. All funds are virtual and for practice only.
+  </p>
+
+  <h5>The page isn’t loading correctly.</h5>
+  <p>
+    Try refreshing the page or using a different browser. If the problem continues,
+    contact us on the <a href="{{ url_for('contact') }}">Contact</a> page.
+  </p>
+{% endblock %}
